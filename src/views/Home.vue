@@ -5,21 +5,21 @@
     <SketchesList v-for="sketch in sketches" :key="sketch.message" :sketch="sketch" />
     <br> 
 
-    <form @submit.prevent="updateSketch" class="updateSketches">
+    <form @submit="updateSketch" class="updateSketches">
       <input type="number" placeholder="Sketch ID to change">
       <input type="text" placeholder="Changes">
       <button type="submit" class="patchBtn">PATCH Sketch</button>  
     </form>
     <br>  
   
-    <form @submit.prevent="deleteDraft">
+    <form @submit="deleteDraft">
       <input class="deleteDraft" type="number" placeholder="Draft ID to delete">
     <button type="submit" class="deleteBtn">DELETE Draft</button> 
     </form>
     <DraftsList v-for="draft in drafts" :key="draft.message" :draft="draft" />
     <br>
 
-    <form @submit.prevent="postOrder">
+    <form @submit="postOrder">
       <input class="postOrder" type="number" placeholder="Draft ID to order">
     <button type="submit">POST Order</button> 
     <OrdersList v-for="order in orders" :key="order.message" :order="order" />
