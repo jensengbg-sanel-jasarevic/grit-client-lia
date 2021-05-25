@@ -23,33 +23,33 @@ export default new Vuex.Store({
   },
   actions: {
     async getSketches({ commit }){
-      let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/sketches`);
+      let resp = await axios.get(`/api/sketches`);
       commit('setSketches', resp.data)
     },
     async getDrafts({ commit }){
-      let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/drafts`);
+      let resp = await axios.get(`/api/drafts`);
       commit('setDrafts', resp.data)
     },
     async getOrders({ commit }){
-      let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/orders`);
+      let resp = await axios.get(`/api/orders`);
       commit('setOrders', resp.data)
     },
     async postSketchDraft(){
-      let resp = await axios.post(`https://demo-server-100.herokuapp.com/`);      
+      let resp = await axios.post(`/`);      
       console.log(resp) 
     },
     async updateSketch(ctx, update) {
-      let resp = await axios.patch(`https://demo-server-100.herokuapp.com/api/sketches/${update.id}`, {
+      let resp = await axios.patch(`/api/sketches/${update.id}`, {
         changes: update.changes
       });
       console.log(resp) 
     },
     async deleteDraft(ctx, id) {
-      let resp = await axios.delete(`https://demo-server-100.herokuapp.com/api/drafts/${id}`);
+      let resp = await axios.delete(`/api/drafts/${id}`);
       console.log(resp) 
     }, 
     async postOrder(ctx, id) {
-      let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/orders/${id}`);
+      let resp = await axios.post(`/api/orders/${id}`);
       console.log(resp) 
     }
   },
