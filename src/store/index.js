@@ -6,7 +6,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    URL: 'https://demo-server-100.herokuapp.com',
+    apiUrl: 'https://demo-server-100.herokuapp.com',
     sketches: [],
     drafts: [],
     orders: [],
@@ -28,35 +28,35 @@ export default new Vuex.Store({
   },
   actions: {
     async getSketches({ commit }){
-      let resp = await axios.get(`${URL}/api/sketches`);
+      let resp = await axios.get(`${apiUrl}/api/sketches`);
       commit('setSketches', resp.data)
     },
     async getDrafts({ commit }){
-      let resp = await axios.get(`${URL}/api/drafts`);
+      let resp = await axios.get(`${apiUrl}/api/drafts`);
       commit('setDrafts', resp.data)
     },
     async getOrders({ commit }){
-      let resp = await axios.get(`${URL}/api/orders`);
+      let resp = await axios.get(`${apiUrl}/api/orders`);
       commit('setOrders', resp.data)
     },
     async postSketchDraft(){
-      let resp = await axios.post(`${URL}`);      
+      let resp = await axios.post(`${apiUrl}`);      
       console.log(resp) 
     },
     async deleteDraft(ctx, id) {
-      let resp = await axios.delete(`${URL}/api/drafts/${id}`);
+      let resp = await axios.delete(`${apiUrl}/api/drafts/${id}`);
       console.log(resp) 
     }, 
     async postOrder(ctx, id) {
-      let resp = await axios.post(`${URL}/api/orders/${id}`);
+      let resp = await axios.post(`${apiUrl}/api/orders/${id}`);
       console.log(resp) 
     },
     async postComment(ctx, comment) {
-      let resp = await axios.post(`${URL}/api/drafts/${comment.id}`, { comment: comment.text });
+      let resp = await axios.post(`${apiUrl}/api/drafts/${comment.id}`, { comment: comment.text });
       console.log(resp) 
     },
     async getInbox({ commit }){
-      let resp = await axios.get(`${URL}/api/mailbox`);
+      let resp = await axios.get(`${apiUrl}/api/mailbox`);
       commit('setInbox', resp.data)
     }
   },
