@@ -1,13 +1,13 @@
 <template>
   <div class="home">
-    <button @click="postSketchDraft">POST Draft</button>
+    <button @click="postDraft">POST Draft</button>
 
     <h1>Inbox</h1>
-      <Inbox v-for="msg in inbox" :key="msg" :msg="msg" />
+      <Inbox v-for="msg in inbox" :key="msg.comment" :msg="msg" />
 
     <h1>Orders</h1>
     <OrdersList 
-    v-for="order in orders" :key="order.message" :order="order" />
+    v-for="order in orders" :key="order.id" :order="order" />
 
   </div>
 </template>
@@ -26,22 +26,16 @@ export default {
 
   beforeMount(){
   this.$store.dispatch('getInbox')
+  this.$store.dispatch("getOrders"); 
   },
 
   methods: {
-    postSketchDraft(){
-    this.$store.dispatch('postSketchDraft')
-    this.$store.dispatch("getDrafts"); 
-    },
-    refreshInbox(){
-    this.$store.dispatch('getInbox')
+    postDraft(){
+    this.$store.dispatch('postDraft')
     }
   },
 
   computed: {
-  drafts() {
-  return this.$store.state.drafts;
-  },
   orders() {
   return this.$store.state.orders;
   },
@@ -49,7 +43,6 @@ export default {
   return this.$store.state.inbox;
   }
   }
-
   
 }
 </script>

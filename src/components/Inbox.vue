@@ -1,6 +1,6 @@
 <template>
   <div>
-      <span>On draft ID: {{ msg.id }}, comment: {{ msg.comment }}</span>
+      <span><b>Draft ID: </b>{{ msg.id }}, <b>Comments: </b>{{ msg.comment }}</span>
   </div>
 </template>
 

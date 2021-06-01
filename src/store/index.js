@@ -37,8 +37,8 @@ export default new Vuex.Store({
       let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/orders`);
       commit('setOrders', resp.data)
     },
-    async postSketchDraft(){
-      let resp = await axios.post(`https://demo-server-100.herokuapp.com/`);      
+    async postDraft(){
+      let resp = await axios.post(`https://demo-server-100.herokuapp.com`);      
       console.log(resp) 
     },
     async deleteDraft(ctx, id) {

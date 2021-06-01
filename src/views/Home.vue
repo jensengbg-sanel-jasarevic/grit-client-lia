@@ -2,7 +2,6 @@
   <div class="home">
 
     <DraftsList
-    @submit.native="refreshInbox"
      v-for="draft in drafts" :key="draft.message" :draft="draft" />
     <br> 
 
@@ -20,29 +19,14 @@ export default {
   },
 
   beforeMount(){
-  this.$store.dispatch('getInbox')
-  },
-
-  methods: {
-    postSketchDraft(){
-    this.$store.dispatch('postSketchDraft')
-    this.$store.dispatch("getDrafts"); 
-    },
-    refreshInbox(){
-    this.$store.dispatch('getInbox')
-    }
+  this.$store.dispatch("getDrafts"); 
   },
 
   computed: {
   drafts() {
   return this.$store.state.drafts;
   },
-  orders() {
-  return this.$store.state.orders;
-  },
-  inbox() {
-  return this.$store.state.inbox;
-  }
+
   }
 
   

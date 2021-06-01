@@ -48,15 +48,8 @@ export default {
     
     postOrder(){
     this.$store.dispatch('postOrder', this.draft.id)
-    this.$store.dispatch("getOrders"); 
     }
     },
-
-  computed: {
-  drafts() {
-  return this.$store.state.drafts;
-  },    
-}
 
 }
 </script>
