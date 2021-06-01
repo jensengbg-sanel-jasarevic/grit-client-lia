@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-
+    <h1>Drafts</h1>
     <DraftsList
      v-for="draft in drafts" :key="draft.message" :draft="draft" />
     <br> 
