@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> 
+      <router-link to="/">Home | </router-link> 
+      <router-link to="/admin">Admin</router-link> 
     </div>
     <router-view/>
   </div>
@@ -12,15 +13,11 @@ export default {
   name: 'App',
 
   beforeMount(){
-  this.$store.dispatch('getSketches');
   this.$store.dispatch('getDrafts');
   this.$store.dispatch('getOrders')
   },
   
   computed: {
-  sketches() {
-  return this.$store.state.sketches;
-  },
   drafts() {
   return this.$store.state.drafts;
   },

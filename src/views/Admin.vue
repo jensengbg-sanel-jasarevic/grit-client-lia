@@ -1,22 +1,27 @@
 <template>
   <div class="home">
+    <button @click="postSketchDraft">POST Draft</button>
 
-    <DraftsList
-    @submit.native="refreshInbox"
-     v-for="draft in drafts" :key="draft.message" :draft="draft" />
-    <br> 
+    <h1>Inbox</h1>
+      <Inbox v-for="msg in inbox" :key="msg" :msg="msg" />
+
+    <h1>Orders</h1>
+    <OrdersList 
+    v-for="order in orders" :key="order.message" :order="order" />
 
   </div>
 </template>
 
 <script>
-import DraftsList from '@/components/DraftsList'
+import OrdersList from '@/components/OrdersList'
+import Inbox from '@/components/Inbox'
 
 export default {
-  name: 'Home',
+  name: 'Admin',
 
   components: {
-  DraftsList
+  OrdersList,
+  Inbox
   },
 
   beforeMount(){
