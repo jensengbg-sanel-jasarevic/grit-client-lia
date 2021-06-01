@@ -40,7 +40,7 @@ export default new Vuex.Store({
       commit('setOrders', resp.data)
     },
     async postSketchDraft(){
-      let resp = await axios.post(`${URL}/`);      
+      let resp = await axios.post(`${URL}`);      
       console.log(resp) 
     },
     async deleteDraft(ctx, id) {
