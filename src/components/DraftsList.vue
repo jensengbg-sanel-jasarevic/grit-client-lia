@@ -29,6 +29,10 @@ export default {
       draft: Object
   },
 
+  beforeMount(){
+  this.$store.dispatch("getInbox"); 
+  },
+
   data() {
     return {
     textareaInput: "",
