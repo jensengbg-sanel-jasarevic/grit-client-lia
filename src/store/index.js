@@ -6,7 +6,6 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    apiUrl: 'https://demo-server-100.herokuapp.com',
     sketches: [],
     drafts: [],
     orders: [],
@@ -28,35 +27,35 @@ export default new Vuex.Store({
   },
   actions: {
     async getSketches({ commit }){
-      let resp = await axios.get(`${apiUrl}/api/sketches`);
+      let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/sketches`);
       commit('setSketches', resp.data)
     },
     async getDrafts({ commit }){
-      let resp = await axios.get(`${apiUrl}/api/drafts`);
+      let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/drafts`);
       commit('setDrafts', resp.data)
     },
     async getOrders({ commit }){
-      let resp = await axios.get(`${apiUrl}/api/orders`);
+      let resp = await axios.get(`$https://demo-server-100.herokuapp.com/api/orders`);
       commit('setOrders', resp.data)
     },
     async postSketchDraft(){
-      let resp = await axios.post(`${apiUrl}`);      
+      let resp = await axios.post(`https://demo-server-100.herokuapp.com`);      
       console.log(resp) 
     },
     async deleteDraft(ctx, id) {
-      let resp = await axios.delete(`${apiUrl}/api/drafts/${id}`);
+      let resp = await axios.delete(`https://demo-server-100.herokuapp.com/api/drafts/${id}`);
       console.log(resp) 
     }, 
     async postOrder(ctx, id) {
-      let resp = await axios.post(`${apiUrl}/api/orders/${id}`);
+      let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/orders/${id}`);
       console.log(resp) 
     },
     async postComment(ctx, comment) {
-      let resp = await axios.post(`${apiUrl}/api/drafts/${comment.id}`, { comment: comment.text });
+      let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/drafts/${comment.id}`, { comment: comment.text });
       console.log(resp) 
     },
     async getInbox({ commit }){
-      let resp = await axios.get(`${apiUrl}/api/mailbox`);
+      let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/mailbox`);
       commit('setInbox', resp.data)
     }
   },
