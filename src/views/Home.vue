@@ -2,6 +2,7 @@
   <div class="home">
     <h1>Drafts</h1>
     <DraftsList
+    @submit.native="refreshDraftData"
      v-for="draft in drafts" :key="draft.message" :draft="draft" />
     <br> 
 
@@ -22,6 +23,12 @@ export default {
   this.$store.dispatch("getDrafts"); 
   },
 
+  methods: {
+    refreshDraftData(){
+    this.$store.dispatch("getDrafts");
+    }
+  },
+  
   computed: {
   drafts() {
   return this.$store.state.drafts;

@@ -5,15 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    sketches: [],
     drafts: [],
     orders: [],
     inbox: []
   },
   mutations: {
-    setSketches(state, sketches){
-      state.sketches = sketches;
-    },
     setDrafts(state, drafts){
       state.drafts = drafts;
     },
@@ -25,10 +21,6 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async getSketches({ commit }){
-      let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/sketches`);
-      commit('setSketches', resp.data)
-    },
     async getDrafts({ commit }){
       let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/drafts`);
       commit('setDrafts', resp.data)
@@ -41,15 +33,15 @@ export default new Vuex.Store({
       let resp = await axios.post(`https://demo-server-100.herokuapp.com`);      
       console.log(resp) 
     },
-    async deleteDraft(ctx, id) {
-      let resp = await axios.delete(`https://demo-server-100.herokuapp.com/api/drafts/${id}`);
-      console.log(resp) 
-    }, 
     async postOrder(ctx, id) {
       let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/orders/${id}`);
       console.log(resp) 
     },
     async postComment(ctx, comment) {
+      let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/drafts/${comment.id}`, { comment: comment.text });
+      console.log(resp) 
+    },
+    async postResponseClientMsg(ctx, comment) {
       let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/drafts/${comment.id}`, { comment: comment.text });
       console.log(resp) 
     },

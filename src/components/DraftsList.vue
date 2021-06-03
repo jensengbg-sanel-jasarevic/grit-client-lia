@@ -12,10 +12,10 @@
     <span>{{ draft.updated_at }}</span>
     <form @submit.prevent="postComment">
       <label for="comments">
-        <textarea v-model="textareaInput" rows="4" />
+        <textarea :disabled="textareaDisabled" id="comment" v-model="textareaInput" rows="4" />
       </label>
       <br>
-      <button type="submit">Leave comment</button>
+      <button :disabled="commentBtnDisabled" type="submit">{{ commentBtnText }}</button>
     </form>
       <button @click="postOrder">Confirm order</button> 
   </div>
@@ -29,13 +29,12 @@ export default {
       draft: Object
   },
 
-  beforeMount(){
-  this.$store.dispatch("getInbox"); 
-  },
-
   data() {
     return {
     textareaInput: "",
+    textareaDisabled: false,
+    commentBtnDisabled: false,
+    commentBtnText: "Leave comment"
     };
   },
 
@@ -46,8 +45,10 @@ export default {
         id: this.draft.id,
       };      
       this.$store.dispatch("postComment", comment);
+      this.textareaDisabled = true;
+      this.commentBtnDisabled = true;
+      this.commentBtnText = "✔"
       this.$store.dispatch("getDrafts");
-      this.textareaInput = "";    
       },
     
     postOrder(){
