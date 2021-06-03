@@ -41,8 +41,8 @@ export default new Vuex.Store({
       let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/drafts/${comment.id}`, { comment: comment.text });
       console.log(resp) 
     },
-    async postResponseClientMsg(ctx, comment) {
-      let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/drafts/${comment.id}`, { comment: comment.text });
+    async postAdminResponse(ctx, adminResponse) {
+      let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/mailbox/user`, { response: adminResponse.text });
       console.log(resp) 
     },
     async getInbox({ commit }){
