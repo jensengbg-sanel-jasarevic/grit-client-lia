@@ -5,7 +5,6 @@
     @submit.native="refreshDraftData"
      v-for="draft in drafts" :key="draft.message" :draft="draft" />
     <br> 
-
   </div>
 </template>
 

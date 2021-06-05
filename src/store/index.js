@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     drafts: [],
     orders: [],
-    inbox: []
+    inbox: [],
+    inboxClient: []
   },
   mutations: {
     setDrafts(state, drafts){
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     setInbox(state, inbox){
       state.inbox = inbox;
+    },
+    setInboxClient(state, inbox){
+      state.inboxClient = inbox;
     }
   },
   actions: {
@@ -41,9 +45,17 @@ export default new Vuex.Store({
       let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/drafts/${comment.id}`, { comment: comment.text });
       console.log(resp) 
     },
-    async postAdminResponse(ctx, adminResponse) {
-      let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/mailbox/user`, { response: adminResponse.text });
+    async postContactsResponse(ctx, contactsResponse) {
+      let resp = await axios.post(`/api/mailbox/client`, { response: contactsResponse.text });
       console.log(resp) 
+    },
+    async postClientResponse(ctx, clientResponse) {
+      let resp = await axios.post(`/api/mailbox/contacts`, { response: clientResponse.text });
+      console.log(resp) 
+    },
+    async getInboxClient({ commit }){
+      let resp = await axios.get(`/api/mailbox/client`);
+      commit('setInboxClient', resp.data)
     },
     async getInbox({ commit }){
       let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/mailbox`);

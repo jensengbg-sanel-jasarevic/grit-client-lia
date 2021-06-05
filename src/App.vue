@@ -2,7 +2,8 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home | </router-link> 
-      <router-link to="/admin">Admin</router-link> 
+      <router-link to="/admin">Admin | </router-link> 
+      <router-link to="/mailboxclient">Client Mailbox</router-link>       
     </div>
     <router-view/>
   </div>
@@ -15,6 +16,7 @@ export default {
   beforeMount(){
   this.$store.dispatch('getDrafts');
   this.$store.dispatch('getOrders')
+  this.$store.dispatch('getInboxClient')
   },
   
   computed: {

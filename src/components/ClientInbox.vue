@@ -1,9 +1,9 @@
 <template>
   <div>
       <span><b>Draft ID: </b>{{ msg.id }}, <b>Comments: </b>{{ msg.comment }}</span>
-    <form @submit.prevent="postResponse">
-      <label for="contacts-msg">
-        <textarea id="comment" v-model="contactsResponse" rows="2" />
+    <form @submit.prevent="postClientResponse">
+      <label for="admin-msg">
+        <textarea id="comment" v-model="clientResponse" rows="2" />
       </label>
       <br>
       <button type="submit">Post answer</button>
@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'Inbox',
+  name: 'ClientInbox',
 
   props: {
       msg: Object
@@ -22,17 +22,17 @@ export default {
 
   data() {
     return {
-    contactsResponse: ""
+    clientResponse: ""
     }
   },
 
   methods: {
     async postResponse() {
       const response = {
-        text: this.contactsResponse,
+        text: this.clientResponse,
       };      
-      this.$store.dispatch("postContactsResponse", response);
-      this.contactsResponse = ""
+      this.$store.dispatch("postClientResponse", response);
+      this.clientResponse = ""
       },
     
     },  
