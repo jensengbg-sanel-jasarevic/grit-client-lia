@@ -1,6 +1,6 @@
 <template>
   <div>
-      <span><b>Draft ID: </b>{{ msg.id }}, <b>Comments: </b>{{ msg.comment }}</span>
+      <span><b>Draft ID: </b>{{ msg.id }}, <b>Comments: </b>{{ msg.messages }}</span>
     <form @submit.prevent="postResponse">
       <label for="contacts-msg">
         <textarea id="comment" v-model="contactsResponse" rows="2" />

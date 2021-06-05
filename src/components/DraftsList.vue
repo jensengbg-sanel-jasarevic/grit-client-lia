@@ -44,7 +44,7 @@ export default {
         text: this.textareaInput,
         id: this.draft.id,
       };      
-      this.$store.dispatch("postComment", comment);
+      this.$store.dispatch("postClientResponse", comment);
       this.textareaDisabled = true;
       this.commentBtnDisabled = true;
       this.commentBtnText = "✔"

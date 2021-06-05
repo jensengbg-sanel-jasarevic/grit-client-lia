@@ -3,7 +3,7 @@
     <button @click="postDraft">POST Draft</button>
 
     <h1>Inbox</h1>
-      <Inbox v-for="msg in inbox" :key="msg.comment" :msg="msg" />
+      <Inbox v-for="msg in inbox" :key="msg.id" :msg="msg" />
 
     <h1>Orders</h1>
     <OrdersList 

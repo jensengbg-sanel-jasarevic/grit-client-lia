@@ -41,10 +41,6 @@ export default new Vuex.Store({
       let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/orders/${id}`);
       console.log(resp) 
     },
-    async postComment(ctx, comment) {
-      let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/drafts/${comment.id}`, { comment: comment.text });
-      console.log(resp) 
-    },
     async postContactsResponse(ctx, contactsResponse) {
       let resp = await axios.post(`/api/mailbox/client`, { response: contactsResponse.text });
       console.log(resp) 
