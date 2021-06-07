@@ -3,7 +3,6 @@
     <h4>Client message id {{msg.messagesId}}:</h4>
     <p>{{ msg.messages }}</p>
 
-
     <form @submit.prevent="postMessage">
       <label for="contacts-msg">
         <textarea id="contacts-msg" v-model="contactsMessage" rows="2" />

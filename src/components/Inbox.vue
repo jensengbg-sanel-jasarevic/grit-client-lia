@@ -30,7 +30,7 @@ export default {
     async postMessage() {
       const message = {
         text: this.clientMessage,
-        textId: this.msg.messagesId
+        textId: this.msg.id
       };      
       this.$store.dispatch("postMsgToContacts", message);
       this.clientMessage = ""
