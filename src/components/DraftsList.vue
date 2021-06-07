@@ -4,18 +4,16 @@
     <span> {{ draft.id }} </span>
     <span class="bold">message: </span>
     <span>{{ draft.message }} </span>
-    <span class="bold">comment: </span>
-    <span>{{ draft.comment }} </span>
     <span class="bold">created at: </span>
     <span>{{ draft.created_at }} </span>
     <span class="bold">updated at: </span>
     <span>{{ draft.updated_at }}</span>
-    <form @submit.prevent="postComment">
-      <label for="comments">
-        <textarea :disabled="textareaDisabled" id="comment" v-model="textareaInput" rows="4" />
+    <form @submit.prevent="postMsgToContacts">
+      <label for="client-message">
+        <textarea :disabled="textareaDisabled" id="client-message" v-model="textareaInput" rows="4" />
       </label>
       <br>
-      <button :disabled="commentBtnDisabled" type="submit">{{ commentBtnText }}</button>
+      <button :disabled="btnDisabled" type="submit">{{ btnText }}</button>
     </form>
       <button @click="postOrder">Confirm order</button> 
   </div>
@@ -33,21 +31,21 @@ export default {
     return {
     textareaInput: "",
     textareaDisabled: false,
-    commentBtnDisabled: false,
-    commentBtnText: "Leave comment"
+    btnDisabled: false,
+    btnText: "Send message"
     };
   },
 
   methods: {
-    async postComment() {
-      const comment = {
+    async postMsgToContacts() {
+      const clientMsg = {
         text: this.textareaInput,
-        id: this.draft.id,
+        textId: this.draft.id,
       };      
-      this.$store.dispatch("postClientResponse", comment);
+      this.$store.dispatch("postMsgToContacts", clientMsg);
       this.textareaDisabled = true;
-      this.commentBtnDisabled = true;
-      this.commentBtnText = "✔"
+      this.btnDisabled = true;
+      this.btnText = "✔"
       this.$store.dispatch("getDrafts");
       },
     

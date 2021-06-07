@@ -2,8 +2,8 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home | </router-link> 
-      <router-link to="/admin">Admin | </router-link> 
-      <router-link to="/mailboxclient">Client Mailbox</router-link>       
+      <router-link to="/mailbox">Mailbox | </router-link>       
+      <router-link to="/contacts">Contacts(admin)</router-link> 
     </div>
     <router-view/>
   </div>

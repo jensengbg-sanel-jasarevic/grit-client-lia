@@ -1,18 +1,22 @@
 <template>
-  <div class="mailbox-client">
-    <h1>Mailbox Client</h1>
-      <ClientInbox v-for="msg in inboxClient" :key="msg.id" :msg="msg.messages" />
+  <div class="mailbox">
+    <h1>Mailbox</h1>
+      <Inbox v-for="msg in inboxClient" :key="msg.id" :msg="msg" />
   </div>
 </template>
 
 <script>
-import ClientInbox from '@/components/ClientInbox'
+import Inbox from '@/components/Inbox'
 
 export default {
-  name: 'MailBoxClient',
+  name: 'MailBox',
 
   components: {
-  ClientInbox
+  Inbox
+  },
+
+  beforeMount(){
+  this.$store.dispatch('getInboxClient')
   },
 
   computed: {

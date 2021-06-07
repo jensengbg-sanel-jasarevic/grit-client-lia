@@ -1,14 +1,14 @@
 <template>
   <div>
-      <span><b>Draft ID: </b>{{ msg.id }}, <b>Comments: </b>{{ msg.messages }}</span>
-    <form @submit.prevent="postResponse">
-      <label for="contacts-msg">
-        <textarea id="comment" v-model="contactsResponse" rows="2" />
+      <h4>Contacts response to message id {{msg.messagesId}}:</h4>
+      <p>{{ msg.messages }}</p>
+    <form @submit.prevent="postMessage">
+      <label for="client-msg">
+        <textarea id="client-msg" v-model="clientMessage" rows="2" />
       </label>
       <br>
-      <button type="submit">Post answer</button>
+      <button type="submit">Send</button>
     </form>
-  
   </div>
 </template>
 
@@ -22,17 +22,18 @@ export default {
 
   data() {
     return {
-    contactsResponse: ""
+    clientMessage: ""
     }
   },
 
   methods: {
-    async postResponse() {
-      const response = {
-        text: this.contactsResponse,
+    async postMessage() {
+      const message = {
+        text: this.clientMessage,
+        textId: this.msg.messagesId
       };      
-      this.$store.dispatch("postContactsResponse", response);
-      this.contactsResponse = ""
+      this.$store.dispatch("postMsgToContacts", message);
+      this.clientMessage = ""
       },
     
     },  
@@ -67,5 +68,8 @@ textarea{
   -moz-box-shadow: none;
   box-shadow: none;
   resize: none;    
+}
+h4 {
+  margin: 0;
 }
 </style>

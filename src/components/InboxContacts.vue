@@ -1,20 +1,23 @@
 <template>
-  <div>
-      <span><b>Draft ID: </b>{{ msg.id }}, <b>Comments: </b>{{ msg.comment }}</span>
-    <form @submit.prevent="postClientResponse">
-      <label for="admin-msg">
-        <textarea id="comment" v-model="clientResponse" rows="2" />
+  <div class="inbox-contacts">
+    <h4>Client message id {{msg.messagesId}}:</h4>
+    <p>{{ msg.messages }}</p>
+
+
+    <form @submit.prevent="postMessage">
+      <label for="contacts-msg">
+        <textarea id="contacts-msg" v-model="contactsMessage" rows="2" />
       </label>
       <br>
-      <button type="submit">Post answer</button>
+      <button type="submit">Send</button>
     </form>
-  
   </div>
 </template>
 
 <script>
+
 export default {
-  name: 'ClientInbox',
+  name: 'InboxContacts',
 
   props: {
       msg: Object
@@ -22,17 +25,18 @@ export default {
 
   data() {
     return {
-    clientResponse: ""
+    contactsMessage: ""
     }
   },
 
   methods: {
-    async postResponse() {
-      const response = {
-        text: this.clientResponse,
+    async postMessage() {
+      const message = {
+        text: this.contactsMessage,
+        textId: this.msg.messagesId
       };      
-      this.$store.dispatch("postClientResponse", response);
-      this.clientResponse = ""
+      this.$store.dispatch("postMsgToClient", message);
+      this.contactsMessage = ""
       },
     
     },  
@@ -68,4 +72,10 @@ textarea{
   box-shadow: none;
   resize: none;    
 }
+h4 {
+  margin: 0;
+}
+p { 
+  word-break: break-all; 
+  }
 </style>

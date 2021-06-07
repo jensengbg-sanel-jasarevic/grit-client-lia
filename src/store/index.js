@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     drafts: [],
     orders: [],
-    inbox: [],
+    inboxContacts: [],
     inboxClient: []
   },
   mutations: {
@@ -17,8 +17,8 @@ export default new Vuex.Store({
     setOrders(state, orders){
       state.orders = orders;
     },
-    setInbox(state, inbox){
-      state.inbox = inbox;
+    setInboxContacts(state, inbox){
+      state.inboxContacts = inbox;
     },
     setInboxClient(state, inbox){
       state.inboxClient = inbox;
@@ -41,21 +41,21 @@ export default new Vuex.Store({
       let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/orders/${id}`);
       console.log(resp) 
     },
-    async postContactsResponse(ctx, contactsResponse) {
-      let resp = await axios.post(`/api/mailbox/client`, { response: contactsResponse.text });
+    async postMsgToClient(ctx, message) {
+      let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/mailbox/client`, { text: message.text, textId: message.textId });
       console.log(resp) 
     },
-    async postClientResponse(ctx, clientResponse) {
-      let resp = await axios.post(`/api/mailbox/contacts`, { response: clientResponse.text });
+    async postMsgToContacts(ctx, message) {
+      let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/mailbox/contacts`, { text: message.text, textId: message.textId });
       console.log(resp) 
     },
     async getInboxClient({ commit }){
-      let resp = await axios.get(`/api/mailbox/client`);
+      let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/mailbox/client`);
       commit('setInboxClient', resp.data)
     },
-    async getInbox({ commit }){
-      let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/mailbox`);
-      commit('setInbox', resp.data)
+    async getInboxContacts({ commit }){
+      let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/mailbox/contacts`);
+      commit('setInboxContacts', resp.data)
     }
   },
   modules: {

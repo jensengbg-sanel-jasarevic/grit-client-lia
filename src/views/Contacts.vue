@@ -1,31 +1,32 @@
 <template>
-  <div class="home">
-    <button @click="postDraft">POST Draft</button>
-
-    <h1>Inbox</h1>
-      <Inbox v-for="msg in inbox" :key="msg.id" :msg="msg" />
-
-    <h1>Orders</h1>
-    <OrdersList 
-    v-for="order in orders" :key="order.id" :order="order" />
-
+  <div class="contacts">
+    <div class="left">
+        <h1>Mailbox</h1>
+        <InboxContacts v-for="msg in inbox" :key="msg.messages" :msg="msg" />
+    </div>
+    <div class="right">
+        <button @click="postDraft">POST Draft</button>
+        <h1>Orders from client</h1>
+        <OrdersList 
+        v-for="order in orders" :key="order.id" :order="order" />
+    </div>
   </div>
 </template>
 
 <script>
 import OrdersList from '@/components/OrdersList'
-import Inbox from '@/components/Inbox'
+import InboxContacts from '@/components/InboxContacts'
 
 export default {
-  name: 'Admin',
+  name: 'Contacts',
 
   components: {
   OrdersList,
-  Inbox
+  InboxContacts
   },
 
   beforeMount(){
-  this.$store.dispatch('getInbox')
+  this.$store.dispatch('getInboxContacts')
   this.$store.dispatch("getOrders"); 
   },
 
@@ -40,7 +41,7 @@ export default {
   return this.$store.state.orders;
   },
   inbox() {
-  return this.$store.state.inbox;
+  return this.$store.state.inboxContacts;
   }
   }
   
@@ -48,6 +49,10 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.contacts {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    }
 button {
   margin-left: 1%;
   margin-bottom: 1%;

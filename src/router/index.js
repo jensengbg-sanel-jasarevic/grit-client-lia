@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Admin from '../views/Admin.vue'
-import MailboxClient from '../views/MailboxClient.vue'
+import Contacts from '../views/Contacts.vue'
+import Mailbox from '../views/Mailbox.vue'
 
 Vue.use(VueRouter)
 
@@ -13,14 +13,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/admin',
-    name: 'Admin',
-    component: Admin
+    path: '/contacts',
+    name: 'Contact',
+    component: Contacts
   },
   {
-    path: '/mailboxclient',
-    name: 'MailboxClient',
-    component: MailboxClient
+    path: '/mailbox',
+    name: 'Mailbox',
+    component: Mailbox
   }
   
 ]
