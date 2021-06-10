@@ -1,4 +1,4 @@
-Heroku deploy: https://demo-client-100.herokuapp.com/
+Heroku deploy: https://vueclient-100.herokuapp.com/
 
 # demo-client
 
