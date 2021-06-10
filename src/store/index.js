@@ -26,35 +26,35 @@ export default new Vuex.Store({
   },
   actions: {
     async getDrafts({ commit }){
-      let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/drafts`);
+      let resp = await axios.get(`https://nodeserver-100.herokuapp.com/api/drafts`);
       commit('setDrafts', resp.data)
     },
     async getOrders({ commit }){
-      let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/orders`);
+      let resp = await axios.get(`https://nodeserver-100.herokuapp.com/api/orders`);
       commit('setOrders', resp.data)
     },
     async postDraft(){
-      let resp = await axios.post(`https://demo-server-100.herokuapp.com`);      
+      let resp = await axios.post(`https://nodeserver-100.herokuapp.com`);      
       console.log(resp) 
     },
     async postOrder(ctx, id) {
-      let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/orders/${id}`);
+      let resp = await axios.post(`https://nodeserver-100.herokuapp.com/api/orders/${id}`);
       console.log(resp) 
     },
     async postMsgToClient(ctx, message) {
-      let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/mailbox/client`, { text: message.text, textId: message.textId });
+      let resp = await axios.post(`https://nodeserver-100.herokuapp.com/api/mailbox/client`, { text: message.text, textId: message.textId });
       console.log(resp) 
     },
     async postMsgToContacts(ctx, message) {
-      let resp = await axios.post(`https://demo-server-100.herokuapp.com/api/mailbox/contacts`, { text: message.text, textId: message.textId });
+      let resp = await axios.post(`https://nodeserver-100.herokuapp.com/api/mailbox/contacts`, { text: message.text, textId: message.textId });
       console.log(resp) 
     },
     async getInboxClient({ commit }){
-      let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/mailbox/client`);
+      let resp = await axios.get(`https://nodeserver-100.herokuapp.com/api/mailbox/client`);
       commit('setInboxClient', resp.data)
     },
     async getInboxContacts({ commit }){
-      let resp = await axios.get(`https://demo-server-100.herokuapp.com/api/mailbox/contacts`);
+      let resp = await axios.get(`https://nodeserver-100.herokuapp.com/api/mailbox/contacts`);
       commit('setInboxContacts', resp.data)
     }
   },
