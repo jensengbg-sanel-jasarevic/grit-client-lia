@@ -1,21 +1,26 @@
 <template>
-  <div>
-    <span class="bold">ID: </span>
-    <span> {{ draft.id }} </span>
-    <span class="bold">message: </span>
-    <span>{{ draft.message }} </span>
-    <span class="bold">created at: </span>
-    <span>{{ draft.created_at }} </span>
-    <span class="bold">updated at: </span>
-    <span>{{ draft.updated_at }}</span>
-    <form @submit.prevent="postMsgToContacts">
-      <label for="client-message">
-        <textarea :disabled="textareaDisabled" id="client-message" v-model="textareaInput" rows="4" />
+  <div class="wrapper-draft">
+
+    <button id="approve-btn" @click="postOrder" :disabled="disableApproveBtn">{{ approveBtnText }}</button>
+
+    <div class="disapprove-comments">
+      <h3>Skiss förslag</h3>
+      <span class="bold">ID: </span>
+      <span> {{ draft.id }} </span>
+      <span class="bold">message: </span>
+      <span>{{ draft.message }} </span>
+      <span class="bold">created at: </span>
+      <span>{{ draft.created_at }} </span>
+      <span class="bold">updated at: </span>
+      <span>{{ draft.updated_at }}</span>
+
+      <button id="disapprove-btn" @click.prevent="postMsgToContacts" :disabled="disableDisapproveBtn">{{ disapproveBtnText }}</button>
+
+      <label for="comments">
+        <textarea id="comments" rows="4" :placeholder="textareaPlaceholder" v-model="textareaInput" :disabled="textareaDisabled" />
       </label>
-      <br>
-      <button :disabled="btnDisabled" type="submit">{{ btnText }}</button>
-    </form>
-      <button @click="postOrder">Confirm order</button> 
+    </div>
+
   </div>
 </template>
 
@@ -27,12 +32,15 @@ export default {
       draft: Object
   },
 
-  data() {
+ data() {
     return {
     textareaInput: "",
     textareaDisabled: false,
-    btnDisabled: false,
-    btnText: "Send message"
+    disableApproveBtn: false,
+    disableDisapproveBtn: false,
+    approveBtnText: "Godkänn",
+    disapproveBtnText: "Underkänn",
+    textareaPlaceholder: "Lägg till en kommentar"
     };
   },
 
@@ -44,15 +52,17 @@ export default {
       };      
       this.$store.dispatch("postMsgToContacts", clientMsg);
       this.textareaDisabled = true;
-      this.btnDisabled = true;
-      this.btnText = "✔"
+      this.disableDisapproveBtn = true;
+      this.disapproveBtnText = "Skiss underkänd"
       this.$store.dispatch("getDrafts");
       },
-    
+
     postOrder(){
     this.$store.dispatch('postOrder', this.draft.id)
+    this.disableApproveBtn = true;
+    this.approveBtnText = "Skiss godkänd"
     }
-    },
+  }
 
 }
 </script>
@@ -60,38 +70,67 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 span {
+  color: #2c3e50;
   font-size: 0.8em;
+  margin-top: 1%;
 }
 .bold {
   font-weight: bold;
 }
-.changes {
-  color: red;
+h3 {
+    color: #2c3e50;
 }
-button {
-  margin-left: 1%;
-  margin-bottom: 1%;
+.wrapper-draft {
+  margin-left: 5%;
+  margin-right: 5%;
+  display: grid;
+  grid-template-columns: 70% 30%;
+  grid-template-areas: "left right";
+  min-height: 500px;
+  background-color: #F1F1F1;
+}
+#approve-btn {
+  grid-area: right;
+  margin-top: 50%;
+  margin-right: 10%;
   border: none;
+  height: 50px;
+  width: auto;
   border-radius: 5px;
   background-color: #42b983;
-  padding: 10px;
+  color: white;
+  cursor: pointer;
+}
+.disapprove-comments {
+  grid-area: left;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+#disapprove-btn {
+  margin-top: 1%;
+  border: none;
+  height: 50px;
+  width: 200px;
+  border-radius: 5px;
+  background-color: #DC143C;
   color: white;
   cursor: pointer;
 }
 textarea{
   min-width: 25vw;
-  margin : 0 auto;
+  margin-top: 10px;
   padding: 1.1em;
   border-radius: 8px;
   color: #555555;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   font-size: 1em;
   line-height: 1.4em;
-  overflow: auto;
   outline: none;
+  box-shadow: none;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
-  box-shadow: none;
   resize: none;    
+  overflow: auto;
 }
 </style>

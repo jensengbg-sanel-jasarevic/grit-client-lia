@@ -22,7 +22,6 @@ const routes = [
     name: 'Mailbox',
     component: Mailbox
   }
-  
 ]
 
 const router = new VueRouter({

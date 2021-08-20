@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home | </router-link> 
-      <router-link to="/mailbox">Mailbox | </router-link>       
-      <router-link to="/contacts">Contacts(admin)</router-link> 
+      <router-link to="/">Home </router-link> 
+      <router-link to="/mailbox">| Mailbox |</router-link>       
+      <router-link to="/contacts"> Contacts(admin)</router-link> 
     </div>
     <router-view/>
   </div>
@@ -38,16 +38,19 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: white;
+  background-color: #1d1d1d;
 }
-
+h1, h4 {
+  color: white;
+}
 #nav {
   padding: 30px;
 }
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: white;
 }
 
 #nav a.router-link-exact-active {
