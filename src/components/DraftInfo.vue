@@ -5,6 +5,9 @@
 
     <div class="disapprove-comments">
       <h3>Skiss förslag</h3>
+
+      <div id="draft-img"></div>
+
       <span class="bold">ID: </span>
       <span> {{ draft.id }} </span>
       <span class="bold">message: </span>
@@ -26,11 +29,7 @@
 
 <script>
 export default {
-  name: 'DraftsList',
-
-  props: {
-      draft: Object
-  },
+  name: 'DraftInfo',
 
  data() {
     return {
@@ -54,14 +53,20 @@ export default {
       this.textareaDisabled = true;
       this.disableDisapproveBtn = true;
       this.disapproveBtnText = "Skiss underkänd"
-      this.$store.dispatch("getDrafts");
+      this.$store.dispatch("getDraft");
       },
 
     postOrder(){
     this.$store.dispatch('postOrder', this.draft.id)
     this.disableApproveBtn = true;
     this.approveBtnText = "Skiss godkänd"
-    }
+   }
+  },
+
+  computed: {
+  draft() {
+  return this.$store.state.draft;
+  },
   }
 
 }
@@ -111,15 +116,16 @@ h3 {
   margin-top: 1%;
   border: none;
   height: 50px;
-  width: 200px;
+  width: 180px;
   border-radius: 5px;
   background-color: #DC143C;
   color: white;
   cursor: pointer;
 }
-textarea{
+textarea {
   min-width: 25vw;
   margin-top: 10px;
+  margin-bottom: 10px;
   padding: 1.1em;
   border-radius: 8px;
   color: #555555;
@@ -132,5 +138,8 @@ textarea{
   -moz-box-shadow: none;
   resize: none;    
   overflow: auto;
+}
+#comments {
+  max-width: 150px;
 }
 </style>

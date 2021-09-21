@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h4>Contacts response to message id {{msg.messagesId}}:</h4>
+      <h4>Contacts response to message with object id {{msg.messagesId}}:</h4>
       <p>{{ msg.messages }}</p>
     <form @submit.prevent="postMessage">
       <label for="client-msg">

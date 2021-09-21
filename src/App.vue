@@ -14,7 +14,7 @@ export default {
   name: 'App',
 
   beforeMount(){
-  this.$store.dispatch('getDrafts');
+  this.$store.dispatch('getDraft');
   this.$store.dispatch('getOrders')
   this.$store.dispatch('getInboxClient')
   },

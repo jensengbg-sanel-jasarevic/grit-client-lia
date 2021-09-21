@@ -1,32 +1,25 @@
 <template>
   <div>
     <h1>Draft</h1>
-    <DraftsList
-     v-for="draft in drafts" :key="draft.message" :draft="draft" />
+    <DraftInfo />
     <br> 
   </div>
 </template>
 
 <script>
-import DraftsList from '@/components/DraftsList'
+import DraftInfo from '@/components/DraftInfo'
 
 export default {
   name: 'Home',
   components: {
-  DraftsList
+  DraftInfo
   },
 
   beforeMount(){
-  this.$store.dispatch("getDrafts"); 
+  this.$store.dispatch("getDraft"); 
+  this.$store.dispatch("getDraftImage"); 
   },
   
-  computed: {
-  drafts() {
-  return this.$store.state.drafts;
-  },
-
-  }
-
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
