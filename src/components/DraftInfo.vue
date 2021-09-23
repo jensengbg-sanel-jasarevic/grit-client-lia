@@ -31,6 +31,10 @@
 export default {
   name: 'DraftInfo',
 
+  props: {
+    draft: Object
+  },
+
  data() {
     return {
     textareaInput: "",
@@ -44,31 +48,28 @@ export default {
   },
 
   methods: {
-    async postMsgToContacts() {
-      const clientMsg = {
-        text: this.textareaInput,
-        textId: this.draft.id,
-      };      
-      this.$store.dispatch("postMsgToContacts", clientMsg);
-      this.textareaDisabled = true;
-      this.disableDisapproveBtn = true;
-      this.disapproveBtnText = "Skiss underkänd"
-      this.$store.dispatch("getDraft");
-      },
+    postMsgToContacts() {
+    const clientMsg = {
+      text: this.textareaInput,
+      textId: this.draft.id,
+    };      
+    this.$store.dispatch("postMsgToContacts", clientMsg);
+    this.$store.dispatch("removeDraft", this.draft.id);
+    this.textareaDisabled = true;
+    this.disableDisapproveBtn = true;
+    this.disapproveBtnText = "Skiss underkänd"
+    setTimeout( () => { this.$store.dispatch("getDraft") }, 1500)
+    },
 
     postOrder(){
     this.$store.dispatch('postOrder', { id: this.draft.id, filename: this.draft.filename } )
+    this.$store.dispatch("removeDraft", this.draft.id);
     this.disableApproveBtn = true;
     this.approveBtnText = "Skiss godkänd"
+    setTimeout( () => { this.$store.dispatch("getDraft") }, 1500)
    }
-  },
-
-  computed: {
-  draft() {
-  return this.$store.state.draft;
-  },
   }
-
+  
 }
 </script>
 

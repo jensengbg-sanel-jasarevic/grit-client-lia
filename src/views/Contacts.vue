@@ -12,7 +12,7 @@
           <button type="submit">Submit</button>   
         </form>
         <h1>Orders from client</h1>
-        <p>Click <b>'Show more'</b> to display draft image for each order.</p>
+        <p>Click <b>'Show more'</b> to display draft image for specific order.</p>
         <OrdersList 
         v-for="order in orders" :key="order.id" :order="order" />
     </div>

@@ -1,6 +1,6 @@
 <template>
-  <div class="inbox-contacts">
-    <h4>Client message for object with id {{msg.messagesId}}:</h4>
+  <div v-if="msg.messages" class="inbox-contacts">
+    <h4>Client message for object with id {{ msg.messagesId }}:</h4>
     <p>{{ msg.messages }}</p>
 
     <form @submit.prevent="postMessage">

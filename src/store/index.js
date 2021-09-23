@@ -8,14 +8,14 @@ export default new Vuex.Store({
     // http://localhost:5000
     // https://nodeserver-100.herokuapp.com
     API_URL: "https://nodeserver-100.herokuapp.com",
-    draft: {},
+    draft: [],
     orders: [],
     inboxContacts: [],
     inboxClient: [],
   },
   mutations: {
-    setDraft(state, draft){
-      state.draft = draft;
+    setDrafts(state, drafts){
+      state.draft = drafts;
     },
     setOrders(state, orders){
       state.orders = orders;
@@ -25,13 +25,16 @@ export default new Vuex.Store({
     },
     setInboxClient(state, inbox){
       state.inboxClient = inbox;
-    },
+    }
   },
   actions: {
+    async removeDraft(ctx, id){
+      let resp = await axios.delete(`${ctx.state.API_URL}/api/drafts/${id}`);
+      console.log(resp)
+    },
     async getDraft(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/drafts`);
-      const lastItem = resp.data[resp.data.length - 1]
-      ctx.commit('setDraft', lastItem)
+      ctx.commit('setDrafts', resp.data)
     },
     async getOrders(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/orders`);

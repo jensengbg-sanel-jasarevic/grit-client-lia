@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Draft</h1>
-    <DraftInfo />
+    <DraftInfo v-for="draft in drafts" :key="draft.created_at" :draft="draft" />
     <br> 
   </div>
 </template>
@@ -13,6 +13,12 @@ export default {
   name: 'Home',
   components: {
   DraftInfo
+  },
+  
+  computed: {
+  drafts() {
+  return this.$store.state.draft;
+  },
   },
 
   beforeMount(){
