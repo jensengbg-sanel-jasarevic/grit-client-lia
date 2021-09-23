@@ -1,15 +1,19 @@
 <template>
-  <div>
-    <div id="order-img"></div>
+  <div>    
 
-    <span class="bold">ID: </span>
-    <span> {{ order.id }} </span>
-    <span class="bold">message: </span>
-    <span>{{ order.message }} </span>
-    <span class="bold">created at: </span>
-    <span>{{ order.created_at }} </span>
-    <span class="bold">updated at: </span>
-    <span>{{ order.updated_at }}</span>
+    <div class="order-wrapper" @click="displayImage">
+      <span class="bold">Order ID: </span>
+      <span> {{ order.id }} </span>
+      <span class="bold">Message: </span>
+      <span>{{ order.message }} </span>
+      <span class="bold">Created at: </span>
+      <span>{{ order.created_at }} </span>
+      <p class="show-more">Show more</p>
+      
+      <div :id="order.id"></div>
+
+    </div>
+
   </div>
 </template>
 
@@ -18,7 +22,13 @@ export default {
   name: 'OrdersList',
 
   props: {
-      order: Object
+    order: Object
+  },
+
+  methods: {
+  displayImage(){
+  this.$store.dispatch("getOrderImage", this.order);  
+  },
   },
 
 }
@@ -34,5 +44,19 @@ span {
 }
 .changes {
   color: red;
+}
+.show-more {
+  margin: 1%;
+}
+.order-wrapper {
+  margin-left: 1%;
+  margin-right: 1%;
+  margin-bottom: 1%;
+  border: none;
+  border-radius: 5px;
+  background-color: #777;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
 }
 </style>

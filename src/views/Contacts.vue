@@ -1,5 +1,5 @@
 <template>
-  <div class="contacts">   
+  <div class="wrapper-contacts">   
     <div class="left">
         <h1>Mailbox</h1>
         <InboxContacts v-for="msg in inbox" :key="msg.created_at" :msg="msg" />
@@ -12,6 +12,7 @@
           <button type="submit">Submit</button>   
         </form>
         <h1>Orders from client</h1>
+        <p>Click <b>'Show more'</b> to display draft image for each order.</p>
         <OrdersList 
         v-for="order in orders" :key="order.id" :order="order" />
     </div>
@@ -33,7 +34,6 @@ export default {
   beforeMount(){
   this.$store.dispatch('getInboxContacts')
   this.$store.dispatch("getOrders");
-  this.$store.dispatch("getOrderImage", { filename: this.orders.filename[1] });  
   },
 
   methods: {
@@ -55,6 +55,17 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.wrapper-contacts {
+  margin-left: 5%;
+  margin-right: 5%;
+  display: grid;
+  grid-template-columns: 30% 70%;
+  min-height: 500px;
+  background-color: #F1F1F1;;
+}
+h1, p {
+  color: #2c3e50;
+}
 label {
   cursor: pointer;
   border-radius: 5px;
@@ -66,12 +77,9 @@ input[type="file"] {
   width: 0;
   height: 0;
 }
-.contacts {
-  display: grid;
-  grid-template-columns: 30% 70%;
-}
 button {
   margin-left: 1%;
+  margin-top: 1%;
   margin-bottom: 1%;
   border: none;
   border-radius: 5px;
@@ -79,9 +87,6 @@ button {
   padding: 10px;
   color: white;
   cursor: pointer;
-}
-.deleteBtn {
-  background-color: #d11a2a;
 }
 .updateSketches > input {
   margin: 5px;

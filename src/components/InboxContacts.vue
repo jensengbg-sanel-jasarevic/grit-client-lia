@@ -71,6 +71,9 @@ textarea{
   box-shadow: none;
   resize: none;    
 }
+h4, p {
+  color: #2c3e50;
+}
 h4 {
   margin: 0;
 }
