@@ -57,7 +57,7 @@ export default {
       },
 
     postOrder(){
-    this.$store.dispatch('postOrder', this.draft.id)
+    this.$store.dispatch('postOrder', { id: this.draft.id, filename: this.draft.filename } )
     this.disableApproveBtn = true;
     this.approveBtnText = "Skiss godkänd"
    }

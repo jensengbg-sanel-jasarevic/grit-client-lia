@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     // http://localhost:5000
     // https://nodeserver-100.herokuapp.com
-    API_URL: "https://nodeserver-100.herokuapp.com",
+    API_URL: "http://localhost:5000",
     draft: {},
     orders: [],
     inboxContacts: [],
@@ -39,7 +39,6 @@ export default new Vuex.Store({
     },
     async getDraftImage(ctx){
       let fileName = JSON.parse(localStorage.getItem("name"))
-
       // Template strings with dynamic segment in route.
       let resp = await axios.get(`${ctx.state.API_URL}/api/storage/space/${fileName}`); // ContentType that we get back is a 'application/octet-stream', it's binary data. 
       
@@ -59,14 +58,36 @@ export default new Vuex.Store({
       img.alt = fileName; 
       img.style.maxWidth = "90%";
     },
+    async getOrderImage(ctx, payload){
+      console.log(payload)
+      let fileName = JSON.parse(localStorage.getItem("name"))
+      // Template strings with dynamic segment in route.
+      let resp = await axios.get(`${ctx.state.API_URL}/api/storage/space/${fileName}`); // ContentType that we get back is a 'application/octet-stream', it's binary data. 
+      
+      let bufferData = resp.data.Body.data // ArrayBuffer of binary data of image.  
+
+      // Passing encoding type Base64, algorithm that converts binary data into a ASCII string.
+      const imageData = new Buffer.from(bufferData).toString("base64") // This string now contains image data that is encoded with Base64.
+      // Display image by using <img> tag in HTML. The 'src' attribute should contain Data URL of image. 
+
+      let imageDataURL = `data:image/png;base64,${imageData}` 
+      // Data URLs are composed of four parts: a prefix (data:), a MIME type indicating the type of data, an optional base64 token if non-textual, and the data itself.
+
+      const imageGrid = document.getElementById('order-img')
+      const img = document.createElement('img');
+      imageGrid.appendChild(img);
+      img.src = imageDataURL;
+      img.alt = fileName; 
+      img.style.maxWidth = "90%";
+    },
     async postDraft(ctx, payload){
       localStorage.setItem("name", JSON.stringify(payload.name))
       let formData = new FormData();
       formData.append("image", payload); // Construct key/value pairs from form.
       await axios.post(`${ctx.state.API_URL}/api/storage`, formData); 
     },
-    async postOrder(ctx, id) {
-      let resp = await axios.post(`${ctx.state.API_URL}/api/orders/${id}`);
+    async postOrder(ctx, payload) {
+      let resp = await axios.post(`${ctx.state.API_URL}/api/orders/`, payload);
       console.log(resp) 
     },
     async postMsgToClient(ctx, message) {

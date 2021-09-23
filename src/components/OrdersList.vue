@@ -1,5 +1,7 @@
 <template>
   <div>
+    <div id="order-img"></div>
+
     <span class="bold">ID: </span>
     <span> {{ order.id }} </span>
     <span class="bold">message: </span>

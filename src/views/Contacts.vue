@@ -32,7 +32,8 @@ export default {
 
   beforeMount(){
   this.$store.dispatch('getInboxContacts')
-  this.$store.dispatch("getOrders"); 
+  this.$store.dispatch("getOrders");
+  this.$store.dispatch("getOrderImage", { filename: this.orders.filename[1] });  
   },
 
   methods: {
