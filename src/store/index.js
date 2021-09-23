@@ -59,8 +59,6 @@ export default new Vuex.Store({
       img.style.maxWidth = "90%";
     },
     async getOrderImage(ctx, payload){
-      //let fileName = JSON.parse(localStorage.getItem("name"))
-
       // Template strings with dynamic segment in route.
       let resp = await axios.get(`${ctx.state.API_URL}/api/storage/space/${payload.filename}`); // ContentType that we get back is a 'application/octet-stream', it's binary data. 
       

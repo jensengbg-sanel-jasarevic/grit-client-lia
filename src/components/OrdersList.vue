@@ -1,17 +1,16 @@
 <template>
   <div>    
 
-    <div class="order-wrapper" @click="displayImage">
-      <span class="bold">Order ID: </span>
-      <span> {{ order.id }} </span>
+    <div class="order-wrapper">
+      <span class="bold">| Order ID: </span>
+      <span> {{ order.id }} | </span>
       <span class="bold">Message: </span>
-      <span>{{ order.message }} </span>
-      <span class="bold">Created at: </span>
-      <span>{{ order.created_at }} </span>
-      <p class="show-more">Show more</p>
+      <span>{{ order.message }} | </span>
+      <span class="bold">Created At: </span>
+      <span>{{ order.created_at }} |</span>
+      <p class="show-more" @click="displayImage">Show more</p>
       
       <div :id="order.id"></div>
-
     </div>
 
   </div>
@@ -47,6 +46,7 @@ span {
 }
 .show-more {
   margin: 1%;
+  cursor: pointer;
 }
 .order-wrapper {
   margin-left: 1%;
@@ -57,6 +57,5 @@ span {
   background-color: #777;
   padding: 10px;
   color: white;
-  cursor: pointer;
 }
 </style>

@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/">Home </router-link> 
       <router-link to="/mailbox">| Mailbox |</router-link>       
-      <router-link to="/contacts"> Contacts(Admin)</router-link> 
+      <router-link to="/contacts"> Contacts (Admin)</router-link> 
     </div>
     <router-view/>
   </div>

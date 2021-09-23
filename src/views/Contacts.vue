@@ -67,6 +67,7 @@ h1, p {
   color: #2c3e50;
 }
 label {
+  margin-top: 1%;
   cursor: pointer;
   border-radius: 5px;
   padding: 10px;
