@@ -10,7 +10,7 @@
             <input type="file" id="file-uploader" accept=".jpg, .png"> 
           </label>
           <button id="submit-img-btn" type="submit">Lämna in bild</button>  
-          <p class="uploaded-img-text"  v-if="btnSubmitted">Bilduppladdning klar. <a href="http://localhost:8080/">Klicka här</a> för att se senaste uppladdningen.</p> 
+          <p class="uploaded-img-text"  v-if="btnSubmitted">Bilduppladdning klar. <a href="https://nodeserver-100.herokuapp.com">Klicka här</a> för att se senaste uppladdningen.</p> 
         </form>
         <h1>Kundens ordrar</h1>
         <p>Klicka på <b>"Visa mer"</b> för att se skissbilden för en viss order.</p>
