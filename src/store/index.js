@@ -88,6 +88,7 @@ export default new Vuex.Store({
       await axios.post(`${ctx.state.API_URL}/api/storage`, formData); 
     },
     async postOrder(ctx, payload) {
+      console.log(payload)
       let resp = await axios.post(`${ctx.state.API_URL}/api/orders/`, payload);
       console.log(resp) 
     },

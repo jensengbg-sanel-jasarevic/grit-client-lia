@@ -21,7 +21,7 @@ export default {
   
   computed: {
   drafts() {
-  return this.$store.state.drafts;
+  return this.$store.state.draft;
   },
   orders() {
   return this.$store.state.orders;
