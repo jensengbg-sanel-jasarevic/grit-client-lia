@@ -1,18 +1,19 @@
 <template>
   <div class="wrapper-contacts">   
     <div class="left">
-        <h1>Mailbox</h1>
+        <h1>Mailbox contacts</h1>
         <InboxContacts v-for="msg in inbox" :key="msg.created_at" :msg="msg" />
     </div>
     <div class="right">
-        <form @submit="postDraft" enctype="multipart/form-data">
+        <form @submit.prevent="postDraft" enctype="multipart/form-data">
           <label for="file-uploader">Bläddra
             <input type="file" id="file-uploader" accept=".jpg, .png"> 
           </label>
-          <button type="submit">Lämna in bild</button>   
+          <button id="submit-img-btn" type="submit">Lämna in bild</button>  
+          <p class="uploaded-img-text"  v-if="btnSubmitted">Bilduppladdning klar. <a href="http://localhost:8080/">Klicka här</a> för att se senaste uppladdningen.</p> 
         </form>
-        <h1>Kundens order</h1>
-        <p>Klicka på <b>"Visa mer"</b> för att se skissbilden för en viss beställning.</p>
+        <h1>Kundens ordrar</h1>
+        <p>Klicka på <b>"Visa mer"</b> för att se skissbilden för en viss order.</p>
         <OrdersList 
         v-for="order in orders" :key="order.id" :order="order" />
     </div>
@@ -31,6 +32,12 @@ export default {
   InboxContacts
   },
 
+ data() {
+    return {
+    btnSubmitted: false
+    }
+  },
+
   beforeMount(){
   this.$store.dispatch('getInboxContacts')
   this.$store.dispatch("getOrders");
@@ -39,6 +46,7 @@ export default {
   methods: {
   postDraft(e){
   this.$store.dispatch('postDraft', e.target[0].files[0])
+  this.btnSubmitted = true
   }
   },
 
@@ -66,6 +74,16 @@ export default {
 h1, p {
   color: #2c3e50;
 }
+a{
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1.3em;
+  color:#ff9800; 
+}
+.uploaded-img-text{
+  font-weight: bold;
+  color: #42b983;
+}
 label {
   margin-top: 1%;
   cursor: pointer;
@@ -91,5 +109,11 @@ button {
 }
 .updateSketches > input {
   margin: 5px;
+}
+
+@media(max-width: 900px) {
+    .wrapper-contacts{
+        grid-template-columns: 1fr;
+    }
 }
 </style>

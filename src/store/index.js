@@ -34,7 +34,7 @@ export default new Vuex.Store({
     },
     async getDraft(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/drafts`);
-      ctx.commit('setDrafts', resp.data)
+      ctx.commit('setDrafts', resp.data.reverse()) // Display latest added item by using Array method 'reverse()'.
     },
     async getOrders(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/orders`);
@@ -54,7 +54,6 @@ export default new Vuex.Store({
       // Data URLs are composed of four parts: a prefix (data:), a MIME type indicating the type of data, an optional base64 token if non-textual, and the data itself.
 
       const imageGrid = document.getElementById(`${payload.id}`)
-      console.log("fff", imageGrid)
       const img = document.createElement('img');
       imageGrid.appendChild(img);
       img.src = imageDataURL;
@@ -82,13 +81,11 @@ export default new Vuex.Store({
       img.style.maxWidth = "90%";
     },
     async postDraft(ctx, payload){
-      localStorage.setItem("name", JSON.stringify(payload.name))
       let formData = new FormData();
       formData.append("image", payload); // Construct key/value pairs from form.
       await axios.post(`${ctx.state.API_URL}/api/storage`, formData); 
     },
     async postOrder(ctx, payload) {
-      console.log(payload)
       let resp = await axios.post(`${ctx.state.API_URL}/api/orders/`, payload);
       console.log(resp) 
     },

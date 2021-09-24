@@ -1,6 +1,6 @@
 <template>
   <div v-if="msg.messages" class="inbox-contacts">
-    <h4>Client message for object with id {{ msg.messagesId }}:</h4>
+    <h4>Kommentar från kund för skiss-ID #{{ msg.messagesId }}:</h4>
     <p>{{ msg.messages }}</p>
 
     <form @submit.prevent="postMessage">
@@ -8,7 +8,7 @@
         <textarea id="contacts-msg" v-model="contactsMessage" rows="2" />
       </label>
       <br>
-      <button type="submit">Send</button>
+      <button type="submit">Skicka</button>
     </form>
   </div>
 </template>
@@ -45,6 +45,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.inbox-contacts {
+  border-bottom: 1px solid #292929;
+  margin-bottom: 5%;
+}
 button {
   margin-left: 1%;
   margin-bottom: 1%;

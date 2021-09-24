@@ -1,13 +1,13 @@
 <template>
   <div>
-      <h4>Contacts response to message with object id {{msg.messagesId}}:</h4>
+      <h4>Svar från Contacts för skiss-ID #{{msg.messagesId}}:</h4>
       <p>{{ msg.messages }}</p>
     <form @submit.prevent="postMessage">
       <label for="client-msg">
         <textarea id="client-msg" v-model="clientMessage" rows="2" />
       </label>
       <br>
-      <button type="submit">Send</button>
+      <button type="submit">Skicka</button>
     </form>
   </div>
 </template>

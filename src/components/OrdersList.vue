@@ -9,7 +9,6 @@
       <span class="bold">Created At: </span>
       <span>{{ order.created_at }} |</span>
       <button class="show-more" @click="displayImage">{{ displayImageBtnText }}</button>
-      
       <div :id="order.id"></div>
     </div>
 
@@ -55,7 +54,8 @@ span {
 }
 .show-more {
   all: unset;
-  margin: 1%;
+  display: block;
+  margin: 0 auto;
   cursor: pointer;
   font-weight: bold;
   font-size: 25px;

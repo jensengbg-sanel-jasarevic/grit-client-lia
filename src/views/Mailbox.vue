@@ -1,6 +1,6 @@
 <template>
   <div class="mailbox">
-    <h1>Mailbox</h1>
+    <h1>Mailbox kund</h1>
       <Inbox v-for="msg in inboxClient" :key="msg.id" :msg="msg" />
   </div>
 </template>
