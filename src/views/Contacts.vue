@@ -13,7 +13,7 @@
           <p class="uploaded-img-text"  v-if="btnSubmitted">Bilduppladdning klar. <a href="https://vueclient-100.herokuapp.com/">Klicka här</a> för att se senaste uppladdningen.</p> 
         </form>
         <h1>Kundens ordrar</h1>
-        <p>Klicka på <b>"Visa mer"</b> för att se skissbilden för en viss order.</p>
+        <p>Klicka på <b>"Visa mer"</b> för att se skissbild för en viss order.</p>
         <OrdersList 
         v-for="order in orders" :key="order.id" :order="order" />
     </div>
