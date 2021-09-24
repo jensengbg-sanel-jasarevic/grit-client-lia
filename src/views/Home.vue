@@ -23,7 +23,6 @@ export default {
 
   beforeMount(){
   this.$store.dispatch("getDraft"); 
-  this.$store.dispatch("getDraftImage"); 
   },
   
 }

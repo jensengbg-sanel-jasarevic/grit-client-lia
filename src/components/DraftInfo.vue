@@ -5,8 +5,9 @@
 
     <div class="disapprove-comments">
       <h3>Skiss förslag</h3>
+      <button id="show-btn" @click="showImage" :disabled=" disableShowBtn">Visa</button>
 
-      <div id="draft-img"></div>
+      <div :id="draft.id"></div>
 
       <span class="bold">ID: </span>
       <span> {{ draft.id }} </span>
@@ -39,6 +40,7 @@ export default {
     return {
     textareaInput: "",
     textareaDisabled: false,
+    disableShowBtn: false,
     disableApproveBtn: false,
     disableDisapproveBtn: false,
     approveBtnText: "Godkänn",
@@ -48,6 +50,11 @@ export default {
   },
 
   methods: {
+    showImage() {
+    this.$store.dispatch("getDraftImage", this.draft); 
+    this.disableShowBtn = true;
+    },
+
     postMsgToContacts() {
     const clientMsg = {
       text: this.textareaInput,
@@ -94,6 +101,16 @@ h3 {
   grid-template-areas: "left right";
   min-height: 500px;
   background-color: #F1F1F1;
+}
+#show-btn {
+  margin-top: 1%;
+  margin-bottom: 1%;
+  border: none;
+  border-radius: 5px;
+  background-color: #42b983;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
 }
 #approve-btn {
   grid-area: right;
