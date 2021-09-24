@@ -8,7 +8,7 @@
       <span>{{ order.message }} | </span>
       <span class="bold">Created At: </span>
       <span>{{ order.created_at }} |</span>
-      <p class="show-more" @click="displayImage">Show more</p>
+      <button class="show-more" @click="displayImage">{{ displayImageBtnText }}</button>
       
       <div :id="order.id"></div>
     </div>
@@ -24,9 +24,18 @@ export default {
     order: Object
   },
 
+data() {
+    return {
+    disableDisplayImageBtn: false,
+    displayImageBtnText: "Visa mer",
+    };
+  },
+
   methods: {
   displayImage(){
-  this.$store.dispatch("getOrderImage", this.order);  
+  this.$store.dispatch("getOrderImage", this.order);
+  this.disableDisplayImageBtn = true;  
+  setTimeout( () => {   this.displayImageBtnText = "" }, 1000)
   },
   },
 
@@ -45,8 +54,11 @@ span {
   color: red;
 }
 .show-more {
+  all: unset;
   margin: 1%;
   cursor: pointer;
+  font-weight: bold;
+  font-size: 25px;
 }
 .order-wrapper {
   margin-left: 1%;

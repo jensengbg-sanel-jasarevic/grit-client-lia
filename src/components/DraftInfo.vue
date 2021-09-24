@@ -4,19 +4,12 @@
     <button id="approve-btn" @click="postOrder" :disabled="disableApproveBtn">{{ approveBtnText }}</button>
 
     <div class="disapprove-comments">
-      <h3>Skiss förslag</h3>
-      <button id="show-btn" @click="showImage" :disabled=" disableShowBtn">Visa</button>
-
+      <h3>Skiss-ID #{{draft.id}}</h3>
       <div :id="draft.id"></div>
 
-      <span class="bold">ID: </span>
-      <span> {{ draft.id }} </span>
-      <span class="bold">message: </span>
-      <span>{{ draft.message }} </span>
-      <span class="bold">created at: </span>
-      <span>{{ draft.created_at }} </span>
-      <span class="bold">updated at: </span>
-      <span>{{ draft.updated_at }}</span>
+      <span><b>ID:</b> {{ draft.id }}</span>
+      <span><b>message:</b> {{ draft.message }}</span>
+      <span><b>created at:</b> {{ draft.created_at }}</span>
 
       <button id="disapprove-btn" @click.prevent="postMsgToContacts" :disabled="disableDisapproveBtn">{{ disapproveBtnText }}</button>
 
@@ -36,11 +29,16 @@ export default {
     draft: Object
   },
 
+  mounted() {
+    this.$nextTick(function () {
+        this.$store.dispatch("getDraftImage", this.draft); 
+    })
+  },
+
  data() {
     return {
     textareaInput: "",
     textareaDisabled: false,
-    disableShowBtn: false,
     disableApproveBtn: false,
     disableDisapproveBtn: false,
     approveBtnText: "Godkänn",
@@ -50,11 +48,6 @@ export default {
   },
 
   methods: {
-    showImage() {
-    this.$store.dispatch("getDraftImage", this.draft); 
-    this.disableShowBtn = true;
-    },
-
     postMsgToContacts() {
     const clientMsg = {
       text: this.textareaInput,
@@ -65,7 +58,7 @@ export default {
     this.textareaDisabled = true;
     this.disableDisapproveBtn = true;
     this.disapproveBtnText = "Skiss underkänd"
-    setTimeout( () => { this.$store.dispatch("getDraft") }, 1500)
+    setTimeout( () => { this.$store.dispatch("getDraft") }, 1000)
     },
 
     postOrder(){
@@ -73,7 +66,7 @@ export default {
     this.$store.dispatch("removeDraft", this.draft.id);
     this.disableApproveBtn = true;
     this.approveBtnText = "Skiss godkänd"
-    setTimeout( () => { this.$store.dispatch("getDraft") }, 1500)
+    setTimeout( () => { this.$store.dispatch("getDraft") }, 1000)
    }
   }
   
@@ -87,9 +80,6 @@ span {
   font-size: 0.8em;
   margin-top: 1%;
 }
-.bold {
-  font-weight: bold;
-}
 h3 {
     color: #2c3e50;
 }
@@ -101,16 +91,7 @@ h3 {
   grid-template-areas: "left right";
   min-height: 500px;
   background-color: #F1F1F1;
-}
-#show-btn {
-  margin-top: 1%;
-  margin-bottom: 1%;
-  border: none;
-  border-radius: 5px;
-  background-color: #42b983;
-  padding: 10px;
-  color: white;
-  cursor: pointer;
+  border-bottom: 1px solid #292929;
 }
 #approve-btn {
   grid-area: right;
@@ -159,5 +140,6 @@ textarea {
 }
 #comments {
   max-width: 150px;
+  margin-bottom: 10%;
 }
 </style>

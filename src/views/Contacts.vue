@@ -5,14 +5,14 @@
         <InboxContacts v-for="msg in inbox" :key="msg.created_at" :msg="msg" />
     </div>
     <div class="right">
-        <form @submit.prevent="postDraft" enctype="multipart/form-data">
-          <label for="file-uploader">Browse images
+        <form @submit="postDraft" enctype="multipart/form-data">
+          <label for="file-uploader">Bläddra
             <input type="file" id="file-uploader" accept=".jpg, .png"> 
           </label>
-          <button type="submit">Submit</button>   
+          <button type="submit">Lämna in bild</button>   
         </form>
-        <h1>Orders from client</h1>
-        <p>Click <b>'Show more'</b> to display draft image for specific order.</p>
+        <h1>Kundens order</h1>
+        <p>Klicka på <b>"Visa mer"</b> för att se skissbilden för en viss beställning.</p>
         <OrdersList 
         v-for="order in orders" :key="order.id" :order="order" />
     </div>

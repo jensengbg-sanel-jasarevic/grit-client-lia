@@ -54,6 +54,7 @@ export default new Vuex.Store({
       // Data URLs are composed of four parts: a prefix (data:), a MIME type indicating the type of data, an optional base64 token if non-textual, and the data itself.
 
       const imageGrid = document.getElementById(`${payload.id}`)
+      console.log("fff", imageGrid)
       const img = document.createElement('img');
       imageGrid.appendChild(img);
       img.src = imageDataURL;

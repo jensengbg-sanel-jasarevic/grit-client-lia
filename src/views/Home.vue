@@ -15,16 +15,16 @@ export default {
   DraftInfo
   },
   
-  computed: {
-  drafts() {
-  return this.$store.state.draft;
-  },
-  },
-
   beforeMount(){
   this.$store.dispatch("getDraft"); 
   },
   
+  computed: {
+  drafts() {
+  return this.$store.state.draft;
+  },
+  }
+
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
