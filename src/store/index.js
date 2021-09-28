@@ -112,11 +112,11 @@ export default new Vuex.Store({
     },
     async getInboxClient(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/mailbox/client`);
-      ctx.commit('setInboxClient', resp.data)
+      ctx.commit('setInboxClient', resp.data.reverse())
     },
     async getInboxContacts(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/mailbox/contacts`);
-      ctx.commit('setInboxContacts', resp.data)
+      ctx.commit('setInboxContacts', resp.data.reverse())
     }
   },
   modules: {
