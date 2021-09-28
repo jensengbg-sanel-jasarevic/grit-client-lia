@@ -18,7 +18,7 @@ export default {
  data() {
     return {
     btnSubmitted: false,
-    uploadFileText: "Ingen bildfil vald."
+    uploadFileText: "Ingen bildfil för uppladdning vald."
     }
   },
 
