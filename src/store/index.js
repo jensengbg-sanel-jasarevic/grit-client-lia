@@ -28,8 +28,8 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async removeDraft(ctx, id){
-      let resp = await axios.delete(`${ctx.state.API_URL}/api/drafts/${id}`);
+    async removeDraft(ctx, payload){
+      let resp = await axios.delete(`${ctx.state.API_URL}/api/drafts`, { data: {filename: payload.filename, id: payload.id} } );
       console.log(resp)
     },
     async getDraft(ctx){
@@ -40,28 +40,24 @@ export default new Vuex.Store({
       let resp = await axios.get(`${ctx.state.API_URL}/api/orders`);
       ctx.commit('setOrders', resp.data)
     },
-    async getDraftImage(ctx, payload){
-      // Template strings with dynamic segment in route.
+    async getInboxImage(ctx, payload){
       let resp = await axios.get(`${ctx.state.API_URL}/api/storage/space/${payload.filename}`); // ContentType that we get back is a 'application/octet-stream', it's binary data. 
       
-      let bufferData = resp.data.Body.data // ArrayBuffer of binary data of image.  
+      let bufferData = resp.data.Body.data  
 
-      // Passing encoding type Base64, algorithm that converts binary data into a ASCII string.
-      const imageData = new Buffer.from(bufferData).toString("base64") // This string now contains image data that is encoded with Base64.
-      // Display image by using <img> tag in HTML. The 'src' attribute should contain Data URL of image. 
+      const imageData = new Buffer.from(bufferData).toString("base64")
 
       let imageDataURL = `data:image/png;base64,${imageData}` 
-      // Data URLs are composed of four parts: a prefix (data:), a MIME type indicating the type of data, an optional base64 token if non-textual, and the data itself.
 
-      const imageGrid = document.getElementById(`${payload.id}`)
+      const imageGrid = document.getElementById(`inbox${payload.id}`)
       const img = document.createElement('img');
       imageGrid.appendChild(img);
       img.src = imageDataURL;
       img.alt = payload.filename; 
       img.style.maxWidth = "90%";
     },
-    async getOrderImage(ctx, payload){
-      // Template strings with dynamic segment in route.
+    async getImage(ctx, payload){
+      // Template strings with dynamic segment in URL route.
       let resp = await axios.get(`${ctx.state.API_URL}/api/storage/space/${payload.filename}`); // ContentType that we get back is a 'application/octet-stream', it's binary data. 
       
       let bufferData = resp.data.Body.data // ArrayBuffer of binary data of image.  
@@ -90,11 +86,11 @@ export default new Vuex.Store({
       console.log(resp) 
     },
     async postMsgToClient(ctx, message) {
-      let resp = await axios.post(`${ctx.state.API_URL}/api/mailbox/client`, { text: message.text, textId: message.textId });
+      let resp = await axios.post(`${ctx.state.API_URL}/api/mailbox/client`, { text: message.text, textId: message.textId, filename: message.filename });
       console.log(resp) 
     },
     async postMsgToContacts(ctx, message) {
-      let resp = await axios.post(`${ctx.state.API_URL}/api/mailbox/contacts`, { text: message.text, textId: message.textId });
+      let resp = await axios.post(`${ctx.state.API_URL}/api/mailbox/contacts`, { text: message.text, textId: message.textId, filename: message.filename });
       console.log(resp) 
     },
     async getInboxClient(ctx){

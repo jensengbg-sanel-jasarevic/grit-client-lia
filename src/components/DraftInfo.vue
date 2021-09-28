@@ -31,7 +31,7 @@ export default {
 
   mounted() {
     this.$nextTick(function () {
-        this.$store.dispatch("getDraftImage", this.draft); 
+        this.$store.dispatch("getImage", this.draft); 
     })
   },
 
@@ -52,9 +52,10 @@ export default {
     const clientMsg = {
       text: this.textareaInput,
       textId: this.draft.id,
+      filename: document.getElementById(this.draft.id).getElementsByTagName('img')[0].alt
     };      
     this.$store.dispatch("postMsgToContacts", clientMsg);
-    this.$store.dispatch("removeDraft", this.draft.id);
+    this.$store.dispatch("removeDraft", this.draft);
     this.textareaDisabled = true;
     this.disableDisapproveBtn = true;
     this.disapproveBtnText = "Skiss underkänd"
@@ -63,7 +64,7 @@ export default {
 
     postOrder(){
     this.$store.dispatch('postOrder', { id: this.draft.id, filename: this.draft.filename } )
-    this.$store.dispatch("removeDraft", this.draft.id);
+    this.$store.dispatch("removeDraft", this.draft);
     this.disableApproveBtn = true;
     this.approveBtnText = "Skiss godkänd"
     setTimeout( () => { this.$store.dispatch("getDraft") }, 1000)

@@ -1,7 +1,8 @@
 <template>
   <div v-if="msg.messages" class="inbox-contacts">
-    <h4>Kommentar från kund för skiss-ID #{{ msg.messagesId }}:</h4>
-    <p>{{ msg.messages }}</p>
+    <h4><span :id="`btn${msg.id}`" @click="getInboxImage">Visa</span> skiss-ID #{{ msg.messagesId }}</h4>
+    <div :id="`inbox${msg.id}`"></div>
+    <p>Kommentar: {{ msg.messages }}</p>
 
     <form @submit.prevent="postMessage">
       <label for="contacts-msg">
@@ -29,10 +30,15 @@ export default {
   },
 
   methods: {
+    getInboxImage() {
+    this.$store.dispatch("getInboxImage", { filename: this.msg.filename, id: this.msg.id })
+    document.getElementById(`btn${this.msg.id}`).remove()
+    },
     async postMessage() {
       const message = {
         text: this.contactsMessage,
-        textId: this.msg.messagesId
+        textId: this.msg.messagesId,
+        filename: this.msg.filename
       };      
       this.$store.dispatch("postMsgToClient", message);
       this.contactsMessage = ""
@@ -83,5 +89,8 @@ h4 {
 }
 p { 
   word-break: break-all; 
+  }
+span {
+  cursor: pointer;
   }
 </style>

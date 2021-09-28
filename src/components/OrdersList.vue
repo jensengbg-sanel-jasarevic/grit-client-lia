@@ -25,15 +25,13 @@ export default {
 
 data() {
     return {
-    disableDisplayImageBtn: false,
     displayImageBtnText: "Visa mer",
     };
   },
 
   methods: {
   displayImage(){
-  this.$store.dispatch("getOrderImage", this.order);
-  this.disableDisplayImageBtn = true;  
+  this.$store.dispatch("getImage", this.order);
   setTimeout( () => {   this.displayImageBtnText = "" }, 1000)
   },
   },

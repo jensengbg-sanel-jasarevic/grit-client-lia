@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home </router-link> 
-      <router-link to="/mailbox">| Mailbox |</router-link>       
+      <router-link to="/">Home (Client) </router-link> 
+      <router-link to="/mailbox">| Mailbox (Client) |</router-link>       
       <router-link to="/contacts"> Contacts (Admin)</router-link> 
     </div>
     <router-view/>
