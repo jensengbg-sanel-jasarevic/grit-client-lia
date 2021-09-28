@@ -2,9 +2,10 @@
   <div>
     <form @submit.prevent="postDraft" enctype="multipart/form-data">
         <label for="file-uploader">Bläddra
-        <input type="file" id="file-uploader" accept=".jpg, .png"> 
+        <input type="file" id="file-uploader" accept=".jpg, .png" @change="filesChange($event.target.name, $event.target.files)"> 
         </label>
         <button id="submit-img-btn" type="submit">Lämna in bild</button>  
+        <p id="upload-file-txt">{{ uploadFileText }}</p>
         <p class="uploaded-img-text"  v-if="btnSubmitted">Bilduppladdning klar. <a href="https://vueclient-100.herokuapp.com/">Klicka här</a> för att se senaste uppladdningen.</p> 
     </form>
   </div>
@@ -16,11 +17,16 @@ export default {
 
  data() {
     return {
-    btnSubmitted: false
+    btnSubmitted: false,
+    uploadFileText: "Ingen bildfil vald"
     }
   },
 
   methods: {
+ filesChange(fieldName, fileList){
+  this.uploadFileText = fileList[0].name
+  document.getElementById("upload-file-txt").style.color = "#42b983";
+  },
   postDraft(e){
   this.$store.dispatch('postDraft', e.target[0].files[0])
   this.btnSubmitted = true
@@ -67,5 +73,9 @@ a{
   text-decoration: none;
   font-size: 1.3em;
   color:#ff9800; 
+}
+#upload-file-txt {
+  font-size: 0.8em;
+  color: #DC143C;
 }
 </style>
