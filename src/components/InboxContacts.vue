@@ -12,6 +12,7 @@
       </label>
       <br>
       <button class="submit-msg" type="submit">Skicka svar</button>
+      <p v-if="messageSent">Meddelande skickat.</p>
     </form>
   </div>
 </template>
@@ -29,6 +30,7 @@ export default {
     return {
     contactsMessage: "",
     disableShowImageMailbox: false,
+    messageSent: false,
     }
   },
 
@@ -49,6 +51,7 @@ export default {
       };      
       this.$store.dispatch("postMsgToClient", message);
       this.contactsMessage = ""
+      this.messageSent = true
       },
     
     },  
