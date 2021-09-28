@@ -59,7 +59,7 @@ export default {
     this.textareaDisabled = true;
     this.disableDisapproveBtn = true;
     this.disapproveBtnText = "Skiss underkänd"
-    setTimeout( () => { this.$store.dispatch("getDraft") }, 1000)
+    setTimeout( () => { this.$store.dispatch("getDraft") }, 1500)
     },
 
     postOrder(){
@@ -67,7 +67,7 @@ export default {
     this.$store.dispatch("removeDraft", this.draft);
     this.disableApproveBtn = true;
     this.approveBtnText = "Skiss godkänd"
-    setTimeout( () => { this.$store.dispatch("getDraft") }, 1000)
+    setTimeout( () => { this.$store.dispatch("getDraft") }, 1500)
    }
   }
   
