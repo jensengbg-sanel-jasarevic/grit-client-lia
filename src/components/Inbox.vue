@@ -1,13 +1,18 @@
 <template>
-  <div>
-      <h4>Svar från Contacts för skiss-ID #{{msg.messagesId}}:</h4>
-      <p>{{ msg.messages }}</p>
+  <div class="mail-client">
+      <p><b>Respons från:</b> Contacts</p>
+      <p><b>Angående: </b>  
+        <button @click="getImage" :disabled="disableShowImageMailbox" class="client-inbox-img-btn" :id="`btn-client-inbox${msg.id}`">skiss-ID #{{ msg.messagesId }}</button>
+      </p>
+      <div :id="`inbox-client-${msg.id}`"></div>
+      <p><b>Meddelande:</b></p>
+      <p class="inbox-client-font">{{ msg.messages }}</p>
     <form @submit.prevent="postMessage">
       <label for="client-msg">
         <textarea id="client-msg" v-model="clientMessage" rows="2" />
       </label>
       <br>
-      <button type="submit">Skicka</button>
+      <button type="submit" class="btn-submit-inbox-client">Skicka svar</button>
     </form>
   </div>
 </template>
@@ -22,11 +27,19 @@ export default {
 
   data() {
     return {
-    clientMessage: ""
+    clientMessage: "",
+    disableShowImageMailbox: false,
     }
   },
 
   methods: {
+    getImage() {
+    this.$store.dispatch("getInboxClientImage", { filename: this.msg.filename, id: this.msg.id })
+    this.disableShowImageMailbox = true
+    let btn =  document.getElementById(`btn-client-inbox-${this.msg.id}`)
+    btn.style.cursor = "initial";
+    btn.style.textDecoration = "initial";
+    },
     async postMessage() {
       const message = {
         text: this.clientMessage,
@@ -44,7 +57,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-button {
+.mail-client{
+  border-bottom: 1px solid white;
+}
+.btn-submit-inbox-client{
   margin-left: 1%;
   margin-bottom: 1%;
   border: none;
@@ -55,7 +71,7 @@ button {
   cursor: pointer;
 }
 textarea{
-  min-width: 15vw;
+  min-width: 20vw;
   margin : 0 auto;
   padding: 1.1em;
   border-radius: 8px;
@@ -72,5 +88,16 @@ textarea{
 }
 h4 {
   margin: 0;
+}
+button {
+  all: unset;
+}
+.client-inbox-img-btn{
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.8em;
+}
+.inbox-client-font{
+  font-size: 0.8em;
 }
 </style>

@@ -1,15 +1,17 @@
 <template>
   <div v-if="msg.messages" class="inbox-contacts">
-    <p><span :id="`btn${msg.id}`" @click="getInboxImage">Visa</span> skiss-ID #{{ msg.messagesId }}</p>
-    <div :id="`inbox${msg.id}`"></div>
-    <p>Kommentar: {{ msg.messages }}</p>
-
+    <p><b>Feedback angående: </b> 
+      <button @click="getImage" :disabled="disableShowImageMailbox" class="inbox-img-btn" :id="`btn${msg.id}`">skiss-ID #{{ msg.messagesId }}</button>
+    </p>
+    <div :id="`inbox-contacts-${msg.id}`"></div>
+    <p><b>Meddelande:</b></p>
+    <p class="inbox-contacts-font">{{ msg.messages }}</p>
     <form @submit.prevent="postMessage">
       <label for="contacts-msg">
         <textarea id="contacts-msg" v-model="contactsMessage" rows="2" />
       </label>
       <br>
-      <button type="submit">Skicka</button>
+      <button class="submit-msg" type="submit">Skicka svar</button>
     </form>
   </div>
 </template>
@@ -25,14 +27,19 @@ export default {
 
   data() {
     return {
-    contactsMessage: ""
+    contactsMessage: "",
+    disableShowImageMailbox: false,
     }
   },
 
   methods: {
-    getInboxImage() {
-    this.$store.dispatch("getInboxImage", { filename: this.msg.filename, id: this.msg.id })
-    document.getElementById(`btn${this.msg.id}`).remove()
+    getImage() {
+    this.$store.dispatch("getInboxContactsImage", { filename: this.msg.filename, id: this.msg.id })
+    this.disableShowImageMailbox = true
+    let btn =  document.getElementById(`btn${this.msg.id}`)
+    btn.style.color = "#2c3e50";
+    btn.style.cursor = "initial";
+    btn.style.textDecoration = "initial"
     },
     async postMessage() {
       const message = {
@@ -55,7 +62,7 @@ export default {
   border-bottom: 1px solid #292929;
   margin-bottom: 5%;
 }
-button {
+.submit-msg {
   margin-left: 1%;
   margin-bottom: 1%;
   border: none;
@@ -88,10 +95,17 @@ h4 {
   margin: 0;
 }
 p { 
-  word-break: break-all; 
+  word-break: break-all;
   }
-span {
+  button {
+   all: unset;
+}
+.inbox-img-btn {
+  text-decoration: underline;
+  color: #42b983;
   cursor: pointer;
-  font-weight: bolder;
-  }
+}
+.inbox-contacts-font{
+  font-size: 0.8em;
+}
 </style>

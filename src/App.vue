@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home (Client) </router-link> 
-      <router-link to="/mailbox">| Mailbox (Client) |</router-link>       
-      <router-link to="/contacts"> Contacts (Admin)</router-link> 
+      <router-link to="/">Home (client) </router-link> 
+      <router-link to="/mailbox">| Mailbox (client) |</router-link>       
+      <router-link to="/contacts"> Contacts (admin)</router-link> 
     </div>
     <router-view/>
   </div>

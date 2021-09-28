@@ -2,8 +2,8 @@
   <div class="wrapper-contacts">   
     <div class="left">
         <h1>Mailbox contacts</h1>
-        <p>Kommentarer från kund för skissar som blivit underkända.</p>
-        <p class="show-sketch-text"><b>Klicka på "Visa" för att se underkänd skissbild.</b></p>
+        <p>Kommentarer från kund för underkända skissar.</p>
+        <p class="show-sketch-text">Klicka på det specifika skiss-ID som finns tillgänglig under varje meddelanderuta för att se skissbild som underkänts.</p>
         <InboxContacts v-for="msg in inbox" :key="msg.created_at" :msg="msg" />
     </div>
     <div class="right">

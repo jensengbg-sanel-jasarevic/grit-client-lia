@@ -7,8 +7,9 @@
       <span class="bold">Message: </span>
       <span>{{ order.message }} | </span>
       <span class="bold">Created At: </span>
+
       <span>{{ order.created_at }} |</span>
-      <button class="show-more" @click="displayImage">{{ displayImageBtnText }}</button>
+      <button @click="displayImage" class="show-more" :id="`show-more-order-btn${order.id}`" :disabled="disableShowMoreBtn">{{ displayImageBtnText }}</button>
       <div :id="order.id"></div>
     </div>
 
@@ -26,13 +27,18 @@ export default {
 data() {
     return {
     displayImageBtnText: "Visa mer",
+    disableShowMoreBtn: false
     };
   },
 
   methods: {
   displayImage(){
-  this.$store.dispatch("getImage", this.order);
-  setTimeout( () => {   this.displayImageBtnText = "" }, 1000)
+  this.$store.dispatch("getOrderImage", this.order);
+  this.disableShowMoreBtn = true
+  setTimeout( () => {   this.displayImageBtnText = `Order-ID #${this.order.id}` }, 1000)
+  let btn =  document.getElementById(`show-more-order-btn${this.order.id}`)
+  btn.style.cursor = "initial";
+  btn.style.textDecoration = "initial"
   },
   },
 
@@ -47,9 +53,6 @@ span {
 .bold {
   font-weight: bold;
 }
-.changes {
-  color: red;
-}
 .show-more {
   all: unset;
   display: block;
@@ -57,6 +60,7 @@ span {
   cursor: pointer;
   font-weight: bold;
   font-size: 25px;
+  text-decoration: underline;
 }
 .order-wrapper {
   margin-left: 1%;
