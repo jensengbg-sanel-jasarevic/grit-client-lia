@@ -24,7 +24,7 @@ export default {
 
   methods: {
  filesChange(fieldName, fileList){
-  this.uploadFileText = `bildfil: ${fileList[0].name}. Klicka 'Lämna in bild' för att ladda upp filen.`
+  this.uploadFileText = `bildfil: ${fileList[0].name}. Klicka 'Lämna in bild' för uppladdning av fil.`
   document.getElementById("upload-file-txt").style.color = "#42b983";
   },
   postDraft(e){
