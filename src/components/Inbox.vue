@@ -61,7 +61,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .mail-client{
-  border-bottom: 1px solid white;
+    background-color: #F1F1F1; 
+    color: #2c3e50;
+    margin-left: 20%;
+    margin-right: 20%;
+    padding:1%;
+    border-bottom: 1px solid #1d1d1d;
 }
 .btn-submit-inbox-client{
   margin-left: 1%;
@@ -98,7 +103,6 @@ button {
 .client-inbox-img-btn{
   text-decoration: underline;
   cursor: pointer;
-  font-size: 0.8em;
 }
 .inbox-client-font{
   font-size: 0.8em;
