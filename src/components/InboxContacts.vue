@@ -1,6 +1,6 @@
 <template>
   <div v-if="msg.messages" class="inbox-contacts">
-    <h4><span :id="`btn${msg.id}`" @click="getInboxImage">Visa</span> skiss-ID #{{ msg.messagesId }}</h4>
+    <p><span :id="`btn${msg.id}`" @click="getInboxImage">Visa</span> skiss-ID #{{ msg.messagesId }}</p>
     <div :id="`inbox${msg.id}`"></div>
     <p>Kommentar: {{ msg.messages }}</p>
 
@@ -92,5 +92,6 @@ p {
   }
 span {
   cursor: pointer;
+  font-weight: bolder;
   }
 </style>

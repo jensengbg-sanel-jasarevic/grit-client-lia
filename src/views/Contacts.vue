@@ -3,7 +3,7 @@
     <div class="left">
         <h1>Mailbox contacts</h1>
         <p>Kommentarer från kund för skissar som blivit underkända.</p>
-        <p>Klicka på <b>"Visa"</b> för att se underkänd skissbild.</p>
+        <p class="show-sketch-text"><b>Klicka på "Visa" för att se underkänd skissbild.</b></p>
         <InboxContacts v-for="msg in inbox" :key="msg.created_at" :msg="msg" />
     </div>
     <div class="right">
@@ -64,6 +64,10 @@ export default {
 }
 h1, p {
   color: #2c3e50;
+}
+.show-sketch-text {
+    padding: 2%;
+    border-bottom: 1px solid #292929;
 }
 
 @media(max-width: 900px) {
