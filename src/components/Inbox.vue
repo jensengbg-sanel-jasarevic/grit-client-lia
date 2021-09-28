@@ -2,7 +2,7 @@
   <div class="mail-client">
       <p><b>Respons från:</b> Contacts</p>
       <p><b>Angående: </b>  
-        <button @click="getImage" :disabled="disableShowImageMailbox" class="client-inbox-img-btn" :id="`btn-client-inbox${msg.id}`">skiss-ID #{{ msg.messagesId }}</button>
+        <button @click="getImage" :disabled="disableShowImageMailbox" class="client-inbox-img-btn" :id="`btn-client-inbox-${msg.id}`">skiss-ID #{{ msg.messagesId }}</button>
       </p>
       <div :id="`inbox-client-${msg.id}`"></div>
       <p><b>Meddelande:</b></p>
