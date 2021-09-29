@@ -39,6 +39,7 @@ export default {
     this.$store.dispatch("getInboxClientImage", { filename: this.msg.filename, id: this.msg.id })
     this.disableShowImageMailbox = true
     let btn =  document.getElementById(`btn-client-inbox-${this.msg.id}`)
+    btn.style.color = "#2c3e50";
     btn.style.cursor = "initial";
     btn.style.textDecoration = "initial";
     },
@@ -102,6 +103,7 @@ button {
 }
 .client-inbox-img-btn{
   text-decoration: underline;
+  color: #42b983;
   cursor: pointer;
 }
 .inbox-client-font{
