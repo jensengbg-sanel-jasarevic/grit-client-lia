@@ -9,14 +9,14 @@ export default new Vuex.Store({
     // https://nodeserver-100.herokuapp.com
     
     API_URL: "https://nodeserver-100.herokuapp.com",
-    draft: [],
+    drafts: [],
     orders: [],
     inboxContacts: [],
     inboxClient: [],
   },
   mutations: {
     setDrafts(state, drafts){
-      state.draft = drafts;
+      state.drafts = drafts;
     },
     setOrders(state, orders){
       state.orders = orders;
@@ -29,12 +29,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async removeDraft(ctx, payload){
-      let resp = await axios.delete(`${ctx.state.API_URL}/api/drafts`, { data: {filename: payload.filename, id: payload.id} } );
-      console.log(resp)
-    },
-    async getDraft(ctx){
+    async getDrafts(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/drafts`);
+      console.log(resp)
       ctx.commit('setDrafts', resp.data.reverse()) // Display latest added item by using Array method 'reverse()'.
     },
     async getOrders(ctx){
@@ -93,10 +90,19 @@ export default new Vuex.Store({
       img.alt = payload.filename; 
       img.style.maxWidth = "90%";
     },
-    async postDraft(ctx, payload){
+    async removeDraft(ctx, payload){
+      let resp = await axios.delete(`${ctx.state.API_URL}/api/drafts`, { data: {filename: payload.filename, id: payload.id} } );
+      console.log(resp)
+    },
+    async postSketch(ctx, payload){
       let formData = new FormData();
       formData.append("image", payload); // Construct key/value pairs from form.
-      await axios.post(`${ctx.state.API_URL}/api/storage`, formData); 
+      let resp = await axios.post(`${ctx.state.API_URL}/api/sketches`, formData); 
+      console.log(resp) 
+    },
+    async postDraft(ctx, payload){
+     let resp = await axios.post(`${ctx.state.API_URL}/api/drafts`, { filename: payload } ); 
+     console.log(resp) 
     },
     async postOrder(ctx, payload) {
       let resp = await axios.post(`${ctx.state.API_URL}/api/orders/`, payload);

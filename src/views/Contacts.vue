@@ -7,7 +7,7 @@
         <InboxContacts v-for="msg in inbox" :key="msg.created_at" :msg="msg" />
     </div>
     <div class="right">
-        <UploadObject />
+        <UploadFile />
         <h1>Ordrar kund</h1>
         <p>Klicka på <b>"Visa mer"</b> för att se skissbild för en viss order.</p>
         <OrdersList 
@@ -19,7 +19,7 @@
 <script>
 import OrdersList from '@/components/OrdersList'
 import InboxContacts from '@/components/InboxContacts'
-import UploadObject from '@/components/UploadObject'
+import UploadFile from '@/components/UploadFile'
 
 export default {
   name: 'Contacts',
@@ -27,7 +27,7 @@ export default {
   components: {
   OrdersList,
   InboxContacts,
-  UploadObject
+  UploadFile
   },
 
  data() {

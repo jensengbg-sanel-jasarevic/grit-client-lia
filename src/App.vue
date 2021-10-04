@@ -14,14 +14,14 @@ export default {
   name: 'App',
 
   beforeMount(){
-  this.$store.dispatch('getDraft');
+  this.$store.dispatch('getDrafts');
   this.$store.dispatch('getOrders')
   this.$store.dispatch('getInboxClient')
   },
   
   computed: {
   drafts() {
-  return this.$store.state.draft;
+  return this.$store.state.drafts;
   },
   orders() {
   return this.$store.state.orders;

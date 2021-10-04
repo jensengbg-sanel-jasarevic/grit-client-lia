@@ -16,12 +16,12 @@ export default {
   },
   
   beforeMount(){
-  this.$store.dispatch("getDraft"); 
+  this.$store.dispatch("getDrafts"); 
   },
   
   computed: {
   drafts() {
-  return this.$store.state.draft;
+  return this.$store.state.drafts;
   },
   }
 
