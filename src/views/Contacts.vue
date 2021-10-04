@@ -9,7 +9,7 @@
     <div class="right">
         <UploadFile />
         <h1>Ordrar kund</h1>
-        <p>Klicka på <b>"Visa mer"</b> för att se godkänd skissförslag för en viss order.</p>
+        <p>Klicka på <b>"Visa mer"</b> för att se det godkända skissförslaget för en viss order.</p>
         <OrdersList 
         v-for="order in orders" :key="order.id" :order="order" />
     </div>
