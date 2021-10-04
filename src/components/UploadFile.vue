@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="upload-file-wrapper">
     <form @submit.prevent="uploadFile" enctype="multipart/form-data">
         <label for="file-uploader">Bläddra filer
         <input type="file" id="file-uploader" accept=".jpg, .png" @change="filesChange($event.target.name, $event.target.files); fileType = $event.target.files[0].type"> 
@@ -26,12 +26,12 @@ export default {
 
  data() {
     return {
-    draftUploadedText: false,
+    filenameInfo: "",
     uploadFileBtn: false,
-    sendDraftBtn: false,
     fileSelectedInfo: false,
     fileUploadedText: false,
-    filenameInfo: ""
+    sendDraftBtn: false,
+    draftUploadedText: false,
     }
   },
 
@@ -65,11 +65,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.upload-file-wrapper {
+  margin-top: 2%;
+}
 p {
   color: #2c3e50;
 }
 label {
-  margin-top: 1%;
   cursor: pointer;
   border-radius: 5px;
   padding: 10px;

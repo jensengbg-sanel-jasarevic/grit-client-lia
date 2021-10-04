@@ -1,7 +1,7 @@
 <template>
   <div v-if="msg.messages" class="inbox-contacts">
     <p><b>Feedback angående: </b> 
-      <button @click="getImage" :disabled="disableShowImageMailbox" class="inbox-img-btn" :id="`btn${msg.id}`">skiss-ID #{{ msg.messagesId }}</button>
+      <button @click="getImage" :disabled="disableShowImageMailbox" class="inbox-img-btn" :id="`btn${msg.id}`">draft-ID #{{ msg.messagesId }}</button>
     </p>
     <div :id="`inbox-contacts-${msg.id}`"></div>
     <p><b>Meddelande:</b></p>

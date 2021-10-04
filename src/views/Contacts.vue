@@ -2,14 +2,14 @@
   <div class="wrapper-contacts">   
     <div class="left">
         <h1>Mailbox contacts</h1>
-        <p>Kommentarer från kund för underkända skissar.</p>
-        <p class="show-sketch-text">Klicka på det specifika skiss-ID som finns tillgänglig under varje meddelanderuta för att se skissbild som underkänts.</p>
+        <p>Kommentarer från kund för underkända skissförslag.</p>
+        <p class="show-sketch-text">Klicka på det specifika draft-ID som finns tillgänglig under varje meddelanderuta för att se skissförslag som underkänts.</p>
         <InboxContacts v-for="msg in inbox" :key="msg.created_at" :msg="msg" />
     </div>
     <div class="right">
         <UploadFile />
         <h1>Ordrar kund</h1>
-        <p>Klicka på <b>"Visa mer"</b> för att se skissbild för en viss order.</p>
+        <p>Klicka på <b>"Visa mer"</b> för att se godkänd skissförslag för en viss order.</p>
         <OrdersList 
         v-for="order in orders" :key="order.id" :order="order" />
     </div>

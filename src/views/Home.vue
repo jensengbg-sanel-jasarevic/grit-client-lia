@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Draft</h1>
+    <h1>Drafts</h1>
     <DraftInfo v-for="draft in drafts" :key="draft.created_at" :draft="draft" />
     <br> 
   </div>

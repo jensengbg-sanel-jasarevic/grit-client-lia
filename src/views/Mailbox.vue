@@ -1,7 +1,7 @@
 <template>
   <div class="mailbox">
     <h1>Mailbox kund</h1>
-    <p>Klicka på det specifika skiss-ID som finns tillgänglig under varje meddelanderuta för att se bilden.</p>
+    <p>Klicka på det specifika draft-ID som finns tillgänglig under varje meddelanderuta för att öppna skissförslaget.</p>
       <Inbox v-for="msg in inboxClient" :key="msg.id" :msg="msg" />
   </div>
 </template>
