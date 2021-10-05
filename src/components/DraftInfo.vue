@@ -4,7 +4,7 @@
     <button id="approve-btn" @click="postOrder" :disabled="disableApproveBtn">{{ approveBtnText }}</button>
 
     <div class="disapprove-comments">
-      <h3>Skiss-ID #{{draft.id}}</h3>
+      <h3>Draft-ID #{{draft.id}}</h3>
       <div :id="draft.id"></div>
 
       <span><b>ID:</b> {{ draft.id }}</span>
