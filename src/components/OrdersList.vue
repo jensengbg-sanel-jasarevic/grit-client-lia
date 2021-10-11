@@ -3,7 +3,7 @@
 
     <div class="order-wrapper">
       <span class="bold">| Order ID: </span>
-      <span> {{ order.id }} | </span>
+      <span id="order-id"> {{ order.id }} | </span>
       <span class="bold">Message: </span>
       <span>{{ order.message }} | </span>
       <span class="bold">Created At: </span>

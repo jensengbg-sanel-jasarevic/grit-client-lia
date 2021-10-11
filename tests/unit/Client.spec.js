@@ -12,22 +12,22 @@ describe('Client.vue', () => {
 	let state;
   let actions;
 
-      beforeEach(() => {
-        state = {
-          drafts: [
-            { id: 1, filename: "image.png" }
-          ]
-        }
+  beforeEach(() => {
+		state = {
+			drafts: [
+        { id: 1, filename: "image.png" }
+      ]
+		}
 
-        actions = {
-          getDrafts: jest.fn(),
-        };
+    actions = {
+			getDrafts: jest.fn(),
+		};
 
-      store = new Vuex.Store({
-        state,
-        actions
-        })
+  store = new Vuex.Store({
+    state,
+    actions
     })
+})
 
   it('should when mounted dispatch action to Vuex store', () => {
     // Arrange

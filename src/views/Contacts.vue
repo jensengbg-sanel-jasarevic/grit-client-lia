@@ -20,12 +20,6 @@ export default {
   UploadFile
   },
 
- data() {
-    return {
-    btnSubmitted: false
-    }
-  },
-
   beforeMount(){
   this.$store.dispatch("getOrders");
   },
