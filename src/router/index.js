@@ -1,26 +1,32 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Client from '../views/Client.vue'
 import Contacts from '../views/Contacts.vue'
-import Mailbox from '../views/Mailbox.vue'
+import MailboxClient from '../views/MailboxClient.vue'
+import MailboxContacts from '../views/MailboxContacts.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Client',
+    component: Client
   },
   {
     path: '/contacts',
-    name: 'Contact',
+    name: 'Contacts',
     component: Contacts
   },
   {
-    path: '/mailbox',
-    name: 'Mailbox',
-    component: Mailbox
+    path: '/mailbox-client',
+    name: 'MailboxClient',
+    component: MailboxClient
+  },
+  {
+    path: '/mailbox-contacts',
+    name: 'MailboxContacts',
+    component: MailboxContacts
   }
 ]
 

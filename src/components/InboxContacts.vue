@@ -1,14 +1,16 @@
 <template>
   <div v-if="msg.messages" class="inbox-contacts">
-    <p><b>Feedback angående: </b> 
-      <button @click="getImage" :disabled="disableShowImageMailbox" class="inbox-img-btn" :id="`btn${msg.id}`">draft-ID #{{ msg.messagesId }}</button>
-    </p>
-    <div :id="`inbox-contacts-${msg.id}`"></div>
-    <p><b>Meddelande:</b></p>
-    <p class="inbox-contacts-font">{{ msg.messages }}</p>
+    <div>
+      <p><b>Feedback angående: </b> 
+        <button @click="getImage" :disabled="disableShowImageMailbox" class="inbox-img-btn" :id="`btn${msg.id}`">draft-ID #{{ msg.messagesId }}</button>
+      </p>
+      <div :id="`inbox-contacts-${msg.id}`"></div>
+      <p><b>Meddelande:</b></p>
+      <p class="inbox-contacts-font">{{ msg.messages }}</p>
+    </div>
     <form @submit.prevent="postMessage">
       <label for="contacts-msg">
-        <textarea id="contacts-msg" v-model="contactsMessage" rows="2" />
+        <textarea id="contacts-msg" v-model="contactsMessage" rows="5" />
       </label>
       <br>
       <button class="submit-msg" type="submit">Skicka svar</button>
@@ -62,23 +64,38 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .inbox-contacts {
-  border-bottom: 1px solid #292929;
-  margin-bottom: 5%;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  background-color: #F1F1F1; 
+  color: #2c3e50;
+  margin-left: 5%;
+  margin-right: 5%;
+  padding: 1%;
+  border-bottom: 1px solid #1d1d1d;
+  text-align: left;
 }
-.submit-msg {
-  margin-left: 1%;
-  margin-bottom: 1%;
-  border: none;
-  border-radius: 5px;
-  background-color: #42b983;
-  padding: 10px;
-  color: white;
+h4 {
+  margin: 0;
+}
+button {
+  all: unset;
+}
+.inbox-img-btn {
+  text-decoration: underline;
+  color: #42b983;
   cursor: pointer;
 }
+.inbox-contacts-font{
+  font-size: 0.8em;
+}
+form {
+ display: flex;
+ flex-direction: column;
+}
 textarea{
-  min-width: 15vw;
+  width: 90%;
   margin : 0 auto;
-  padding: 1.1em;
+  padding: 1%;
   border-radius: 8px;
   color: #555555;
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -91,24 +108,24 @@ textarea{
   box-shadow: none;
   resize: none;    
 }
-h4, p {
-  color: #2c3e50;
-}
-h4 {
-  margin: 0;
-}
-p { 
-  word-break: break-all;
-  }
-  button {
-   all: unset;
-}
-.inbox-img-btn {
-  text-decoration: underline;
-  color: #42b983;
+.submit-msg {
+  width: 30%;
+  margin-bottom: 1%;
+  border: none;
+  border-radius: 5px;
+  background-color: #42b983;
+  padding: 10px;
+  color: white;
   cursor: pointer;
+  text-align: center;
 }
-.inbox-contacts-font{
-  font-size: 0.8em;
+@media(max-width: 900px) {
+  .inbox-contacts{
+    grid-template-columns: 1fr;
+    grid-template-areas: none;
+    }
+  .submit-msg{
+    width: 85%;
+  }
 }
 </style>

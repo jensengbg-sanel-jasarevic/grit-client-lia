@@ -2,18 +2,18 @@
   <div class="mailbox">
     <h1>Mailbox kund</h1>
     <p>Klicka på det specifika draft-ID som finns tillgänglig under varje meddelanderuta för att öppna skissförslaget.</p>
-      <Inbox v-for="msg in inboxClient" :key="msg.id" :msg="msg" />
+      <InboxClient v-for="msg in inboxClient" :key="msg.id" :msg="msg" />
   </div>
 </template>
 
 <script>
-import Inbox from '@/components/Inbox'
+import InboxClient from '@/components/InboxClient'
 
 export default {
-  name: 'MailBox',
+  name: 'MailboxClient',
 
   components: {
-  Inbox
+  InboxClient
   },
 
   beforeMount(){
@@ -31,7 +31,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 p{
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid #1d1d1d;
   padding: 1%;
 }
 </style>

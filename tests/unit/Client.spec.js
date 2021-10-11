@@ -1,12 +1,12 @@
 import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
-import Home from '@/views/Home.vue'
-import DraftInfo from '@/components/DraftInfo.vue'
 import Vuex from 'vuex';
+import Client from '@/views/Client.vue'
+import DraftInfo from '@/components/DraftInfo.vue'
 
 const localVue = createLocalVue()
 localVue.use(Vuex);
 
-describe('Home.vue', () => {
+describe('Client.vue', () => {
   let store;
 
 	let state;
@@ -31,7 +31,7 @@ describe('Home.vue', () => {
 
   it('should when mounted dispatch action to Vuex store', () => {
     // Arrange
-    const wrapper = shallowMount(Home, {
+    const wrapper = shallowMount(Client, {
       localVue,
       store
     })
@@ -45,7 +45,7 @@ describe('Home.vue', () => {
 
   it('should when mounted render correct data from Vuex store state via computed property', () => {
     // Arrange
-    const wrapper = shallowMount(Home, {
+    const wrapper = shallowMount(Client, {
       localVue,
       store
     })
@@ -60,7 +60,7 @@ describe('Home.vue', () => {
 
   it('should when mounted have child component "DraftInfo"', () => {
     // Arrange
-    const wrapper = mount(Home, {
+    const wrapper = mount(Client, {
        mocks: {
         $store: {
          dispatch: function() { },

@@ -1,9 +1,10 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home </router-link> 
-      <router-link to="/mailbox">| Mailbox |</router-link>       
-      <router-link to="/contacts"> Contacts</router-link> 
+      <router-link to="/">Client </router-link> 
+      <router-link to="/mailbox-client">| Mailbox Client |</router-link>       
+      <router-link to="/contacts"> Contacts |</router-link> 
+      <router-link to="/mailbox-contacts"> Mailbox Contacts</router-link> 
     </div>
     <router-view/>
   </div>
@@ -17,6 +18,7 @@ export default {
   this.$store.dispatch('getDrafts');
   this.$store.dispatch('getOrders')
   this.$store.dispatch('getInboxClient')
+  this.$store.dispatch('getInboxContacts')
   },
   
   computed: {
@@ -38,21 +40,20 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: white;
-  background-color: #1d1d1d;
+  color: #2c3e50;
+  background-color: #F1F1F1; 
+  min-height: 100vh;
 }
 h1, h4 {
-  color: white;
+  color: #2c3e50;
 }
 #nav {
   padding: 30px;
 }
-
 #nav a {
   font-weight: bold;
-  color: white;
+  color: #2c3e50;
 }
-
 #nav a.router-link-exact-active {
   color: #42b983;
 }

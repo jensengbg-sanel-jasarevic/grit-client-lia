@@ -76,6 +76,7 @@ label {
   border-radius: 5px;
   padding: 10px;
   background-color: #ff9800;
+  color: white;
 }
 input[type="file"] {
   opacity: 0; 
