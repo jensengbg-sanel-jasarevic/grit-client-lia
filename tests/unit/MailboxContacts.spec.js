@@ -1,27 +1,25 @@
 import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex';
-import Client from '@/views/Client.vue'
-import DraftInfo from '@/components/DraftInfo.vue'
+import MailboxContacts from '@/views/MailboxContacts.vue'
+import InboxContacts from '@/components/InboxContacts.vue'
 
 const localVue = createLocalVue()
 localVue.use(Vuex);
 
-describe('Client.vue', () => {
+describe('MailboxContacts.vue', () => {
   let store;
 
-	let state;
+  let state;
   let actions;
 
   beforeEach(() => {
-		state = {
-			drafts: [
-        { id: 1, filename: "image.png" }
-      ]
-		}
+	state = {
+		inboxContacts: [ { id: 9 } ]
+	}
 
     actions = {
-			getDrafts: jest.fn(),
-		};
+        getInboxContacts: jest.fn(),
+	};
 
   store = new Vuex.Store({
     state,
@@ -29,15 +27,15 @@ describe('Client.vue', () => {
     })
 })
 
-  it('should when mounted dispatch action to Vuex store', () => {
+it('should when mounted dispatch action to Vuex store', () => {
     // Arrange
-     shallowMount(Client, {
+     shallowMount(MailboxContacts, {
       localVue,
       store
     })
 
     // Act
-    const actual = actions.getDrafts
+    const actual = actions.getInboxContacts
 
     // Assert
     expect(actual).toHaveBeenCalled();
@@ -45,35 +43,35 @@ describe('Client.vue', () => {
 
   it('should when mounted render correct data from Vuex store state via computed property', () => {
     // Arrange
-    const wrapper = shallowMount(Client, {
+    const wrapper = shallowMount(MailboxContacts, {
       localVue,
       store
     })
-    const expected = [ { id: 1, filename: "image.png" } ]
+    const expected = [ { id: 9 } ]
 
     // Act
-    const actual = wrapper.vm.drafts
+    const actual = wrapper.vm.inboxContacts
 
     // Assert
     expect(actual).toStrictEqual(expected);
   })
 
-  it('should when mounted have child component "DraftInfo"', () => {
+  it('should when mounted have child component "InboxContacts"', () => {
     // Arrange
-    const wrapper = mount(Client, {
+    const wrapper = mount(MailboxContacts, {
        mocks: {
         $store: {
          dispatch: function() { },
          state: { 
-           drafts: [] 
+           inboxContacts: [] 
           }
         }
       }
     })
-    const expected = "DraftInfo"
+    const expected = "InboxContacts"
 
     // Act
-    const findComponent = wrapper.findComponent(DraftInfo);
+    const findComponent = wrapper.findComponent(InboxContacts);
     const actual = findComponent.selector.name
 
     // Assert

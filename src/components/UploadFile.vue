@@ -10,7 +10,7 @@
         </div>
         <button v-if="uploadFileBtn" type="submit">Ladda upp bild</button> 
         <p v-if="fileUploadedText" class="p-upload-file">Bilduppladdning klar. Klicka på 'Skicka förslag' för att gå vidare i processen.</p>
-        <button v-if="sendDraftBtn" @click="postDraft">Skicka förslag</button> 
+        <button v-if="sendDraftBtn" @click="postDraft" id="post-draft-btn">Skicka förslag</button> 
         
         <div v-if="draftUploadedText">
           <p class="p-upload-file">Förslag skickad.</p>

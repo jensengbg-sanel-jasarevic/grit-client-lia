@@ -3,7 +3,7 @@
     <h1>Mailbox contacts</h1>
     <p>Kommentarer från kund för underkända skissförslag.</p>
     <p class="underline">Klicka på det specifika draft-ID som finns tillgänglig under varje meddelanderuta för att se skissförslag som underkänts.</p>
-      <InboxContacts v-for="msg in inbox" :key="msg.created_at" :msg="msg" />
+      <InboxContacts v-for="msg in inboxContacts" :key="msg.created_at" :msg="msg" />
   </div>
 </template>
 
@@ -22,7 +22,7 @@ export default {
   },
 
   computed: {
-  inbox() {
+  inboxContacts() {
   return this.$store.state.inboxContacts;
   }
   }

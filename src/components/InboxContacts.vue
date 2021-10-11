@@ -13,7 +13,7 @@
         <textarea id="contacts-msg" v-model="contactsMessage" rows="5" />
       </label>
       <br>
-      <button class="submit-msg" type="submit">Skicka svar</button>
+      <button type="submit" class="submit-msg">Skicka svar</button>
       <p v-if="messageSent">Meddelande skickat.</p>
     </form>
   </div>
@@ -54,10 +54,8 @@ export default {
       this.$store.dispatch("postMsgToClient", message);
       this.contactsMessage = ""
       this.messageSent = true
-      },
-    
-    },  
-
+      }
+    }
 }
 </script>
 

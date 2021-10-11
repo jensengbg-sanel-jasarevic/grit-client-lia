@@ -56,9 +56,7 @@ export default {
       this.clientMessage = ""
       this.messageSent = true
       },
-    
-    },  
-
+    }
 }
 </script>
 
