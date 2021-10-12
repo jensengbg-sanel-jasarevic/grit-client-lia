@@ -20,16 +20,6 @@ export default {
   this.$store.dispatch('getInboxClient')
   this.$store.dispatch('getInboxContacts')
   },
-  
-  computed: {
-  drafts() {
-  return this.$store.state.drafts;
-  },
-  orders() {
-  return this.$store.state.orders;
-  }
-  
-  }
 
 }
 </script>

@@ -10,7 +10,7 @@
 import DraftInfo from '@/components/DraftInfo'
 
 export default {
-  name: 'Home',
+  name: 'Client',
   components: {
   DraftInfo
   },
