@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1 v-if="drafts">Skissförslag</h1>
-    <h1 v-else>Det finns för närvarande inga nya skissförslag.</h1>
+    <h1 v-if="drafts.length === 0">Det finns för närvarande inga nya skissförslag.</h1>
+    <h1 v-else>Skissförslag</h1>
     <DraftInfo v-for="draft in drafts" :key="draft.created_at" :draft="draft" />
     <br> 
   </div>
