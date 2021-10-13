@@ -5,7 +5,7 @@
       <p><b>Angående: </b>  
         <button @click="getImage" :disabled="disableShowImageMailbox" class="client-inbox-img-btn" :id="`btn-client-inbox-${msg.id}`">draft-ID #{{ msg.messagesId }}</button>
       </p>
-      <div :id="`inbox-client-${msg.id}`"></div>
+      <div :id="`${msg.id}`"></div>
       <p><b>Meddelande:</b></p>
       <p class="inbox-client">{{ msg.messages }}</p>
     </div>
@@ -38,7 +38,7 @@ export default {
 
   methods: {
     getImage() {
-    this.$store.dispatch("getInboxClientImage", { filename: this.msg.filename, id: this.msg.id })
+    this.$store.dispatch("getImage", { req: this.msg, vueComponent: "InboxClient.vue" });      
     this.disableShowImageMailbox = true
     let btn =  document.getElementById(`btn-client-inbox-${this.msg.id}`)
     btn.style.color = "#2c3e50";

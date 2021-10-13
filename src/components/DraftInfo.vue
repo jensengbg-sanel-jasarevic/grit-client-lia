@@ -31,7 +31,7 @@ export default {
 
   mounted() {
     this.$nextTick(function () {
-        this.$store.dispatch("getImage", this.draft); 
+        this.$store.dispatch("getImage", { req: this.draft, vueComponent: "DraftInfo.vue" }); 
     })
   },
 

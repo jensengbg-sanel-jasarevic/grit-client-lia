@@ -4,7 +4,7 @@
       <p><b>Feedback angående: </b> 
         <button @click="getImage" :disabled="disableShowImageMailbox" class="inbox-img-btn" :id="`btn${msg.id}`">draft-ID #{{ msg.messagesId }}</button>
       </p>
-      <div :id="`inbox-contacts-${msg.id}`"></div>
+      <div :id="`${msg.id}`"></div>
       <p><b>Meddelande:</b></p>
       <p class="inbox-contacts-font">{{ msg.messages }}</p>
     </div>
@@ -38,7 +38,7 @@ export default {
 
   methods: {
     getImage() {
-    this.$store.dispatch("getInboxContactsImage", { filename: this.msg.filename, id: this.msg.id })
+    this.$store.dispatch("getImage", { req: this.msg, vueComponent: "InboxContacts.vue" });
     this.disableShowImageMailbox = true
     let btn =  document.getElementById(`btn${this.msg.id}`)
     btn.style.color = "#2c3e50";

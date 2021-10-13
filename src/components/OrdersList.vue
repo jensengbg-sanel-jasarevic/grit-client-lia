@@ -33,7 +33,7 @@ data() {
 
   methods: {
   displayImage(){
-  this.$store.dispatch("getImage", this.order);
+  this.$store.dispatch("getImage", { req: this.order, vueComponent: "OrdersList.vue" });
   this.disableShowMoreBtn = true
   setTimeout( () => {   this.displayImageBtnText = `Order-ID #${this.order.id}` }, 1000)
   let btn =  document.getElementById(`show-more-order-btn${this.order.id}`)

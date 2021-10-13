@@ -40,7 +40,7 @@ export default new Vuex.Store({
     },
     async getImage(ctx, payload){
       // Template strings with dynamic segment in URL route.
-      let resp = await axios.get(`${ctx.state.API_URL}/api/storage/space/${payload.filename}`); // ContentType that we get back is a 'application/octet-stream', it's binary data. 
+      let resp = await axios.get(`${ctx.state.API_URL}/api/storage/space/${payload.req.filename}`); // ContentType that we get back is a 'application/octet-stream', it's binary data. 
       
       let bufferData = resp.data.Body.data // ArrayBuffer of binary data of image.  
 
@@ -50,44 +50,12 @@ export default new Vuex.Store({
 
       let imageDataURL = `data:image/png;base64,${imageData}` 
       // Data URLs are composed of four parts: a prefix (data:), a MIME type indicating the type of data, an optional base64 token if non-textual, and the data itself.
-
-      const imageGrid = document.getElementById(`${payload.id}`)
-      const img = document.createElement('img');
-      imageGrid.appendChild(img);
-      img.src = imageDataURL;
-      img.alt = payload.filename; 
-      img.style.maxWidth = "90%";
-    },
-    async getInboxContactsImage(ctx, payload){
-      let resp = await axios.get(`${ctx.state.API_URL}/api/storage/space/${payload.filename}`); 
       
-      let bufferData = resp.data.Body.data  
-
-      const imageData = new Buffer.from(bufferData).toString("base64")
-
-      let imageDataURL = `data:image/png;base64,${imageData}` 
-
-      const imageGrid = document.getElementById(`inbox-contacts-${payload.id}`)
-      const img = document.createElement('img');
+      let imageGrid = document.getElementById(`${payload.req.id}`)
+      let img = document.createElement('img');
       imageGrid.appendChild(img);
       img.src = imageDataURL;
-      img.alt = payload.filename; 
-      img.style.maxWidth = "90%";
-    },
-    async getInboxClientImage(ctx, payload){
-      let resp = await axios.get(`${ctx.state.API_URL}/api/storage/space/${payload.filename}`); 
-      
-      let bufferData = resp.data.Body.data  
-
-      const imageData = new Buffer.from(bufferData).toString("base64")
-
-      let imageDataURL = `data:image/png;base64,${imageData}` 
-
-      const imageGrid = document.getElementById(`inbox-client-${payload.id}`)
-      const img = document.createElement('img');
-      imageGrid.appendChild(img);
-      img.src = imageDataURL;
-      img.alt = payload.filename; 
+      img.alt = payload.req.filename; 
       img.style.maxWidth = "90%";
     },
     async removeDraft(ctx, payload){
