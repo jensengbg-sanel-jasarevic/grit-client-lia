@@ -9,10 +9,10 @@ export default new Vuex.Store({
     // https://nodeserver-100.herokuapp.com
     
     API_URL: "https://nodeserver-100.herokuapp.com",
-    drafts: [],
-    orders: [],
-    inboxContacts: [],
-    inboxClient: [],
+    drafts: null,
+    orders: null,
+    inboxContacts: null,
+    inboxClient: null,
   },
   mutations: {
     setDrafts(state, drafts){
