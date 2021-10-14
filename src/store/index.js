@@ -5,10 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    // http://localhost:5000
-    // https://nodeserver-100.herokuapp.com
-    
-    API_URL: "http://localhost:5000",
+    API_URL: "https://nodeserver-100.herokuapp.com",
     drafts: null,
     rejectedDrafts: null,
     orders: null,
@@ -19,6 +16,9 @@ export default new Vuex.Store({
     setDrafts(state, drafts){
       state.drafts = drafts;
     },
+    setRejectedDrafts(state, drafts){
+      state.rejectedDrafts = drafts;
+    },
     setOrders(state, orders){
       state.orders = orders;
     },
@@ -27,21 +27,16 @@ export default new Vuex.Store({
     },
     setInboxClient(state, inbox){
       state.inboxClient = inbox;
-    },
-    setRejectedDrafts(state, drafts){
-      state.rejectedDrafts = drafts;
     }
   },
   actions: {
     async getDrafts(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/drafts`);
-      console.log(resp) 
       const rejectedDrafts = resp.data.filter(item => item.rejected === null);
       ctx.commit('setDrafts', rejectedDrafts.reverse())
     },
     async getRejectedDrafts(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/drafts`);
-      console.log(resp) 
       const rejectedDrafts = resp.data.filter(item => item.rejected === "rejected");
       ctx.commit('setRejectedDrafts', rejectedDrafts.reverse()) 
     },
@@ -70,43 +65,34 @@ export default new Vuex.Store({
       img.style.maxWidth = "90%";
     },
     async rejectDraft(ctx, payload){
-      let resp = await axios.patch(`${ctx.state.API_URL}/api/drafts`, { filename: payload.filename, id: payload.id } );
-      console.log(resp)
+      await axios.patch(`${ctx.state.API_URL}/api/drafts`, { filename: payload.filename, id: payload.id } );
     },
     async removeDraft(ctx, payload){
-      let resp = await axios.delete(`${ctx.state.API_URL}/api/drafts`, { data: {filename: payload.filename, id: payload.id} } );
-      console.log(resp)
+      await axios.delete(`${ctx.state.API_URL}/api/drafts`, { data: {filename: payload.filename, id: payload.id} } );
     },
     async postSketch(ctx, payload){
       let formData = new FormData();
       formData.append("image", payload); // Construct key/value pairs from form.
-      let resp = await axios.post(`${ctx.state.API_URL}/api/sketches`, formData); 
-      console.log(resp) 
+      await axios.post(`${ctx.state.API_URL}/api/sketches`, formData); 
     },
     async postDraft(ctx, payload){
-     let resp = await axios.post(`${ctx.state.API_URL}/api/drafts`, { filename: payload } ); 
-     console.log(resp) 
+      await axios.post(`${ctx.state.API_URL}/api/drafts`, { filename: payload } ); 
     },
     async postOrder(ctx, payload) {
-      let resp = await axios.post(`${ctx.state.API_URL}/api/orders/`, payload);
-      console.log(resp) 
+      await axios.post(`${ctx.state.API_URL}/api/orders/`, payload);
     },
     async postMsgToClient(ctx, message) {
-      let resp = await axios.post(`${ctx.state.API_URL}/api/mailbox/client`, { text: message.text, textId: message.textId, filename: message.filename });
-      console.log(resp) 
+      await axios.post(`${ctx.state.API_URL}/api/mailbox/client`, { text: message.text, textId: message.textId, filename: message.filename });
     },
     async postMsgToContacts(ctx, message) {
-      let resp = await axios.post(`${ctx.state.API_URL}/api/mailbox/contacts`, { text: message.text, textId: message.textId, filename: message.filename });
-      console.log(resp) 
+      await axios.post(`${ctx.state.API_URL}/api/mailbox/contacts`, { text: message.text, textId: message.textId, filename: message.filename }); 
     },
     async getInboxClient(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/mailbox/client`);
-      console.log(resp) 
       ctx.commit('setInboxClient', resp.data.reverse())
     },
     async getInboxContacts(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/mailbox/contacts`);
-      console.log(resp) 
       ctx.commit('setInboxContacts', resp.data.reverse())
     }
   },
