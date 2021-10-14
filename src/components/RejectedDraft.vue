@@ -1,19 +1,13 @@
 <template>
-  <div class="draft-info-component-wrapper">
+  <div class="rejected-draft-component-wrapper">
     <button id="approve-btn" @click="postOrder" :disabled="disableApproveBtn">{{ approveBtnText }}</button>
-
     <div class="image-box">
-      <h3>Draft-ID #{{draft.id}}</h3>
       <div :id="draft.id"></div>
-
-      <span><b>message:</b> {{ draft.message }}</span>
+      <span><b>Draft-ID</b> #{{ draft.id }}</span>
       <span><b>created at:</b> {{ draft.created_at }}</span>
-      <button id="patch-btn" @click="patchDraft">{{ disapproveBtnText }}</button>
-
-      <button id="disapprove-btn" @click="postMsgToContacts" :disabled="disableDisapproveBtn">Skicka kommentar</button>
-
+      <button id="post-msg-contacts-btn" @click="postMsgToContacts" :disabled="disableCommentBtn">{{ commentBtnText }}</button>
       <label for="comments">
-        <textarea id="comments" rows="4" :placeholder="textareaPlaceholder" v-model="textareaInput" :disabled="textareaDisabled" />
+        <textarea id="comments" rows="4" placeholder="Lägg till en kommentar" v-model="textareaInput" :disabled="textareaDisabled"/>
       </label>
     </div>
   </div>
@@ -21,7 +15,7 @@
 
 <script>
 export default {
-  name: 'DraftInfo',
+  name: 'RejectedDraft',
 
   props: {
     draft: Object
@@ -29,19 +23,18 @@ export default {
 
   mounted() {
     this.$nextTick(function () {
-        this.$store.dispatch("getImage", { req: this.draft, vueComponent: "DraftInfo.vue" }); 
+        this.$store.dispatch("getImage", { req: this.draft, vueComponent: "RejectedDraft.vue" }); 
     })
-  },
+  },  
 
  data() {
     return {
+    approveBtnText: "Godkänn förslag",
+    commentBtnText: "Skicka kommentar",
     textareaInput: "",
     textareaDisabled: false,
     disableApproveBtn: false,
-    disableDisapproveBtn: false,
-    approveBtnText: "Godkänn förslag",
-    disapproveBtnText: "Underkänn förslag",
-    textareaPlaceholder: "Lägg till en kommentar"
+    disableCommentBtn: false,
     };
   },
 
@@ -53,26 +46,17 @@ export default {
       filename: document.getElementById(this.draft.id).getElementsByTagName('img')[0].alt
     };      
     this.$store.dispatch("postMsgToContacts", clientMsg);
+    this.commentBtnText = "Kommentar skickad";
     this.textareaDisabled = true;
-    this.disableDisapproveBtn = true;
-    this.disapproveBtnText = "Skiss underkänd"
-    setTimeout( () => { this.$store.dispatch("getDrafts") }, 1500)
-    },
-
-    patchDraft() {
-    this.$store.dispatch("patchDraft", this.draft);
-    this.textareaDisabled = true;
-    this.disableDisapproveBtn = true;
-    this.disapproveBtnText = "Skiss underkänd"
-    setTimeout( () => { this.$store.dispatch("getDrafts") }, 1500)
+    this.disableCommentBtn = true;
     },
 
     postOrder(){
     this.$store.dispatch('postOrder', { id: this.draft.id, filename: this.draft.filename } )
     this.$store.dispatch("removeDraft", this.draft);
     this.disableApproveBtn = true;
-    this.approveBtnText = "Skiss godkänd"
-    setTimeout( () => { this.$store.dispatch("getDrafts") }, 1500)
+    this.approveBtnText = "Förslag godkänd";
+    setTimeout( () => { this.$store.dispatch("getRejectedDrafts") }, 1500);
    }
   }
   
@@ -81,9 +65,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.draft-info-component-wrapper {
+.rejected-draft-component-wrapper {
   margin-left: 5%;
   margin-right: 5%;
+  margin-top: 1%;
   display: grid;
   grid-template-columns: 70% 30%;
   grid-template-areas: "left right";
@@ -116,23 +101,13 @@ h3 {
   display: flex;
   flex-direction: column;
 }
-#disapprove-btn {
+#post-msg-contacts-btn {
   margin-top: 1%;
   border: none;
   height: 50px;
   width: 180px;
   border-radius: 5px;
   background-color: #3b5998;
-  color: white;
-  cursor: pointer;
-}  
-#patch-btn {
-  margin-top: 1%;
-  border: none;
-  height: 50px;
-  width: 180px;
-  border-radius: 5px;
-  background-color:#DC143C;
   color: white;
   cursor: pointer;
 }

@@ -1,70 +1,69 @@
 <template>
-  <div v-if="msg.messages" class="inbox-contacts">
+  <div class="inbox-component-wrapper">
     <div>
-      <p><b>Feedback angående: </b> 
-        <button @click="getImage" :disabled="disableShowImageMailbox" class="inbox-img-btn" :id="`btn${msg.id}`">draft-ID #{{ msg.messagesId }}</button>
+      <p><b>Angående: </b>  
+        <button @click="getImage" :disabled="disableBtn" class="inbox-img-btn" :id="`btn-inbox-${msg.id}`">draft-ID #{{ msg.messagesId }}</button>
       </p>
       <div :id="`${msg.id}`"></div>
       <p><b>Meddelande:</b></p>
-      <p class="inbox-contacts-font">{{ msg.messages }}</p>
+      <p class="inbox-msg-font">{{ msg.messages }}</p>
     </div>
-    <form @submit.prevent="postMessage">
-      <label for="contacts-msg">
-        <textarea id="contacts-msg" v-model="contactsMessage" rows="5" />
+    <form @submit.prevent="emitMessage">
+      <label for="message">
+        <textarea id="message" v-model="textareaMessage" rows="5" />
       </label>
       <br>
-      <button type="submit" class="submit-msg">Skicka svar</button>
+      <button type="submit" class="btn-submit-inbox-client">Skicka svar</button>
       <p v-if="messageSent">Meddelande skickat.</p>
     </form>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'InboxContacts',
+  name: 'Inbox',
 
   props: {
-      msg: Object
+    msg: Object
   },      
 
   data() {
     return {
-    contactsMessage: "",
-    disableShowImageMailbox: false,
+    textareaMessage: "",
+    disableBtn: false,
     messageSent: false,
     }
   },
-
+  
   methods: {
     getImage() {
-    this.$store.dispatch("getImage", { req: this.msg, vueComponent: "InboxContacts.vue" });
-    this.disableShowImageMailbox = true
-    let btn =  document.getElementById(`btn${this.msg.id}`)
+    this.$store.dispatch("getImage", { req: this.msg, vueComponent: "Inbox.vue" });      
+    this.disableBtn = true
+    let btn =  document.getElementById(`btn-inbox-${this.msg.id}`)
     btn.style.color = "#2c3e50";
     btn.style.cursor = "initial";
-    btn.style.textDecoration = "initial"
+    btn.style.textDecoration = "initial";
     },
-    async postMessage() {
-      const message = {
-        text: this.contactsMessage,
-        textId: this.msg.messagesId,
-        filename: this.msg.filename
-      };      
-      this.$store.dispatch("postMsgToClient", message);
-      this.contactsMessage = ""
-      this.messageSent = true
-      }
-    }
+    
+    emitMessage() {
+    const message = {
+      text: this.textareaMessage,
+      textId: this.msg.messagesId,
+      filename: this.msg.filename
+    };
+    this.$emit('postMessage', message)      
+    this.textareaMessage = ""
+    this.messageSent = true
+    },
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.inbox-contacts {
+.inbox-component-wrapper{
   display: grid;
   grid-template-columns: 40% 60%;
-  background-color: #F1F1F1; 
   color: #2c3e50;
   margin-left: 5%;
   margin-right: 5%;
@@ -78,12 +77,12 @@ h4 {
 button {
   all: unset;
 }
-.inbox-img-btn {
+.inbox-img-btn{
   text-decoration: underline;
   color: #42b983;
   cursor: pointer;
 }
-.inbox-contacts-font{
+.inbox-msg-font{
   font-size: 0.8em;
 }
 form {
@@ -106,7 +105,7 @@ textarea{
   box-shadow: none;
   resize: none;    
 }
-.submit-msg {
+.btn-submit-inbox-client{
   width: 30%;
   margin-bottom: 1%;
   border: none;
@@ -118,11 +117,11 @@ textarea{
   text-align: center;
 }
 @media(max-width: 900px) {
-  .inbox-contacts{
+  .inbox-component-wrapper{
     grid-template-columns: 1fr;
     grid-template-areas: none;
     }
-  .submit-msg{
+  .btn-submit-inbox-client{
     width: 85%;
   }
 }

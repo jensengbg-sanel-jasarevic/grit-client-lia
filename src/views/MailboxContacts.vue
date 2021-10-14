@@ -1,20 +1,21 @@
 <template>
   <div class="contacts-mailbox">
+    <img src="@/assets/feedback-message-4644.svg" alt="message" width="50" height="50">  
     <h1>Mailbox contacts</h1>
-    <p>Kommentarer från kund för underkända skissförslag.</p>
+    <p>Feedback från kund för underkända skissförslag.</p>
     <p class="underline">Klicka på det specifika draft-ID som finns tillgänglig under varje meddelanderuta för att se skissförslag som underkänts.</p>
-      <InboxContacts v-for="msg in inboxContacts" :key="msg.created_at" :msg="msg" />
+    <Inbox @postMessage="listen" v-for="msg in inboxContacts" :key="msg.created_at" :msg="msg" />
   </div>
 </template>
 
 <script>
-import InboxContacts from '@/components/InboxContacts'
+import Inbox from '@/components/Inbox'
 
 export default {
   name: 'MailboxContacts',
 
   components: {
-  InboxContacts
+  Inbox
   },
 
   beforeMount(){
@@ -25,7 +26,13 @@ export default {
   inboxContacts() {
   return this.$store.state.inboxContacts;
   }
+  },
+
+  methods: {
+  listen(message) {
+  this.$store.dispatch("postMsgToClient", message);     
   }
+  },
 
 }
 </script>

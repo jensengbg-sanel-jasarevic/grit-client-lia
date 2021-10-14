@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Client from '../views/Client.vue'
-import Contacts from '../views/Contacts.vue'
 import MailboxClient from '../views/MailboxClient.vue'
+import ApprovedClient from '../views/ApprovedClient.vue'
+import RejectedClient from '../views/RejectedClient.vue'
+import Contacts from '../views/Contacts.vue'
+import OrdersContacts from '../views/OrdersContacts.vue'
 import MailboxContacts from '../views/MailboxContacts.vue'
 
 Vue.use(VueRouter)
@@ -14,14 +17,29 @@ const routes = [
     component: Client
   },
   {
+    path: '/mailbox-client',
+    name: 'MailboxClient',
+    component: MailboxClient
+  },
+  {
+    path: '/approved-client',
+    name: 'ApprovedClient',
+    component: ApprovedClient
+  },
+  {
+    path: '/rejected-client',
+    name: 'RejectedClient',
+    component: RejectedClient
+  },
+  {
     path: '/contacts',
     name: 'Contacts',
     component: Contacts
   },
   {
-    path: '/mailbox-client',
-    name: 'MailboxClient',
-    component: MailboxClient
+    path: '/orders-contacts',
+    name: 'OrdersContacts',
+    component: OrdersContacts
   },
   {
     path: '/mailbox-contacts',

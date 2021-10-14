@@ -8,11 +8,12 @@ export default new Vuex.Store({
     // http://localhost:5000
     // https://nodeserver-100.herokuapp.com
     
-    API_URL: "https://nodeserver-100.herokuapp.com",
+    API_URL: "http://localhost:5000",
     drafts: null,
+    rejectedDrafts: null,
     orders: null,
     inboxContacts: null,
-    inboxClient: null,
+    inboxClient: null
   },
   mutations: {
     setDrafts(state, drafts){
@@ -26,17 +27,25 @@ export default new Vuex.Store({
     },
     setInboxClient(state, inbox){
       state.inboxClient = inbox;
+    },
+    setRejectedDrafts(state, drafts){
+      state.rejectedDrafts = drafts;
     }
   },
   actions: {
     async getDrafts(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/drafts`);
-      console.log(resp)
-      ctx.commit('setDrafts', resp.data.reverse()) // Display latest added item by using Array method 'reverse()'.
+      const rejectedDrafts = resp.data.filter(item => item.rejected === null);
+      ctx.commit('setDrafts', rejectedDrafts.reverse())
+    },
+    async getRejectedDrafts(ctx){
+      let resp = await axios.get(`${ctx.state.API_URL}/api/drafts`);
+      const rejectedDrafts = resp.data.filter(item => item.rejected === "rejected");
+      ctx.commit('setRejectedDrafts', rejectedDrafts.reverse()) 
     },
     async getOrders(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/orders`);
-      ctx.commit('setOrders', resp.data)
+      ctx.commit('setOrders', resp.data.reverse())
     },
     async getImage(ctx, payload){
       // Template strings with dynamic segment in URL route.
@@ -57,6 +66,10 @@ export default new Vuex.Store({
       img.src = imageDataURL;
       img.alt = payload.req.filename; 
       img.style.maxWidth = "90%";
+    },
+    async patchDraft(ctx, payload){
+      let resp = await axios.patch(`${ctx.state.API_URL}/api/drafts`, { filename: payload.filename, id: payload.id } );
+      console.log(resp)
     },
     async removeDraft(ctx, payload){
       let resp = await axios.delete(`${ctx.state.API_URL}/api/drafts`, { data: {filename: payload.filename, id: payload.id} } );
