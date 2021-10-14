@@ -35,6 +35,10 @@ body {
   color: #2c3e50;
   min-height: 100vh;
 }
+.back-arrow {
+  margin-right: 85%;
+  cursor: pointer;
+}
 h1, h4 {
   color: #2c3e50;
 }

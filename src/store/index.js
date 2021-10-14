@@ -35,11 +35,13 @@ export default new Vuex.Store({
   actions: {
     async getDrafts(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/drafts`);
+      console.log(resp) 
       const rejectedDrafts = resp.data.filter(item => item.rejected === null);
       ctx.commit('setDrafts', rejectedDrafts.reverse())
     },
     async getRejectedDrafts(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/drafts`);
+      console.log(resp) 
       const rejectedDrafts = resp.data.filter(item => item.rejected === "rejected");
       ctx.commit('setRejectedDrafts', rejectedDrafts.reverse()) 
     },
@@ -67,7 +69,7 @@ export default new Vuex.Store({
       img.alt = payload.req.filename; 
       img.style.maxWidth = "90%";
     },
-    async patchDraft(ctx, payload){
+    async rejectDraft(ctx, payload){
       let resp = await axios.patch(`${ctx.state.API_URL}/api/drafts`, { filename: payload.filename, id: payload.id } );
       console.log(resp)
     },
@@ -99,10 +101,12 @@ export default new Vuex.Store({
     },
     async getInboxClient(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/mailbox/client`);
+      console.log(resp) 
       ctx.commit('setInboxClient', resp.data.reverse())
     },
     async getInboxContacts(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/mailbox/contacts`);
+      console.log(resp) 
       ctx.commit('setInboxContacts', resp.data.reverse())
     }
   },

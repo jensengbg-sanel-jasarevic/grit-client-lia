@@ -5,10 +5,10 @@
       <div :id="draft.id"></div>
       <span><b>Draft-ID</b> #{{ draft.id }}</span>
       <span><b>created at:</b> {{ draft.created_at }}</span>
-      <button id="post-msg-contacts-btn" @click="postMsgToContacts" :disabled="disableCommentBtn">{{ commentBtnText }}</button>
       <label for="comments">
-        <textarea id="comments" rows="4" placeholder="Lägg till en kommentar" v-model="textareaInput" :disabled="textareaDisabled"/>
+        <textarea rows="4" placeholder="Lägg till en kommentar" v-model="textareaInput" :disabled="textareaDisabled"/>
       </label>
+      <button id="post-msg-contacts-btn" @click="postMsgToContacts" :disabled="disableCommentBtn">{{ commentBtnText }}</button>
     </div>
   </div>
 </template>
@@ -39,6 +39,14 @@ export default {
   },
 
   methods: {
+    postOrder(){
+    this.$store.dispatch('postOrder', { id: this.draft.id, filename: this.draft.filename } )
+    this.$store.dispatch("removeDraft", this.draft);
+    this.disableApproveBtn = true;
+    this.approveBtnText = "Förslag godkänd";
+    setTimeout( () => { this.$store.dispatch("getRejectedDrafts") }, 1500);
+   },
+   
     postMsgToContacts() {
     const clientMsg = {
       text: this.textareaInput,
@@ -50,14 +58,6 @@ export default {
     this.textareaDisabled = true;
     this.disableCommentBtn = true;
     },
-
-    postOrder(){
-    this.$store.dispatch('postOrder', { id: this.draft.id, filename: this.draft.filename } )
-    this.$store.dispatch("removeDraft", this.draft);
-    this.disableApproveBtn = true;
-    this.approveBtnText = "Förslag godkänd";
-    setTimeout( () => { this.$store.dispatch("getRejectedDrafts") }, 1500);
-   }
   }
   
 }
@@ -72,7 +72,6 @@ export default {
   display: grid;
   grid-template-columns: 70% 30%;
   grid-template-areas: "left right";
-  min-height: 500px;
   border-bottom: 1px solid #292929;
 }
 span {
@@ -103,6 +102,7 @@ h3 {
 }
 #post-msg-contacts-btn {
   margin-top: 1%;
+  margin-bottom: 10px;
   border: none;
   height: 50px;
   width: 180px;
@@ -114,7 +114,6 @@ h3 {
 textarea {
   min-width: 25vw;
   margin-top: 10px;
-  margin-bottom: 10px;
   padding: 1.1em;
   border-radius: 8px;
   color: #555555;
@@ -127,9 +126,5 @@ textarea {
   -moz-box-shadow: none;
   resize: none;    
   overflow: auto;
-}
-#comments {
-  max-width: 150px;
-  margin-bottom: 10%;
 }
 </style>

@@ -8,10 +8,12 @@
     <div class="right-column">
       <router-link to="/mailbox-contacts">
         <h4>Visa mailbox</h4>
+        <p class="counter">{{ totalMessages }}</p>
         <img src="@/assets/mail-5886.svg" alt="mailbox" width="50" height="50">
       </router-link>
       <router-link to="/orders-contacts">
         <h4>Visa ordrar</h4>
+        <p class="counter">{{ totalOrders }}</p>
         <img src="@/assets/list-6240.svg" alt="orderslist" width="50" height="50">
       </router-link>  
     </div>
@@ -27,6 +29,23 @@ export default {
   components: {
   UploadFile
   },
+  
+  computed: {
+  totalMessages() {
+    let total;
+    if(this.$store.state.inboxContacts != undefined){
+    total = this.$store.state.inboxContacts.length
+    } 
+    return total
+    },
+  totalOrders() {
+    let total;
+    if(this.$store.state.orders != undefined){
+    total = this.$store.state.orders.length
+    }
+    return total
+    }    
+  }
   
 }
 </script>
@@ -48,7 +67,7 @@ h1, p, a {
 a{
   text-decoration: none;
 }
-h4{
+h4, .counter {
   margin: 0;
 }
 @media(max-width: 900px) {

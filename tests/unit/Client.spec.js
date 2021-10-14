@@ -21,6 +21,7 @@ describe('Client.vue', () => {
 
     actions = {
 			getDrafts: jest.fn(),
+      getImage: jest.fn()
 		};
 
   store = new Vuex.Store({
@@ -33,7 +34,8 @@ describe('Client.vue', () => {
     // Arrange
      shallowMount(Client, {
       localVue,
-      store
+      store,
+      stubs: ['router-link']
     })
 
     // Act
@@ -47,7 +49,8 @@ describe('Client.vue', () => {
     // Arrange
     const wrapper = shallowMount(Client, {
       localVue,
-      store
+      store,
+      stubs: ['router-link']
     })
     const expected = [ { id: 1, filename: "image.png" } ]
 
@@ -61,14 +64,9 @@ describe('Client.vue', () => {
   it('should when mounted have child component "DraftInfo"', () => {
     // Arrange
     const wrapper = mount(Client, {
-       mocks: {
-        $store: {
-         dispatch: function() { },
-         state: { 
-           drafts: [] 
-          }
-        }
-      }
+      localVue,
+      store,
+      stubs: ['router-link']
     })
     const expected = "DraftInfo"
 

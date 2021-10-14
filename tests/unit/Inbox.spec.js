@@ -1,11 +1,11 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex';
-import InboxClient from '@/components/InboxClient.vue'
+import Inbox from '@/components/Inbox.vue'
 
 const localVue = createLocalVue()
 localVue.use(Vuex);
 
-describe('InboxClient.vue', () => {
+describe('Inbox.vue', () => {
     let store;
 
     let actions;
@@ -23,8 +23,8 @@ describe('InboxClient.vue', () => {
 
   it('should ensure that components method have been called when clicking button', async () => {
   // Arrange
-  const componentMethod = jest.spyOn(InboxClient.methods, 'postMessage')
-  const wrapper = shallowMount(InboxClient, { 
+  const componentMethod = jest.spyOn(Inbox.methods, 'emitMessage')
+  const wrapper = shallowMount(Inbox, { 
     localVue,
     store,
     propsData: {
@@ -33,7 +33,7 @@ describe('InboxClient.vue', () => {
   })
 
   // Act
-  await wrapper.find('.btn-submit-inbox-client').trigger('submit')
+  await wrapper.find('.inbox-submit-btn').trigger('submit')
 
   /// Assert
   expect(componentMethod).toHaveBeenCalled()
@@ -41,7 +41,7 @@ describe('InboxClient.vue', () => {
 
   it('should check if textarea field store correct value in components data property', async () => {
     // Arrange
-    const wrapper = shallowMount(InboxClient, { 
+    const wrapper = shallowMount(Inbox, { 
       propsData: {
         msg: { id: 1 }
       }       
@@ -51,7 +51,7 @@ describe('InboxClient.vue', () => {
     // Act
     const input = wrapper.find('textarea')
     await input.setValue("Store this text")
-    const actual = wrapper.vm.clientMessage
+    const actual = wrapper.vm.textareaMessage
     
     // Assert
     expect(actual).toBe(expected)
@@ -59,7 +59,7 @@ describe('InboxClient.vue', () => {
 
   it('should when mounted display correct text message via components props data', () => {
     // Arrange
-    const wrapper = shallowMount(InboxClient, {
+    const wrapper = shallowMount(Inbox, {
       propsData: {
         msg: { messages: "lorem ipsum" }
       }
@@ -67,7 +67,7 @@ describe('InboxClient.vue', () => {
     const expected = wrapper.props().msg.messages
 
     // Act
-    const actual = wrapper.find('.inbox-client').text()
+    const actual = wrapper.find('.inbox-msg-font').text()
 
     // Assert
     expect(actual).toBe(expected)

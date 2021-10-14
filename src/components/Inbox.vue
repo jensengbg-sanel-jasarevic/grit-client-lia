@@ -13,8 +13,9 @@
         <textarea id="message" v-model="textareaMessage" rows="5" />
       </label>
       <br>
-      <button type="submit" class="btn-submit-inbox-client">Skicka svar</button>
-      <p v-if="messageSent">Meddelande skickat.</p>
+      <button type="submit" class="inbox-submit-btn">Skicka svar</button>
+      <p v-if="textSent">Meddelande skickat.</p>
+      <p v-if="textEmpty" class="text-empty">Tomt textfält. Meddelande kunde inte skickas.</p>
     </form>
   </div>
 </template>
@@ -31,7 +32,8 @@ export default {
     return {
     textareaMessage: "",
     disableBtn: false,
-    messageSent: false,
+    textSent: false,
+    textEmpty: false
     }
   },
   
@@ -46,14 +48,20 @@ export default {
     },
     
     emitMessage() {
-    const message = {
-      text: this.textareaMessage,
-      textId: this.msg.messagesId,
-      filename: this.msg.filename
-    };
-    this.$emit('postMessage', message)      
-    this.textareaMessage = ""
-    this.messageSent = true
+    if(this.textareaMessage == ""){
+    this.textEmpty = true,
+    this.textSent = false
+    } else {
+      this.textEmpty = false
+      this.textSent = true
+      const message = {
+        text: this.textareaMessage,
+        textId: this.msg.messagesId,
+        filename: this.msg.filename
+        };
+      this.$emit('postMessage', message)      
+      this.textareaMessage = ""
+      }
     },
   }
 }
@@ -105,7 +113,7 @@ textarea{
   box-shadow: none;
   resize: none;    
 }
-.btn-submit-inbox-client{
+.inbox-submit-btn{
   width: 30%;
   margin-bottom: 1%;
   border: none;
@@ -116,12 +124,15 @@ textarea{
   cursor: pointer;
   text-align: center;
 }
+.text-empty{
+  color: #DC143C;
+}
 @media(max-width: 900px) {
   .inbox-component-wrapper{
     grid-template-columns: 1fr;
     grid-template-areas: none;
     }
-  .btn-submit-inbox-client{
+  .inbox-submit-btn{
     width: 85%;
   }
 }

@@ -1,9 +1,14 @@
 <template>
+  <div>
     <div>
+      <img class="back-arrow" @click="$router.go(-1)" src="@/assets/curved-arrow-220.svg" alt="back" width="50" height="50">
+    </div>
+    <div> 
       <img src="@/assets/10379.svg" alt="rejected" width="50" height="50">
-      <h1>Underkända skissförslag</h1>
+      <h1 class="underline">Underkända skissförslag</h1>
       <RejectedDraft v-for="draft in rejectedDrafts" :key="draft.created_at" :draft="draft" />
-    </div> 
+    </div>
+  </div>
 </template>
 
 <script>
@@ -30,4 +35,8 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.underline{
+  border-bottom: 2px solid #DC143C;
+  padding: 1%;
+}
 </style>

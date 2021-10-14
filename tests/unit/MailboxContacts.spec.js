@@ -1,7 +1,7 @@
 import { shallowMount, mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex';
 import MailboxContacts from '@/views/MailboxContacts.vue'
-import InboxContacts from '@/components/InboxContacts.vue'
+import Inbox from '@/components/Inbox.vue'
 
 const localVue = createLocalVue()
 localVue.use(Vuex);
@@ -56,7 +56,7 @@ it('should when mounted dispatch action to Vuex store', () => {
     expect(actual).toStrictEqual(expected);
   })
 
-  it('should when mounted have child component "InboxContacts"', () => {
+  it('should when mounted have child component "Inbox"', () => {
     // Arrange
     const wrapper = mount(MailboxContacts, {
        mocks: {
@@ -68,10 +68,10 @@ it('should when mounted dispatch action to Vuex store', () => {
         }
       }
     })
-    const expected = "InboxContacts"
+    const expected = "Inbox"
 
     // Act
-    const findComponent = wrapper.findComponent(InboxContacts);
+    const findComponent = wrapper.findComponent(Inbox);
     const actual = findComponent.selector.name
 
     // Assert

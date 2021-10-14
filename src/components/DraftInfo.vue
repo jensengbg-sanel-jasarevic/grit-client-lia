@@ -5,16 +5,13 @@
     <div class="image-box">
       <h3>Draft-ID #{{draft.id}}</h3>
       <div :id="draft.id"></div>
-
       <span><b>message:</b> {{ draft.message }}</span>
       <span><b>created at:</b> {{ draft.created_at }}</span>
-      <button id="patch-btn" @click="patchDraft">{{ disapproveBtnText }}</button>
-
-      <button id="disapprove-btn" @click="postMsgToContacts" :disabled="disableDisapproveBtn">Skicka kommentar</button>
-
+      <button id="reject-btn" :disabled="disableRejectBtn" @click="rejectDraft">{{ disapproveBtnText }}</button>
       <label for="comments">
-        <textarea id="comments" rows="4" :placeholder="textareaPlaceholder" v-model="textareaInput" :disabled="textareaDisabled" />
+        <textarea rows="4" placeholder="Lägg till en kommentar" v-model="textareaInput" :disabled="textareaDisabled" />
       </label>
+      <button id="disapprove-btn" @click="postMsgToContacts" :disabled="disableCommentBtn">{{ commentBtnText }}</button>
     </div>
   </div>
 </template>
@@ -29,23 +26,32 @@ export default {
 
   mounted() {
     this.$nextTick(function () {
-        this.$store.dispatch("getImage", { req: this.draft, vueComponent: "DraftInfo.vue" }); 
+      this.$store.dispatch("getImage", { req: this.draft, vueComponent: "DraftInfo.vue" }); 
     })
   },
 
  data() {
     return {
+    approveBtnText: "Godkänn förslag",
+    disapproveBtnText: "Underkänn förslag",
+    commentBtnText: "Skicka kommentar",
     textareaInput: "",
     textareaDisabled: false,
     disableApproveBtn: false,
-    disableDisapproveBtn: false,
-    approveBtnText: "Godkänn förslag",
-    disapproveBtnText: "Underkänn förslag",
-    textareaPlaceholder: "Lägg till en kommentar"
+    disableRejectBtn: false,
+    disableCommentBtn: false    
     };
   },
 
   methods: {
+    postOrder(){
+    this.$store.dispatch('postOrder', { id: this.draft.id, filename: this.draft.filename } )
+    this.$store.dispatch("removeDraft", this.draft);
+    this.disableApproveBtn = true;
+    this.approveBtnText = "Förslag godkänd"
+    setTimeout( () => { this.$store.dispatch("getDrafts") }, 1500)
+   },
+
     postMsgToContacts() {
     const clientMsg = {
       text: this.textareaInput,
@@ -53,29 +59,20 @@ export default {
       filename: document.getElementById(this.draft.id).getElementsByTagName('img')[0].alt
     };      
     this.$store.dispatch("postMsgToContacts", clientMsg);
+    this.commentBtnText = "Kommentar skickad";
     this.textareaDisabled = true;
-    this.disableDisapproveBtn = true;
-    this.disapproveBtnText = "Skiss underkänd"
-    setTimeout( () => { this.$store.dispatch("getDrafts") }, 1500)
+    this.disableCommentBtn = true;
+    this.commentBtnText = "Kommentar skickad"
     },
 
-    patchDraft() {
-    this.$store.dispatch("patchDraft", this.draft);
+    rejectDraft() {
+    this.$store.dispatch("rejectDraft", this.draft);
     this.textareaDisabled = true;
-    this.disableDisapproveBtn = true;
-    this.disapproveBtnText = "Skiss underkänd"
+    this.disableRejectBtn = true;
+    this.disapproveBtnText = "Förslag underkänd"
     setTimeout( () => { this.$store.dispatch("getDrafts") }, 1500)
     },
-
-    postOrder(){
-    this.$store.dispatch('postOrder', { id: this.draft.id, filename: this.draft.filename } )
-    this.$store.dispatch("removeDraft", this.draft);
-    this.disableApproveBtn = true;
-    this.approveBtnText = "Skiss godkänd"
-    setTimeout( () => { this.$store.dispatch("getDrafts") }, 1500)
-   }
   }
-  
 }
 </script>
 
@@ -87,7 +84,6 @@ export default {
   display: grid;
   grid-template-columns: 70% 30%;
   grid-template-areas: "left right";
-  min-height: 500px;
   border-bottom: 1px solid #292929;
 }
 span {
@@ -117,7 +113,6 @@ h3 {
   flex-direction: column;
 }
 #disapprove-btn {
-  margin-top: 1%;
   border: none;
   height: 50px;
   width: 180px;
@@ -125,12 +120,13 @@ h3 {
   background-color: #3b5998;
   color: white;
   cursor: pointer;
+  margin-bottom: 10px;
 }  
-#patch-btn {
+#reject-btn {
   margin-top: 1%;
   border: none;
-  height: 50px;
-  width: 180px;
+  height: 40px;
+  width: 130px;
   border-radius: 5px;
   background-color:#DC143C;
   color: white;
@@ -152,9 +148,5 @@ textarea {
   -moz-box-shadow: none;
   resize: none;    
   overflow: auto;
-}
-#comments {
-  max-width: 150px;
-  margin-bottom: 10%;
 }
 </style>

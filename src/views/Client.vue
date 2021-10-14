@@ -8,14 +8,17 @@
     <div class="right-column">
       <router-link to="/mailbox-client">
         <h4>Visa mailbox</h4>
+        <p class="counter">{{ totalMessages }}</p>
         <img src="@/assets/mail-5886.svg" alt="mailbox" width="50" height="50">
       </router-link>
       <router-link to="/approved-client">
         <h4>Visa godkända</h4>
+        <p class="counter">{{ totalOrders }}</p>
         <img src="@/assets/like-922.svg" alt="approved" width="50" height="50">
       </router-link>       
       <router-link to="/rejected-client">
         <h4>Visa underkända</h4>
+        <p class="counter">{{ totalRejected }}</p>
         <img src="@/assets/dislike-898.svg" alt="rejected" width="50" height="50">
       </router-link>       
     </div> 
@@ -38,9 +41,30 @@ export default {
   computed: {
   drafts() {
   return this.$store.state.drafts;
+    },
+  totalMessages() {
+  let total;
+  if(this.$store.state.inboxClient != undefined){
+    total = this.$store.state.inboxClient.length
+  }  
+  return total
+  },    
+  totalOrders() {
+  let total;
+  if(this.$store.state.orders != undefined){
+    total = this.$store.state.orders.length
+  }  
+  return total  
   },
+  totalRejected() {
+  let total;
+  if(this.$store.state.rejectedDrafts != undefined){
+    total = this.$store.state.rejectedDrafts.length
+  }  
+  return total
+  }    
   }
-
+  
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -58,8 +82,9 @@ export default {
 a {
   text-decoration: none;
 }
-h4 {
+h4, .counter {
   margin: 0;
+  color: #2c3e50;
 }
 @media(max-width: 900px) {
     .client-component-wrapper{

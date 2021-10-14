@@ -18,7 +18,8 @@ describe('App.vue', () => {
 			getDrafts: jest.fn(),
             getOrders: jest.fn(),
             getInboxClient: jest.fn(),
-            getInboxContacts: jest.fn()
+            getInboxContacts: jest.fn(),
+            getRejectedDrafts: jest.fn()
 		};
 
   store = new Vuex.Store({

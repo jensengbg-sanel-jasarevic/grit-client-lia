@@ -1,5 +1,5 @@
 <template>
-  <div class="upload-file-wrapper">
+  <div class="upload-file-component-wrapper">
     <form @submit.prevent="uploadFile" enctype="multipart/form-data">
         <label for="file-uploader">Bläddra filer
         <input type="file" id="file-uploader" accept=".jpg, .png" @change="filesChange($event.target.name, $event.target.files); fileType = $event.target.files[0].type"> 
@@ -65,11 +65,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.upload-file-wrapper {
+.upload-file-component-wrapper {
   margin-top: 2%;
 }
 p {
-  color: #2c3e50;
+  color: #42b983;
+}
+a{
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1.3em;
+  color:#ff9800; 
 }
 label {
   cursor: pointer;
@@ -93,14 +99,5 @@ button {
   padding: 10px;
   color: white;
   cursor: pointer;
-}
-a{
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 1.3em;
-  color:#ff9800; 
-}
-.p-upload-file {
-  color: #42b983;
 }
 </style>
