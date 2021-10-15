@@ -14,7 +14,7 @@
         
         <div v-if="draftUploadedText">
           <p class="p-upload-file">Förslag skickad.</p>
-          <p class="p-upload-file"><a href="https://vueclient-100.herokuapp.com/">Klicka här</a> för att omdirigeras till sidan för att se förslaget.</p> 
+          <p class="p-upload-file"><a href="https://vueclient-100.herokuapp.com/#/client">Klicka här</a> för att omdirigeras till sidan för att se förslaget.</p> 
         </div>
     </form>
   </div>
