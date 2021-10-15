@@ -18,7 +18,8 @@ describe('Contacts.vue', () => {
 		}
 
     actions = {
-			getOrders: jest.fn(),
+      getInboxContacts: jest.fn(),
+			getOrders: jest.fn()
 		};
 
   store = new Vuex.Store({

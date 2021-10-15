@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    API_URL: "https://nodeserver-100.herokuapp.com",
+    API_URL: "http://localhost:5000",
     drafts: null,
     rejectedDrafts: null,
     orders: null,

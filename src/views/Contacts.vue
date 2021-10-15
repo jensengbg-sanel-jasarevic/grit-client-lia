@@ -1,7 +1,7 @@
 <template>
   <div class="contacts-component-wrapper">  
     <div> 
-      <h1>Lägg till bild</h1>
+      <h1>Lägg till ny skissförslag</h1>
       <p>Välj bild att lägga till som skissförslag till kund.</p>
       <UploadFile />
     </div>
@@ -30,6 +30,11 @@ export default {
   UploadFile
   },
   
+  beforeMount(){
+  this.$store.dispatch('getInboxContacts')
+  this.$store.dispatch('getOrders')
+  },
+
   computed: {
   totalMessages() {
     let total;

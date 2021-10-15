@@ -20,8 +20,11 @@ describe('Client.vue', () => {
 		}
 
     actions = {
-			getDrafts: jest.fn(),
-      getImage: jest.fn()
+      getImage: jest.fn(),
+      getDrafts: jest.fn(),
+      getInboxClient: jest.fn(),
+      getRejectedDrafts: jest.fn(),
+      getOrders: jest.fn()
 		};
 
   store = new Vuex.Store({

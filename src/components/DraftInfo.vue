@@ -7,7 +7,7 @@
       <div :id="draft.id"></div>
       <span><b>message:</b> {{ draft.message }}</span>
       <span><b>created at:</b> {{ draft.created_at }}</span>
-      <button id="reject-btn" :disabled="disableRejectBtn" @click="rejectDraft">{{ disapproveBtnText }}</button>
+      <button id="reject-btn" :disabled="disableRejectBtn" @click="rejectDraft">{{ rejectBtnText }}</button>
       <label for="comments">
         <textarea rows="4" placeholder="Lägg till en kommentar" v-model="textareaInput" :disabled="textareaDisabled" />
       </label>
@@ -33,7 +33,7 @@ export default {
  data() {
     return {
     approveBtnText: "Godkänn förslag",
-    disapproveBtnText: "Underkänn förslag",
+    rejectBtnText: "Underkänn förslag",
     commentBtnText: "Skicka kommentar",
     textareaInput: "",
     textareaDisabled: false,
@@ -45,8 +45,7 @@ export default {
 
   methods: {
     postOrder(){
-    this.$store.dispatch('postOrder', { id: this.draft.id, filename: this.draft.filename } )
-    this.$store.dispatch("removeDraft", this.draft);
+    this.$emit('postOrder', { id: this.draft.id, filename: this.draft.filename }) 
     this.disableApproveBtn = true;
     this.approveBtnText = "Förslag godkänd"
     setTimeout( () => { this.$store.dispatch("getDrafts") }, 1500)
@@ -66,10 +65,10 @@ export default {
     },
 
     rejectDraft() {
-    this.$store.dispatch("rejectDraft", this.draft);
+    this.$emit('rejectedDraft', this.draft)        
     this.textareaDisabled = true;
     this.disableRejectBtn = true;
-    this.disapproveBtnText = "Förslag underkänd"
+    this.rejectBtnText = "Förslag underkänd"
     setTimeout( () => { this.$store.dispatch("getDrafts") }, 1500)
     },
   }

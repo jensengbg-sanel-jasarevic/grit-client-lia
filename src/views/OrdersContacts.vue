@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <img class="back-arrow" @click="$router.go(-1)" src="@/assets/curved-arrow-220.svg" alt="back" width="50" height="50">
+      <img class="back-arrow" @click="$router.push('/contacts')" src="@/assets/curved-arrow-220.svg" alt="back" width="50" height="50">
     </div>
     <div> 
       <img src="@/assets/list-6242.svg" alt="orders" width="50" height="50">  
