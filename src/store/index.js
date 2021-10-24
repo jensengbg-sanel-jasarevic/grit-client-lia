@@ -5,12 +5,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    API_URL: "https://nodeserver-100.herokuapp.com",
+    API_URL: "http://nodeserver-100.herokuapp.com",
     drafts: null,
     rejectedDrafts: null,
     orders: null,
     inboxContacts: null,
-    inboxClient: null
+    inboxClient: null,
+    generatedKey: null,
+    accountCreated: null
   },
   mutations: {
     setDrafts(state, drafts){
@@ -27,9 +29,39 @@ export default new Vuex.Store({
     },
     setInboxClient(state, inbox){
       state.inboxClient = inbox;
+    },
+    setGeneratedKey(state, generatedKey){
+      state.generatedKey = generatedKey;
+    },
+    setAccountCreated(state, text){
+      state.accountCreated = text;
     }
   },
   actions: {
+    async createUserAccount(ctx, createUserAccount){
+      try{
+        await axios.post(`${ctx.state.API_URL}/api/login/registration`, createUserAccount);            
+        ctx.commit('setAccountCreated', "Användarkonto skapat.")
+      } catch(error){
+        console.error(error)
+      }
+    },
+    async login(ctx, credentials) {
+      let resp = await axios.post(`${ctx.state.API_URL}/api/login`, {
+        username: credentials.username,
+        password: credentials.password
+      });
+      console.log(resp)
+      sessionStorage.setItem('token', resp.data.token);
+    },
+    async generateUserKey(ctx){
+      let resp = await axios.post(`${ctx.state.API_URL}/api/login/userkey`, { user: "admin" }, {
+       headers: {
+          'authorization': `Bearer ${sessionStorage.getItem('token')}` 
+        }
+      });
+      ctx.commit('setGeneratedKey', resp.data.userKey)
+    },
     async getDrafts(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/drafts`);
       const rejectedDrafts = resp.data.filter(item => item.rejected === null);

@@ -7,6 +7,8 @@ import Client from '../views/Client.vue'
 import MailboxClient from '../views/MailboxClient.vue'
 import ApprovedClient from '../views/ApprovedClient.vue'
 import RejectedClient from '../views/RejectedClient.vue'
+import Register from '../views/Register.vue'
+import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
@@ -45,6 +47,16 @@ const routes = [
     path: '/rejected-client',
     name: 'RejectedClient',
     component: RejectedClient
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
   }
 ]
 

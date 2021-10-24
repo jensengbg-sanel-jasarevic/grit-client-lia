@@ -4,6 +4,7 @@
       <h1>Lägg till ny skissförslag</h1>
       <p>Välj bild att lägga till som skissförslag till kund.</p>
       <UploadFile />
+      <KeyGenerator />
     </div>
     <div class="right-column">
       <router-link to="/mailbox-contacts">
@@ -22,12 +23,14 @@
 
 <script>
 import UploadFile from '@/components/UploadFile'
+import KeyGenerator from '@/components/KeyGenerator'
 
 export default {
   name: 'Contacts',
 
   components: {
-  UploadFile
+  UploadFile,
+  KeyGenerator
   },
   
   beforeMount(){
@@ -50,7 +53,7 @@ export default {
     }
     return total
     }    
-  }
+  },
   
 }
 </script>
