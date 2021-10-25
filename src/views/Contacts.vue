@@ -64,6 +64,10 @@ export default {
   grid-template-columns: 50% 50%;
   margin-left: 5%;
   margin-right: 5%;
+  min-height: 70vh;
+  background-color: #fff;
+  padding: 2%;
+  border-radius: 5px;
 }
 .right-column{
   display: flex;

@@ -79,7 +79,7 @@ input {
   border: none;
   height: 40px;
   width: 110px;
-  margin-left: 60%;
+  margin-left: 70%;
   border-radius: 5px;
   background-color: #3b5998;
   color: white;
