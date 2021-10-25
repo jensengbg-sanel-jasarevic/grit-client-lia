@@ -1,5 +1,5 @@
 <template>
-  <div class="client-component-wrapper">
+  <div class="client-view-wrapper">
     <div>
       <h2 v-if="drafts != '' ">Skissförslag</h2>
       <h2 v-else>Det finns för närvarande inga nya skissförslag att visa</h2>
@@ -103,7 +103,7 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.client-component-wrapper{
+.client-view-wrapper{
   display: grid;
   grid-template-columns: 75% 25%;
   margin-left: 5%;
@@ -121,7 +121,7 @@ h4, .counter {
   color: #2c3e50;
 }
 @media(max-width: 900px) {
-    .client-component-wrapper{
+    .client-view-wrapper{
         grid-template-columns: 1fr;
         grid-row-gap: 10%;
     }

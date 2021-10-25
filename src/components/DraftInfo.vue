@@ -11,7 +11,7 @@
       <label for="comments">
         <textarea rows="4" placeholder="Lägg till en kommentar" v-model="textareaInput" :disabled="textareaDisabled" />
       </label>
-      <button id="disapprove-btn" @click="postMsgToContacts" :disabled="disableCommentBtn">{{ commentBtnText }}</button>
+      <button id="leave-comment-btn" @click="postMsgToContacts" :disabled="disableCommentBtn">{{ commentBtnText }}</button>
     </div>
   </div>
 </template>
@@ -111,7 +111,7 @@ h3 {
   display: flex;
   flex-direction: column;
 }
-#disapprove-btn {
+#leave-comment-btn {
   border: none;
   height: 50px;
   width: 180px;

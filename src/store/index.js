@@ -5,14 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    API_URL: "https://nodeserver-100.herokuapp.com",
+    API_URL: "http://localhost:5000",
     drafts: null,
     rejectedDrafts: null,
     orders: null,
     inboxContacts: null,
     inboxClient: null,
     generatedKey: null,
-    accountCreated: null
+    registrationAccepted: null,
+    registrationRejected: null
   },
   mutations: {
     setDrafts(state, drafts){
@@ -33,16 +34,24 @@ export default new Vuex.Store({
     setGeneratedKey(state, generatedKey){
       state.generatedKey = generatedKey;
     },
-    setAccountCreated(state, text){
-      state.accountCreated = text;
+    setRegistrationAccepted(state, text){
+      state.registrationAccepted = text;
+      state.registrationRejected = null;
+    },
+    setRegistrationRejected(state, text){
+      state.registrationRejected = text;
+      state.registrationAccepted = null;
     }
   },
   actions: {
     async createUserAccount(ctx, createUserAccount){
       try{
-        await axios.post(`${ctx.state.API_URL}/api/login/registration`, createUserAccount);            
-        ctx.commit('setAccountCreated', "Användarkonto skapat.")
+        await axios.post(`${ctx.state.API_URL}/api/login/registration`, createUserAccount); 
+        let accepted = "Användarkonto skapat."       
+        ctx.commit('setRegistrationAccepted', accepted)
       } catch(error){
+        let rejected = "Ogiltig användarnyckel."
+        ctx.commit('setRegistrationRejected', rejected)
         console.error(error)
       }
     },

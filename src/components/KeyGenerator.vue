@@ -3,7 +3,10 @@
     <h1>Bjud in ny kund</h1>
     <p>Generera en nyckel som kan utnyttjas av kund till att skapa konto.</p>
     <button @click="generateUserKey">Generera nyckel</button>
-    <p v-if="generatedKey" id="generated-key">Nyckel: {{ generatedKey }}</p>
+    <div v-if="generatedKey" id="generated-key">
+      <p>Användarnyckel:</p>
+      <p> {{ generatedKey }}</p>
+    </div>
   </div>
 </template>
 

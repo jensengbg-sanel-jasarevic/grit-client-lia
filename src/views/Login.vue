@@ -1,12 +1,10 @@
 <template>
-  <div class="login">
-
+  <div class="login-view-wrapper">
     <section>
       <input type="text" name="username" v-model="username" placeholder="Användarnamn" autocomplete="off">
       <input type="password" name="password" v-model="password" placeholder="Lösenord">
-      <a href="#" class="btn" @click.prevent="login">Logga in</a>
+      <button @click="login" id="login-btn">Logga in</button>
     </section>
-
   </div>  
 </template>
 
@@ -31,5 +29,44 @@ export default {
 </script>
 
 <style scoped>
-
+.login-view-wrapper{
+  display: flex;
+  justify-content: center;
+}
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: #fff;
+  min-height: 50vh;
+  min-width: 30vw;
+  padding: 2%;
+  border-radius: 5px;
+}
+input {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 2px solid #3b5998;
+  outline: none;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  padding: 2%;
+}
+#login-btn {
+  border: none;
+  height: 40px;
+  margin-left: 60%;
+  border-radius: 5px;
+  background-color: #3b5998;
+  color: white;
+  cursor: pointer;
+}
+@media(max-width: 900px) {
+    section {
+      min-width: 70vw;
+  }
+    #login-btn{
+      margin-left: 0%;
+    }
+}  
 </style>
