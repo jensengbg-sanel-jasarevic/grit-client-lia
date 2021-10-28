@@ -1,8 +1,17 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Contacts |</router-link>
-      <router-link to="/client">| Client </router-link>
+      <div v-if="navigationBarVisitor" @click="defaultStoreValues">
+        <router-link to="/login">Logga in</router-link>
+        <span> | </span>
+        <router-link to="/register">Registrera</router-link>
+      </div>
+      <div v-if="role === 'admin'" >
+        <router-link to="/">Startsida - inloggad</router-link>
+      </div>
+      <div v-if="role === 'client'">
+        <router-link to="/client">Startsida - inloggad</router-link>
+      </div>
     </div>
     <router-view/>
   </div>
@@ -16,8 +25,22 @@ export default {
   this.$store.dispatch('getDrafts');
   this.$store.dispatch("getRejectedDrafts")
   this.$store.dispatch('getOrders')
-  this.$store.dispatch('getInboxClient')
-  this.$store.dispatch('getInboxContacts')
+  this.$store.dispatch('getMailbox')
+  },
+
+  computed: {
+  role() {
+    return this.$store.state.role
+    },
+  navigationBarVisitor() {
+    return this.$store.state.navigationBarVisitor
+    }
+  },
+
+  methods: {
+  defaultStoreValues() {
+  this.$store.dispatch('defaultStoreValues')
+    }
   },
 
 }
@@ -48,8 +71,10 @@ h1, h4 {
 #nav a {
   font-weight: bold;
   color: #2c3e50;
+  text-decoration: none;
 }
 #nav a.router-link-exact-active {
-  color: #42b983;
+  font-weight: bold;
+  font-size: larger;
 }
 </style>

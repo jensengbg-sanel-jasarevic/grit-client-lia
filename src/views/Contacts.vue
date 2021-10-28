@@ -1,12 +1,13 @@
 <template>
-  <div class="contacts-component-wrapper">  
+  <div v-if="authorized" class="contacts-component-wrapper">  
     <div> 
+      <h1 @click="logout">Logga ut</h1>
       <h1>Lägg till ny skissförslag</h1>
       <p>Välj bild att lägga till som skissförslag till kund.</p>
-      <UploadFile />
+      <UploadFile :user="user" />
       <KeyGenerator />
     </div>
-    <div class="right-column">
+    <div class="right-column" @click="defaultStoreValues">
       <router-link to="/mailbox-contacts">
         <h4>Visa mailbox</h4>
         <p class="counter">{{ totalMessages }}</p>
@@ -34,15 +35,23 @@ export default {
   },
   
   beforeMount(){
-  this.$store.dispatch('getInboxContacts')
+  this.$store.dispatch('getMailbox')
   this.$store.dispatch('getOrders')
   },
 
   computed: {
+  authorized() {
+  return this.$store.state.authorized
+  },
+  user() {
+  return this.$store.state.user;
+  },  
   totalMessages() {
     let total;
-    if(this.$store.state.inboxContacts != undefined){
-    total = this.$store.state.inboxContacts.length
+    let mailbox = this.$store.state.mailbox
+    if(mailbox != undefined){
+    let userMailbox = mailbox.filter(msg => msg.receiver === this.user);
+    total = userMailbox.length
     } 
     return total
     },
@@ -54,6 +63,17 @@ export default {
     return total
     }    
   },
+
+  methods: {
+    logout() {
+      this.$store.dispatch("logout");
+      this.$store.state.role = null
+      this.$store.state.navigationBarVisitor = true
+    },
+  defaultStoreValues() {
+  this.$store.dispatch('defaultStoreValues')
+    }    
+  }  
   
 }
 </script>

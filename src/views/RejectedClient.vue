@@ -26,8 +26,13 @@ export default {
   },
   
   computed: {
+  user() {
+  return this.$store.state.user;
+  },       
   rejectedDrafts() {
-  return this.$store.state.rejectedDrafts;
+  let rejectedList = this.$store.state.rejectedDrafts
+  let rejectedUser = rejectedList.filter(item => item.receiver === this.user && item.rejected === "rejected");
+  return rejectedUser;
   }     
   }
 

@@ -1,12 +1,13 @@
 <template>
   <div class="inbox-component-wrapper">
     <div>
+      <p><b>Avsändare: </b> <span>{{ msg.sender }}</span> </p>
       <p><b>Angående: </b>  
-        <button @click="getImage" :disabled="disableBtn" class="inbox-img-btn" :id="`btn-inbox-${msg.id}`">draft-ID #{{ msg.messagesId }}</button>
+        <button @click="getImage" :disabled="disableBtn" class="inbox-img-btn" :id="`btn-inbox-${msg.id}`">draft-ID #{{ msg.draftId }}</button>
       </p>
       <div :id="`${msg.id}`"></div>
       <p><b>Meddelande:</b></p>
-      <p class="inbox-msg-font">{{ msg.messages }}</p>
+      <p class="inbox-msg-font">{{ msg.message }}</p>
     </div>
     <form @submit.prevent="emitMessage">
       <label for="message">
@@ -25,7 +26,8 @@ export default {
   name: 'Inbox',
 
   props: {
-    msg: Object
+    msg: Object,
+    user: String
   },      
 
   data() {
@@ -55,8 +57,10 @@ export default {
       this.textEmpty = false
       this.textSent = true
       const message = {
+        writer: this.user,
+        receiver: this.msg.sender,
         text: this.textareaMessage,
-        textId: this.msg.messagesId,
+        draftId: this.msg.draftId,
         filename: this.msg.filename
         };
       this.$emit('postMessage', message)      

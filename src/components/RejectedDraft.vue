@@ -8,7 +8,7 @@
       <label for="comments">
         <textarea rows="4" placeholder="Lägg till en kommentar" v-model="textareaInput" :disabled="textareaDisabled"/>
       </label>
-      <button id="post-msg-contacts-btn" @click="postMsgToContacts" :disabled="disableCommentBtn">{{ commentBtnText }}</button>
+      <button id="post-msg-contacts-btn" @click="postMailbox" :disabled="disableCommentBtn">{{ commentBtnText }}</button>
     </div>
   </div>
 </template>
@@ -38,6 +38,12 @@ export default {
     };
   },
 
+  computed: {
+  user() {
+  return this.$store.state.user;
+  }
+  },
+
   methods: {
     postOrder(){
     this.$store.dispatch('postOrder', { id: this.draft.id, filename: this.draft.filename } )
@@ -47,13 +53,15 @@ export default {
     setTimeout( () => { this.$store.dispatch("getRejectedDrafts") }, 1500);
    },
    
-    postMsgToContacts() {
+    postMailbox() {
     const clientMsg = {
+      writer: this.user,
+      receiver: this.draft.sender,
       text: this.textareaInput,
-      textId: this.draft.id,
+      draftId: this.draft.id,
       filename: document.getElementById(this.draft.id).getElementsByTagName('img')[0].alt
     };      
-    this.$store.dispatch("postMsgToContacts", clientMsg);
+    this.$store.dispatch("postMailbox", clientMsg);
     this.commentBtnText = "Kommentar skickad";
     this.textareaDisabled = true;
     this.disableCommentBtn = true;

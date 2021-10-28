@@ -6,10 +6,10 @@
     <div>      
       <img src="@/assets/feedback-message-4644.svg" alt="message" width="50" height="50">      
       <h1>Mailbox</h1>
-      <h3>Inbox: kund</h3>
+      <h3>Inbox: {{ user }}</h3>
       <p>Respons från contacts för underkända skissförslag.</p>
       <p class="underline">Klicka på det specifika draft-ID som finns tillgänglig under varje meddelanderuta för att öppna skissförslaget.</p>
-      <Inbox @postMessage="listen" v-for="msg in inboxClient" :key="msg.id" :msg="msg" />
+      <Inbox @postMessage="listen" :user="user" v-for="msg in mailbox" :key="msg.id" :msg="msg" />
     </div>
   </div>
 </template>
@@ -25,18 +25,21 @@ export default {
   },
 
   beforeMount(){
-  this.$store.dispatch('getInboxClient')
+  this.$store.dispatch('getMailbox')
   },
 
   computed: {
-  inboxClient() {
-  return this.$store.state.inboxClient;
+  user() {
+  return this.$store.state.user;
+  },
+  mailbox() {
+  return this.$store.state.mailbox.filter(msg => msg.receiver === this.user);
   }
   },
 
   methods: {
   listen(message) {
-  this.$store.dispatch("postMsgToContacts", message);     
+  this.$store.dispatch("postMailbox", message);     
   }
   }
   

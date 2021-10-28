@@ -5,13 +5,11 @@
     <div class="image-box">
       <h3>Draft-ID #{{draft.id}}</h3>
       <div :id="draft.id"></div>
-      <span><b>message:</b> {{ draft.message }}</span>
-      <span><b>created at:</b> {{ draft.created_at }}</span>
       <button id="reject-btn" :disabled="disableRejectBtn" @click="rejectDraft">{{ rejectBtnText }}</button>
       <label for="comments">
         <textarea rows="4" placeholder="Lägg till en kommentar" v-model="textareaInput" :disabled="textareaDisabled" />
       </label>
-      <button id="leave-comment-btn" @click="postMsgToContacts" :disabled="disableCommentBtn">{{ commentBtnText }}</button>
+      <button id="leave-comment-btn" @click="postMailbox" :disabled="disableCommentBtn">{{ commentBtnText }}</button>
     </div>
   </div>
 </template>
@@ -21,7 +19,8 @@ export default {
   name: 'DraftInfo',
 
   props: {
-    draft: Object
+    draft: Object,
+    user: String
   },
 
   mounted() {
@@ -45,19 +44,21 @@ export default {
 
   methods: {
     postOrder(){
-    this.$emit('postOrder', { id: this.draft.id, filename: this.draft.filename }) 
+    this.$emit('postOrder', { client: this.user, id: this.draft.id, filename: this.draft.filename }) 
     this.disableApproveBtn = true;
     this.approveBtnText = "Förslag godkänd"
     setTimeout( () => { this.$store.dispatch("getDrafts") }, 1500)
    },
 
-    postMsgToContacts() {
+    postMailbox() {
     const clientMsg = {
+      writer: this.user,
+      receiver: this.draft.sender,
       text: this.textareaInput,
-      textId: this.draft.id,
+      draftId: this.draft.id,
       filename: document.getElementById(this.draft.id).getElementsByTagName('img')[0].alt
     };      
-    this.$store.dispatch("postMsgToContacts", clientMsg);
+    this.$store.dispatch("postMailbox", clientMsg);
     this.commentBtnText = "Kommentar skickad";
     this.textareaDisabled = true;
     this.disableCommentBtn = true;

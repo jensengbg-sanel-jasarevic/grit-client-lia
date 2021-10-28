@@ -7,6 +7,7 @@
       <DraftInfo 
       @rejectedDraft="sendRejectedDraft"
       @postOrder="sendOrder"
+      :user="user"
        v-for="draft in drafts" :key="draft.created_at" :draft="draft" 
        />
 
@@ -42,7 +43,7 @@ export default {
   
   beforeMount(){
   this.$store.dispatch("getDrafts");
-  this.$store.dispatch('getInboxClient')
+  this.$store.dispatch('getMailbox')
   this.$store.dispatch('getRejectedDrafts')
   this.$store.dispatch('getOrders')
   },
@@ -73,27 +74,38 @@ export default {
   },
 
   computed: {
+  user() {
+  return this.$store.state.user;
+  },    
   drafts() {
-  return this.$store.state.drafts;
-    },
+  let draftsList = this.$store.state.drafts
+  let draftsUser = draftsList.filter(item => item.receiver === this.user);
+  return draftsUser
+  },
   totalMessages() {
   let total;
-  if(this.$store.state.inboxClient != undefined){
-    total = this.$store.state.inboxClient.length
+  let mailbox = this.$store.state.mailbox
+  if(mailbox != undefined){
+    let userMailbox = mailbox.filter(msg => msg.receiver === this.user);
+    total = userMailbox.length
   }  
   return total
   },    
   totalOrders() {
   let total;
-  if(this.$store.state.orders != undefined){
-    total = this.$store.state.orders.length
+  let orders = this.$store.state.orders
+  if(orders != undefined){
+    let userOrders = orders.filter(item => item.client === this.user);
+    total = userOrders.length
   }  
   return total  
   },
   totalRejected() {
   let total;
-  if(this.$store.state.rejectedDrafts != undefined){
-    total = this.$store.state.rejectedDrafts.length
+  let rejectedDrafts = this.$store.state.rejectedDrafts
+  if(rejectedDrafts != undefined){
+    let userRejectedDrafts = rejectedDrafts.filter(item => item.receiver === this.user);
+    total = userRejectedDrafts.length
   }  
   return total
   }    

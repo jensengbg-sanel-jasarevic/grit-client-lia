@@ -55,7 +55,8 @@ input {
 #login-btn {
   border: none;
   height: 40px;
-  margin-left: 60%;
+  width: 110px;
+  margin-left: 70%;
   border-radius: 5px;
   background-color: #3b5998;
   color: white;

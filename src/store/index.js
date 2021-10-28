@@ -1,21 +1,39 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from './../router'
 import axios from 'axios'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     API_URL: "https://nodeserver-100.herokuapp.com",
+    navigationBarVisitor: true,
+    authorized: false,
+    user: null,
+    role: null,
+    generatedKey: null,
     drafts: null,
     rejectedDrafts: null,
     orders: null,
-    inboxContacts: null,
-    inboxClient: null,
-    generatedKey: null,
+    mailbox: null,
     registrationAccepted: null,
     registrationRejected: null
   },
   mutations: {
+    setAuthorized(state, replacement){
+      state.authorized = replacement
+    },
+    setUserInfo(state, data){
+      state.user = data.name
+      state.role = data.role
+    },
+    setGeneratedKey(state, generatedKey){
+      state.generatedKey = generatedKey;
+    },
+    setNavigationBarVisitor(state, value){
+      state.navigationBarVisitor = value;
+    },    
     setDrafts(state, drafts){
       state.drafts = drafts;
     },
@@ -25,14 +43,8 @@ export default new Vuex.Store({
     setOrders(state, orders){
       state.orders = orders;
     },
-    setInboxContacts(state, inbox){
-      state.inboxContacts = inbox;
-    },
-    setInboxClient(state, inbox){
-      state.inboxClient = inbox;
-    },
-    setGeneratedKey(state, generatedKey){
-      state.generatedKey = generatedKey;
+    setMailbox(state, mailbox){
+      state.mailbox = mailbox;
     },
     setRegistrationAccepted(state, text){
       state.registrationAccepted = text;
@@ -41,13 +53,21 @@ export default new Vuex.Store({
     setRegistrationRejected(state, text){
       state.registrationRejected = text;
       state.registrationAccepted = null;
+    },
+    setDefaultStoreValues(state){
+      state.registrationRejected = null;
+      state.registrationAccepted = null;
+      state.generatedKey = null;
     }
   },
   actions: {
+    async defaultStoreValues(ctx){
+      ctx.commit('setDefaultStoreValues')
+    },
     async createUserAccount(ctx, createUserAccount){
       try{
-        await axios.post(`${ctx.state.API_URL}/api/login/registration`, createUserAccount); 
-        let accepted = "Användarkonto skapat."       
+       await axios.post(`${ctx.state.API_URL}/api/registration`, createUserAccount); 
+        let accepted = "Användarkonto skapad."    
         ctx.commit('setRegistrationAccepted', accepted)
       } catch(error){
         let rejected = "Ogiltig användarnyckel."
@@ -56,15 +76,31 @@ export default new Vuex.Store({
       }
     },
     async login(ctx, credentials) {
+      try{
       let resp = await axios.post(`${ctx.state.API_URL}/api/login`, {
         username: credentials.username,
         password: credentials.password
       });
-      console.log(resp)
       sessionStorage.setItem('token', resp.data.token);
+      let userInfo = resp.data
+      ctx.commit("setAuthorized", true)
+      ctx.commit("setUserInfo", userInfo)
+      ctx.commit("setNavigationBarVisitor", false)
+      if (userInfo.role === "admin"){
+      router.push("/")
+      } else {
+        router.push("/client")
+      }
+    } catch(error){
+      console.error(error)
+    }
     },
+    async logout(ctx) {
+      ctx.commit("setAuthorized", false)
+      router.push('/login')
+    },    
     async generateUserKey(ctx){
-      let resp = await axios.post(`${ctx.state.API_URL}/api/login/userkey`, { user: "admin" }, {
+      let resp = await axios.post(`${ctx.state.API_URL}/api/keygen`, { user: "admin" }, {
        headers: {
           'authorization': `Bearer ${sessionStorage.getItem('token')}` 
         }
@@ -114,27 +150,20 @@ export default new Vuex.Store({
     async postSketch(ctx, payload){
       let formData = new FormData();
       formData.append("image", payload); // Construct key/value pairs from form.
-      await axios.post(`${ctx.state.API_URL}/api/sketches`, formData); 
+      await axios.post(`${ctx.state.API_URL}/api/storage`, formData); 
     },
     async postDraft(ctx, payload){
-      await axios.post(`${ctx.state.API_URL}/api/drafts`, { filename: payload } ); 
+      await axios.post(`${ctx.state.API_URL}/api/drafts`, payload); 
     },
     async postOrder(ctx, payload) {
       await axios.post(`${ctx.state.API_URL}/api/orders/`, payload);
     },
-    async postMsgToClient(ctx, message) {
-      await axios.post(`${ctx.state.API_URL}/api/mailbox/client`, { text: message.text, textId: message.textId, filename: message.filename });
+    async postMailbox(ctx, message) {
+      await axios.post(`${ctx.state.API_URL}/api/mailbox`, { text: message.text, draftId: message.draftId, sender: message.writer, receiver: message.receiver, filename: message.filename }); 
     },
-    async postMsgToContacts(ctx, message) {
-      await axios.post(`${ctx.state.API_URL}/api/mailbox/contacts`, { text: message.text, textId: message.textId, filename: message.filename }); 
-    },
-    async getInboxClient(ctx){
-      let resp = await axios.get(`${ctx.state.API_URL}/api/mailbox/client`);
-      ctx.commit('setInboxClient', resp.data.reverse())
-    },
-    async getInboxContacts(ctx){
-      let resp = await axios.get(`${ctx.state.API_URL}/api/mailbox/contacts`);
-      ctx.commit('setInboxContacts', resp.data.reverse())
+    async getMailbox(ctx){
+      let resp = await axios.get(`${ctx.state.API_URL}/api/mailbox`);
+      ctx.commit('setMailbox', resp.data.reverse())
     }
   },
   modules: {

@@ -36,7 +36,7 @@ export default {
 
   methods: {
   createUserAccount(){
-      if (this.username && this.password && this.userkey != "") {
+      if (this.username && this.password && this.userkey != null) {
           this.$store.dispatch('createUserAccount', { username: this.username, password: this.password, userkey: this.userkey })
           this.textInputUnfilled = ""
       } else {

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Store from '../store/index.js'
 import Contacts from '../views/Contacts.vue'
 import OrdersContacts from '../views/OrdersContacts.vue'
 import MailboxContacts from '../views/MailboxContacts.vue'
@@ -12,56 +13,80 @@ import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
-    path: '/',
-    name: 'Contacts',
-    component: Contacts
-  },
-  {
-    path: '/orders-contacts',
-    name: 'OrdersContacts',
-    component: OrdersContacts
-  },
-  {
-    path: '/mailbox-contacts',
-    name: 'MailboxContacts',
-    component: MailboxContacts
-  },
-  {
-    path: '/client',
-    name: 'Client',
-    component: Client
-  },  
-  {
-    path: '/mailbox-client',
-    name: 'MailboxClient',
-    component: MailboxClient
-  },
-  {
-    path: '/approved-client',
-    name: 'ApprovedClient',
-    component: ApprovedClient
-  },
-  {
-    path: '/rejected-client',
-    name: 'RejectedClient',
-    component: RejectedClient
-  },
-  {
-    path: '/register',
-    name: 'Register',
-    component: Register
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  }
-]
-
 const router = new VueRouter({
-  routes
+  routes: [
+    {
+      path: '/',
+      name: 'Contacts',
+      component: Contacts,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/orders-contacts',
+      name: 'OrdersContacts',
+      component: OrdersContacts,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/mailbox-contacts',
+      name: 'MailboxContacts',
+      component: MailboxContacts,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/client',
+      name: 'Client',
+      component: Client,
+      meta: { requiresAuth: true }
+    },  
+    {
+      path: '/mailbox-client',
+      name: 'MailboxClient',
+      component: MailboxClient,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/approved-client',
+      name: 'ApprovedClient',
+      component: ApprovedClient,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/rejected-client',
+      name: 'RejectedClient',
+      component: RejectedClient,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    }
+  ]
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+        if(Store.state.authorized === false) { 
+          next({
+            path: '/login',
+            query: { redirect: to.fullPath }
+            })
+          } 
+        else { 
+          next() 
+          }
+        } 
+
+  else {
+    next()
+  }
+  
 })
 
 export default router

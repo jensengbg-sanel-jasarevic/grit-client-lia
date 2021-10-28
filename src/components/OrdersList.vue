@@ -1,11 +1,8 @@
 <template>
-  <div class="orders-list-component-wrapper">    
-      <span class="bold">| Order ID: </span>
-      <span id="order-id"> {{ order.id }} | </span>
-      <span class="bold">Message: </span>
-      <span>{{ order.message }} | </span>
-      <span class="bold">Created At: </span>
-      <span>{{ order.created_at }} |</span>
+  <div class="orders-list-component-wrapper">
+      <span>Kund: {{ order.client }}</span>
+      <span> | </span>
+      <span id="bold">Order ID # {{ order.id }}</span>
       <button @click="displayImage" class="show-more" :id="`show-more-btn${order.id}`" :disabled="disableBtn">{{ btnText }}</button>
       <div :id="order.id"></div>
   </div>
@@ -30,7 +27,9 @@ data() {
   displayImage(){
   this.$store.dispatch("getImage", { req: this.order, vueComponent: "OrdersList.vue" });
   this.disableBtn = true
-  setTimeout( () => {   this.btnText = `Order-ID #${this.order.id}` }, 1000)
+  setTimeout( () => {   
+    this.btnText = `Order-ID #${this.order.id}`
+    }, 1000)
   let btn =  document.getElementById(`show-more-btn${this.order.id}`)
   btn.style.cursor = "initial";
   btn.style.textDecoration = "initial"
@@ -52,10 +51,8 @@ data() {
   padding: 10px;
   color: white;
 }
-span {
+#span {
   font-size: 0.8em;
-}
-.bold {
   font-weight: bold;
 }
 .show-more {
@@ -65,6 +62,5 @@ span {
   cursor: pointer;
   font-weight: bold;
   font-size: 25px;
-  text-decoration: underline;
 }
 </style>

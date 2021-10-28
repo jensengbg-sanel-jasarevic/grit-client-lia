@@ -25,9 +25,12 @@ export default {
   this.$store.dispatch("getOrders")
   },
   
-  computed: {      
+  computed: {   
+  user() {
+  return this.$store.state.user;
+  },   
   orders() {
-  return this.$store.state.orders;
+  return this.$store.state.orders.filter(item => item.client === this.user);
   }
   }
 }

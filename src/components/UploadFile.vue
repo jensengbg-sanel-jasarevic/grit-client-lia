@@ -9,12 +9,20 @@
           <p class="p-upload-file">Filtyp: {{ fileType }}</p>
         </div>
         <button v-if="uploadFileBtn" type="submit">Ladda upp bild</button> 
-        <p v-if="fileUploadedText" class="p-upload-file">Bilduppladdning klar. Klicka på 'Skicka förslag' för att gå vidare i processen.</p>
-        <button v-if="sendDraftBtn" @click="postDraft" id="post-draft-btn">Skicka förslag</button> 
         
+        <div v-if="fileUploadedText" class="p-upload-file">
+          <p>Bilduppladdning klar.</p>
+          <p>Ange mottagarens användarkonto som förslag ska sändas till för att slutföra processen.</p>
+        </div>
+
+        <div v-if="sendDraftBtn" class="post-draft-box">
+          <input type="text" name="recipient" v-model="recipient" autocomplete="off" placeholder="Användarkonto">
+          <button @click="postDraft" id="post-draft-btn">Skicka</button> 
+        </div>
+
         <div v-if="draftUploadedText">
-          <p class="p-upload-file">Förslag skickad.</p>
-          <p class="p-upload-file"><a href="https://vueclient-100.herokuapp.com/#/client">Klicka här</a> för att omdirigeras till sidan för att se förslaget.</p> 
+          <p class="p-upload-file">Förslag skickad till kund:</p>
+          <p class="p-upload-file">{{ recipient }}</p>
         </div>
     </form>
   </div>
@@ -23,10 +31,15 @@
 <script>
 export default {
   name: 'UploadFile',
+  
+  props: {
+    user: String
+  },
 
  data() {
     return {
     filenameInfo: "",
+    recipient: null,
     uploadFileBtn: false,
     fileSelectedInfo: false,
     fileUploadedText: false,
@@ -52,8 +65,12 @@ export default {
     this.sendDraftBtn = true
   },
   postDraft(){
-    let filename = this.filenameInfo.split("Filnamn: ")[1];
-    this.$store.dispatch('postDraft', filename)
+    const receiverInfo = {
+      sender: this.user,
+      receiver: this.recipient,
+      filename: this.filenameInfo.split("Filnamn: ")[1],
+    }
+    this.$store.dispatch('postDraft', receiverInfo)
     this.fileUploadedText = false
     this.sendDraftBtn = false
     this.draftUploadedText = true
@@ -99,5 +116,13 @@ button {
   padding: 10px;
   color: white;
   cursor: pointer;
+}
+.post-draft-box > input {
+  border: none; 
+  border:solid 1px #ccc;
+  border-radius: 10px;
+  outline: none;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  padding: 10px;
 }
 </style>
