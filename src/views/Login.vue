@@ -4,6 +4,7 @@
       <input type="text" name="username" v-model="username" placeholder="Användarnamn" autocomplete="off">
       <input type="password" name="password" v-model="password" placeholder="Lösenord">
       <button @click="login" id="login-btn">Logga in</button>
+      <p v-if="loginRejected" class="rejected">{{ loginRejected }}</p> 
     </section>
   </div>  
 </template>
@@ -19,6 +20,12 @@ export default {
   }
   },
 
+  computed: {
+  loginRejected() {
+  return this.$store.state.loginRejected
+  },
+  },
+
   methods: {
   login(){
   this.$store.dispatch('login', { username: this.username, password: this.password })
@@ -32,6 +39,7 @@ export default {
 .login-view-wrapper{
   display: flex;
   justify-content: center;
+  margin-top: 5%;
 }
 section {
   display: flex;
@@ -61,6 +69,9 @@ input {
   background-color: #3b5998;
   color: white;
   cursor: pointer;
+}
+.rejected {
+  color: #DC143C;
 }
 @media(max-width: 900px) {
     section {

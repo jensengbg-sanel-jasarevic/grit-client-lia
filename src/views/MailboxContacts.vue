@@ -1,21 +1,26 @@
 <template>
-  <div>
+  <div class="mailbox-contacts-component-wrapper">
     <div>
       <img class="back-arrow" @click="$router.push('/')" src="@/assets/curved-arrow-220.svg" alt="back" width="50" height="50">
     </div>
     <div>    
       <img src="@/assets/feedback-message-4644.svg" alt="message" width="50" height="50">  
       <h1>Mailbox</h1>
-      <h3>Inbox: {{ user }}</h3>
-            <div @click="displaySentMsgs">CLICK TO SE
-      <div v-if="showSentMsgs">
-      <SentMessages v-for="msg in sentMsgs" :key="msg.message" :msg="msg" />
-      </div>
-      </div>
+      <h2>{{ user }}</h2>
       <p>Feedback från kund för underkända skissförslag.</p>
       <p class="underline">Klicka på det specifika draft-ID som finns tillgänglig under varje meddelanderuta för att se skissförslag som underkänts.</p>
-      <Inbox @postMessage="listen" :user="user" v-for="msg in mailbox" :key="msg.created_at" :msg="msg" />
+      <div class="mailbox-container">
+        <div class="left-box">
+          <h3>Inkorg ({{ mailboxAmount }})</h3>
+          <Inbox @postMessage="listen" :user="user" v-for="msg in mailbox" :key="msg.created_at" :msg="msg" />
+        </div>        
+        <div class="right-box">
+          <h3>Skickat ({{ sentAmount }})</h3>
+          <SentMessages v-for="msg in sent" :key="msg.message" :msg="msg" />
+        </div>
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -31,14 +36,9 @@ export default {
   SentMessages
   },
 
- data() {
-    return {
-      showSentMsgs: false
-    };
-  },
-
   beforeMount(){
   this.$store.dispatch('getMailbox')
+  this.$store.dispatch('getOrders')
   },
 
   computed: {
@@ -48,26 +48,50 @@ export default {
   mailbox() {
   return this.$store.state.mailbox.filter(msg => msg.receiver === this.user);
   },
-  sentMsgs() {
+  sent() {
   return this.$store.state.mailbox.filter(msg => msg.sender === this.user);
-  }
+  },
+  mailboxAmount() {
+  let total;
+  let inboxUser = this.$store.state.mailbox.filter(msg => msg.receiver === this.user)
+  total = inboxUser.length
+  return total
+  },
+  sentAmount() {
+  let total;
+  let sentUser = this.$store.state.mailbox.filter(msg => msg.sender === this.user)
+  total = sentUser.length
+  return total
+  }     
   },
 
   methods: {
   listen(message) {
-  this.$store.dispatch("postMailbox", message);     
+  this.$store.dispatch("postMailbox", message);
+  this.$store.dispatch('getMailbox')     
   },
-  displaySentMsgs() {
-  this.showSentMsgs = true
-  }
   }
 
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.underline{
+.mailbox-contacts-component-wrapper {
+  background-color: #fff;
+  padding: 2%;
+  border-radius: 5px;
+}
+.mailbox-container {
+  display: grid;
+  grid-template-columns: 60% 40%;
+}
+.underline {
   border-bottom: 2px solid #1d1d1d;
   padding: 1%;
+}
+@media(max-width: 900px) {
+  .mailbox-container {
+    grid-template-columns: 1fr;    
+  }
 }
 </style>

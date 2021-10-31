@@ -1,7 +1,6 @@
 <template>
-  <div v-if="authorized" class="contacts-component-wrapper">  
+  <div v-if="role === 'admin'" class="contacts-component-wrapper">  
     <div> 
-      <h1 @click="logout">Logga ut</h1>
       <h1>Lägg till ny skissförslag</h1>
       <p>Välj bild att lägga till som skissförslag till kund.</p>
       <UploadFile :user="user" />
@@ -40,36 +39,31 @@ export default {
   },
 
   computed: {
-  authorized() {
-  return this.$store.state.authorized
-  },
   user() {
   return this.$store.state.user;
+  },
+  role() {
+  return this.$store.state.role;    
   },  
   totalMessages() {
-    let total;
-    let mailbox = this.$store.state.mailbox
+  let total;
+  let mailbox = this.$store.state.mailbox
     if(mailbox != undefined){
     let userMailbox = mailbox.filter(msg => msg.receiver === this.user);
     total = userMailbox.length
     } 
-    return total
-    },
+  return total
+  },
   totalOrders() {
-    let total;
+  let total;
     if(this.$store.state.orders != undefined){
     total = this.$store.state.orders.length
     }
-    return total
-    }    
+  return total
+  }    
   },
 
   methods: {
-    logout() {
-      this.$store.dispatch("logout");
-      this.$store.state.role = null
-      this.$store.state.navigationBarVisitor = true
-    },
   defaultStoreValues() {
   this.$store.dispatch('defaultStoreValues')
     }    

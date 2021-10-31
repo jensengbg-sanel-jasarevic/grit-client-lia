@@ -22,7 +22,10 @@ export default {
   },
   
   beforeMount(){
-  this.$store.dispatch("getRejectedDrafts")
+  this.$store.dispatch('getRejectedDrafts')
+  this.$store.dispatch("getDrafts");
+  this.$store.dispatch('getMailbox')
+  this.$store.dispatch('getOrders')
   },
   
   computed: {

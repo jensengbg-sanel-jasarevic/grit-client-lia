@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="orders-client-component-wrapper">
     <div>
       <img class="back-arrow" @click="$router.push('/client')" src="@/assets/curved-arrow-220.svg" alt="back" width="50" height="50">
     </div>
@@ -16,13 +16,16 @@
 import OrdersList from '@/components/OrdersList'
 
 export default {
-  name: 'ApprovedClient',
+  name: 'OrdersClient',
   components: {
   OrdersList
   },
   
   beforeMount(){
-  this.$store.dispatch("getOrders")
+  this.$store.dispatch('getOrders')
+  this.$store.dispatch('getMailbox')
+  this.$store.dispatch("getDrafts");
+  this.$store.dispatch('getRejectedDrafts')
   },
   
   computed: {   
@@ -37,7 +40,12 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.underline{
+.orders-client-component-wrapper {
+  background-color: #fff;
+  padding: 2%;
+  border-radius: 5px;
+}
+.underline {
   border-bottom: 2px solid #42b983;
   padding: 1%;
 }

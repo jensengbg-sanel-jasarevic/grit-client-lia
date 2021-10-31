@@ -6,11 +6,13 @@
         <span> | </span>
         <router-link to="/register">Registrera</router-link>
       </div>
-      <div v-if="role === 'admin'" >
+      <div v-if="role === 'admin'">
         <router-link to="/">Startsida - inloggad</router-link>
+        <button @click="logout" class="logout-btn">Logga ut</button>
       </div>
       <div v-if="role === 'client'">
         <router-link to="/client">Startsida - inloggad</router-link>
+        <button @click="logout" class="logout-btn">Logga ut</button>
       </div>
     </div>
     <router-view/>
@@ -40,7 +42,12 @@ export default {
   methods: {
   defaultStoreValues() {
   this.$store.dispatch('defaultStoreValues')
-    }
+  },
+  logout() {
+  this.$store.dispatch("logout");
+  this.$store.state.role = null
+  this.$store.state.navigationBarVisitor = true
+  }
   },
 
 }
@@ -67,14 +74,33 @@ h1, h4 {
 }
 #nav {
   padding: 30px;
+  background-color: #A9A9A9;
+  margin-bottom: 1%;
+  border-radius: 5px;
 }
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: white;
   text-decoration: none;
 }
 #nav a.router-link-exact-active {
   font-weight: bold;
   font-size: larger;
+}
+.logout-btn {
+  margin-left: 30%;
+  border: none;
+  height: 30px;
+  width: 100px;
+  border-radius: 5px;
+  background-color:#ff9800;
+  color: white;
+  cursor: pointer;
+}
+@media(max-width: 900px) {
+    .logout-btn{
+        display: block;
+        margin-top: 5%;
+    }
 }
 </style>

@@ -25,7 +25,7 @@ data() {
 
   methods: {
   displayImage(){
-  this.$store.dispatch("getImage", { req: this.order, vueComponent: "OrdersList.vue" });
+  this.$store.dispatch("getImage", { req: this.order });
   this.disableBtn = true
   setTimeout( () => {   
     this.btnText = `Order-ID #${this.order.id}`

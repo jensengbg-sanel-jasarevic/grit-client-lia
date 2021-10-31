@@ -4,7 +4,6 @@
     <div class="image-box">
       <div :id="draft.id"></div>
       <span><b>Draft-ID</b> #{{ draft.id }}</span>
-      <span><b>created at:</b> {{ draft.created_at }}</span>
       <label for="comments">
         <textarea rows="4" placeholder="Lägg till en kommentar" v-model="textareaInput" :disabled="textareaDisabled"/>
       </label>
@@ -21,11 +20,9 @@ export default {
     draft: Object
   },
 
-  mounted() {
-    this.$nextTick(function () {
-        this.$store.dispatch("getImage", { req: this.draft, vueComponent: "RejectedDraft.vue" }); 
-    })
-  },  
+  beforeMount(){
+  this.$store.dispatch("getImage", { req: this.draft }) 
+  },
 
  data() {
     return {
@@ -81,19 +78,18 @@ export default {
   grid-template-columns: 70% 30%;
   grid-template-areas: "left right";
   border-bottom: 1px solid #292929;
+  background-color: #fff;
+  padding: 2%;
+  border-radius: 5px;
 }
 span {
   color: #2c3e50;
   font-size: 0.8em;
   margin-top: 1%;
 }
-h3 {
-  color: #2c3e50;
-}
 #approve-btn {
   grid-area: right;
-  margin-top: 50%;
-  margin-right: 10%;
+  margin-top: 30%;
   border: none;
   height: 50px;
   width: auto;
@@ -134,5 +130,15 @@ textarea {
   -moz-box-shadow: none;
   resize: none;    
   overflow: auto;
+}
+@media(max-width: 900px) {
+  .rejected-draft-component-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  #approve-btn {
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
 }
 </style>

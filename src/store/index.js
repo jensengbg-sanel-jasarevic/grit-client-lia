@@ -9,7 +9,6 @@ export default new Vuex.Store({
   state: {
     API_URL: "https://nodeserver-100.herokuapp.com",
     navigationBarVisitor: true,
-    authorized: false,
     user: null,
     role: null,
     generatedKey: null,
@@ -17,17 +16,19 @@ export default new Vuex.Store({
     rejectedDrafts: null,
     orders: null,
     mailbox: null,
-    registrationAccepted: null,
-    registrationRejected: null
+    draftMessage: null,
+    registrationMessage: null,
+    loginRejectedMessage: null
   },
   mutations: {
-    setAuthorized(state, replacement){
-      state.authorized = replacement
-    },
-    setUserInfo(state, data){
+    setAuthorizedUser(state, data){
       state.user = data.name
       state.role = data.role
     },
+    setLoggedOut(state){
+      state.user = null
+      state.role = null
+    },    
     setGeneratedKey(state, generatedKey){
       state.generatedKey = generatedKey;
     },
@@ -46,17 +47,18 @@ export default new Vuex.Store({
     setMailbox(state, mailbox){
       state.mailbox = mailbox;
     },
-    setRegistrationAccepted(state, text){
-      state.registrationAccepted = text;
-      state.registrationRejected = null;
+    setDraftMessage(state, text){
+      state.draftMessage = text;
     },
-    setRegistrationRejected(state, text){
-      state.registrationRejected = text;
-      state.registrationAccepted = null;
-    },
+    setRegistrationMessage(state, text){
+      state.registrationMessage = text;
+    },    
+    setLoginRejectedMessage(state, text){
+      state.loginRejectedMessage = text;
+    },    
     setDefaultStoreValues(state){
-      state.registrationRejected = null;
-      state.registrationAccepted = null;
+      state.registrationMessage = null;
+      state.loginRejectedMessage = null;
       state.generatedKey = null;
     }
   },
@@ -68,10 +70,10 @@ export default new Vuex.Store({
       try{
        await axios.post(`${ctx.state.API_URL}/api/registration`, createUserAccount); 
         let accepted = "Användarkonto skapad."    
-        ctx.commit('setRegistrationAccepted', accepted)
+        ctx.commit('setRegistrationMessage', accepted)
       } catch(error){
         let rejected = "Ogiltig användarnyckel."
-        ctx.commit('setRegistrationRejected', rejected)
+        ctx.commit('setRegistrationMessage', rejected)
         console.error(error)
       }
     },
@@ -82,21 +84,23 @@ export default new Vuex.Store({
         password: credentials.password
       });
       sessionStorage.setItem('token', resp.data.token);
-      let userInfo = resp.data
-      ctx.commit("setAuthorized", true)
-      ctx.commit("setUserInfo", userInfo)
+      let authorizedUser = resp.data 
+      ctx.commit('setDefaultStoreValues') 
+      ctx.commit("setAuthorizedUser", authorizedUser)
       ctx.commit("setNavigationBarVisitor", false)
-      if (userInfo.role === "admin"){
+      if (authorizedUser.role === "admin"){
       router.push("/")
       } else {
         router.push("/client")
       }
     } catch(error){
+      let rejected = "Felaktiga inloggningsuppgifter."
+      ctx.commit('setLoginRejectedMessage', rejected)      
       console.error(error)
     }
     },
     async logout(ctx) {
-      ctx.commit("setAuthorized", false)
+      ctx.commit("setLoggedOut")
       router.push('/login')
     },    
     async generateUserKey(ctx){
@@ -105,7 +109,7 @@ export default new Vuex.Store({
           'authorization': `Bearer ${sessionStorage.getItem('token')}` 
         }
       });
-      ctx.commit('setGeneratedKey', resp.data.userKey)
+      ctx.commit('setGeneratedKey', resp.data.userkey)
     },
     async getDrafts(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/drafts`);
@@ -153,7 +157,15 @@ export default new Vuex.Store({
       await axios.post(`${ctx.state.API_URL}/api/storage`, formData); 
     },
     async postDraft(ctx, payload){
-      await axios.post(`${ctx.state.API_URL}/api/drafts`, payload); 
+      try {
+        let resp = await axios.post(`${ctx.state.API_URL}/api/drafts`, payload); 
+        let accepted = `Förslag skickad till kund: ${resp.data.receiver}`
+        ctx.commit('setDraftMessage', accepted)
+      } catch(error) {
+        let rejected = "Användarkonto finns inte registrerat."
+        ctx.commit('setDraftMessage', rejected)
+        console.error(error)
+      }
     },
     async postOrder(ctx, payload) {
       await axios.post(`${ctx.state.API_URL}/api/orders/`, payload);

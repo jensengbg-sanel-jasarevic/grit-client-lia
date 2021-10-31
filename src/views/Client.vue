@@ -18,7 +18,7 @@
         <p class="counter">{{ totalMessages }}</p>
         <img src="@/assets/mail-5886.svg" alt="mailbox" width="50" height="50">
       </router-link>
-      <router-link to="/approved-client">
+      <router-link to="/orders-client">
         <h4>Visa godkända</h4>
         <p id="counter-orders" class="counter">{{ totalOrders }}</p>
         <img src="@/assets/like-922.svg" alt="approved" width="50" height="50">
@@ -49,28 +49,28 @@ export default {
   },
   
   methods: {
-    sendRejectedDraft(payload) {
-      this.$store.dispatch("rejectDraft", payload);
-      setTimeout( () => {  
-      this.$store.dispatch('getRejectedDrafts') 
-      let rejectCounter = document.getElementById("counter-rejected")  
-      rejectCounter.style.backgroundColor = "#DC143C"
-      rejectCounter.style.color = "white"
-      rejectCounter.style.borderRadius = "5px"
-      }, 1000)
-    },
+  sendRejectedDraft(payload) {
+    this.$store.dispatch("rejectDraft", payload);
+    setTimeout( () => {  
+    this.$store.dispatch('getRejectedDrafts') 
+    let rejectCounter = document.getElementById("counter-rejected")  
+    rejectCounter.style.backgroundColor = "#DC143C"
+    rejectCounter.style.color = "white"
+    rejectCounter.style.borderRadius = "5px"
+    }, 1000)
+  },
     
-    sendOrder(payload) {
-      this.$store.dispatch('postOrder', payload)
-      this.$store.dispatch("removeDraft", payload);
-      setTimeout( () => {  
-      this.$store.dispatch('getOrders') 
-      let orderCounter = document.getElementById("counter-orders")
-      orderCounter.style.backgroundColor = "#42b983"
-      orderCounter.style.color = "white"
-      orderCounter.style.borderRadius = "5px"
-      }, 1000)
-    }
+  sendOrder(payload) {
+    this.$store.dispatch('postOrder', payload)
+    this.$store.dispatch("removeDraft", payload);
+    setTimeout( () => {  
+    this.$store.dispatch('getOrders') 
+    let orderCounter = document.getElementById("counter-orders")
+    orderCounter.style.backgroundColor = "#42b983"
+    orderCounter.style.color = "white"
+    orderCounter.style.borderRadius = "5px"
+    }, 1000)
+  }
   },
 
   computed: {
@@ -120,6 +120,9 @@ export default {
   grid-template-columns: 75% 25%;
   margin-left: 5%;
   margin-right: 5%;
+  background-color: #fff;
+  padding: 2%;
+  border-radius: 5px;
 }
 .right-column{
   display: flex;
@@ -135,7 +138,6 @@ h4, .counter {
 @media(max-width: 900px) {
     .client-view-wrapper{
         grid-template-columns: 1fr;
-        grid-row-gap: 10%;
     }
 }
 </style>

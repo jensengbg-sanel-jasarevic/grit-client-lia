@@ -1,11 +1,12 @@
 <template>
   <div class="draft-info-component-wrapper">
+    <div class="buttons-right">
     <button id="approve-btn" @click="postOrder" :disabled="disableApproveBtn">{{ approveBtnText }}</button>
-
+    <button id="reject-btn" :disabled="disableRejectBtn" @click="rejectDraft">{{ rejectBtnText }}</button>
+    </div>
     <div class="image-box">
-      <h3>Draft-ID #{{draft.id}}</h3>
       <div :id="draft.id"></div>
-      <button id="reject-btn" :disabled="disableRejectBtn" @click="rejectDraft">{{ rejectBtnText }}</button>
+      <span><b>Draft-ID</b> #{{ draft.id }}</span>
       <label for="comments">
         <textarea rows="4" placeholder="Lägg till en kommentar" v-model="textareaInput" :disabled="textareaDisabled" />
       </label>
@@ -23,10 +24,8 @@ export default {
     user: String
   },
 
-  mounted() {
-    this.$nextTick(function () {
-      this.$store.dispatch("getImage", { req: this.draft, vueComponent: "DraftInfo.vue" }); 
-    })
+  beforeMount(){
+  this.$store.dispatch("getImage", { req: this.draft }) 
   },
 
  data() {
@@ -91,13 +90,14 @@ span {
   font-size: 0.8em;
   margin-top: 1%;
 }
-h3 {
-  color: #2c3e50;
+.buttons-right {
+  grid-area: right;
+  display: flex;
+  flex-direction: column;
 }
 #approve-btn {
-  grid-area: right;
-  margin-top: 50%;
-  margin-right: 10%;
+  margin-top: 20%;
+  margin-bottom: 10%;
   border: none;
   height: 50px;
   width: auto;
@@ -106,11 +106,21 @@ h3 {
   color: white;
   cursor: pointer;
 }
+#reject-btn {
+  border: none;
+  height: 50px;
+  width: auto;
+  border-radius: 5px;
+  background-color:#DC143C;
+  color: white;
+  cursor: pointer;
+}
 .image-box {
   grid-area: left;
   align-items: center;
   display: flex;
   flex-direction: column;
+  margin-top: 5%;
 }
 #leave-comment-btn {
   border: none;
@@ -122,16 +132,6 @@ h3 {
   cursor: pointer;
   margin-bottom: 10px;
 }  
-#reject-btn {
-  margin-top: 1%;
-  border: none;
-  height: 40px;
-  width: 130px;
-  border-radius: 5px;
-  background-color:#DC143C;
-  color: white;
-  cursor: pointer;
-}
 textarea {
   min-width: 25vw;
   margin-top: 10px;
@@ -148,5 +148,16 @@ textarea {
   -moz-box-shadow: none;
   resize: none;    
   overflow: auto;
+}
+@media(max-width: 900px) {
+  .draft-info-component-wrapper {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #292929;
+  }
+  #approve-btn {
+    margin-top: 5%;
+    margin-bottom: 10%;
+  }
 }
 </style>

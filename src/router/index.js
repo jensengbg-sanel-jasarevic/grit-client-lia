@@ -6,7 +6,7 @@ import OrdersContacts from '../views/OrdersContacts.vue'
 import MailboxContacts from '../views/MailboxContacts.vue'
 import Client from '../views/Client.vue'
 import MailboxClient from '../views/MailboxClient.vue'
-import ApprovedClient from '../views/ApprovedClient.vue'
+import OrdersClient from '../views/OrdersClient.vue'
 import RejectedClient from '../views/RejectedClient.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
@@ -19,19 +19,19 @@ const router = new VueRouter({
       path: '/',
       name: 'Contacts',
       component: Contacts,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, requiresAdminRole: true }
     },
     {
       path: '/orders-contacts',
       name: 'OrdersContacts',
       component: OrdersContacts,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, requiresAdminRole: true }
     },
     {
       path: '/mailbox-contacts',
       name: 'MailboxContacts',
       component: MailboxContacts,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, requiresAdminRole: true }
     },
     {
       path: '/client',
@@ -46,9 +46,9 @@ const router = new VueRouter({
       meta: { requiresAuth: true }
     },
     {
-      path: '/approved-client',
-      name: 'ApprovedClient',
-      component: ApprovedClient,
+      path: '/orders-client',
+      name: 'OrdersClient',
+      component: OrdersClient,
       meta: { requiresAuth: true }
     },
     {
@@ -71,22 +71,25 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-        if(Store.state.authorized === false) { 
-          next({
-            path: '/login',
-            query: { redirect: to.fullPath }
-            })
-          } 
-        else { 
-          next() 
-          }
-        } 
+if (to.matched.some(record => record.meta.requiresAuth)) {
 
-  else {
-    next()
+  if(Store.state.role === null) { 
+    next({ path: '/login', query: { redirect: to.fullPath } })
+  } 
+  next()
+  } 
+
+if (to.matched.some(record => record.meta.requiresAdminRole)) {
+  if(Store.state.role === "client") { 
+  next({ path: '/client', query: { redirect: to.fullPath } })
   }
-  
+  next()
+}
+
+else {
+  next()
+}
+
 })
 
 export default router

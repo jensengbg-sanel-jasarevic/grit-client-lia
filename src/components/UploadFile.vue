@@ -5,14 +5,14 @@
         <input type="file" id="file-uploader" accept=".jpg, .png" @change="filesChange($event.target.name, $event.target.files); fileType = $event.target.files[0].type"> 
         </label>
         <div v-if="fileSelectedInfo">
-          <p class="p-upload-file">{{ filenameInfo }}</p>
-          <p class="p-upload-file">Filtyp: {{ fileType }}</p>
+          <p class="green-text">{{ filenameInfo }}</p>
+          <p class="green-text">Filtyp: {{ fileType }}</p>
         </div>
         <button v-if="uploadFileBtn" type="submit">Ladda upp bild</button> 
         
-        <div v-if="fileUploadedText" class="p-upload-file">
-          <p>Bilduppladdning klar.</p>
-          <p>Ange mottagarens användarkonto som förslag ska sändas till för att slutföra processen.</p>
+        <div v-if="fileUploadedText">
+          <p class="green-text">Bilduppladdning klar.</p>
+          <p class="green-text">Ange mottagarens användarkonto där det uppladdade förslaget ska sändas till för att slutföra processen.</p>
         </div>
 
         <div v-if="sendDraftBtn" class="post-draft-box">
@@ -20,10 +20,7 @@
           <button @click="postDraft" id="post-draft-btn">Skicka</button> 
         </div>
 
-        <div v-if="draftUploadedText">
-          <p class="p-upload-file">Förslag skickad till kund:</p>
-          <p class="p-upload-file">{{ recipient }}</p>
-        </div>
+        <p v-if="draftText">{{ draftMessage }}</p>
     </form>
   </div>
 </template>
@@ -44,14 +41,20 @@ export default {
     fileSelectedInfo: false,
     fileUploadedText: false,
     sendDraftBtn: false,
-    draftUploadedText: false,
+    draftText: false,
     }
+  },
+  
+  computed: {
+  draftMessage() {
+  return this.$store.state.draftMessage;
+  }
   },
 
   methods: {
  filesChange(fieldName, fileList){
   this.filenameInfo = `Filnamn: ${fileList[0].name}`  
-  this.draftUploadedText = false
+  this.draftText = false
   this.sendDraftBtn = false
   this.fileUploadedText = false
   this.uploadFileBtn = true
@@ -73,7 +76,7 @@ export default {
     this.$store.dispatch('postDraft', receiverInfo)
     this.fileUploadedText = false
     this.sendDraftBtn = false
-    this.draftUploadedText = true
+    this.draftText = true
   }
   }
     
@@ -85,14 +88,11 @@ export default {
 .upload-file-component-wrapper {
   margin-top: 2%;
 }
-p {
+.green-text {
   color: #42b983;
 }
-a{
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 1.3em;
-  color:#ff9800; 
+#rejected {
+  color: #DC143C;
 }
 label {
   cursor: pointer;

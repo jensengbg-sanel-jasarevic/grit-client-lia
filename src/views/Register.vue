@@ -52,6 +52,7 @@ export default {
 .register-view-wrapper{
   display: flex;
   justify-content: center;
+  margin-top: 5%;
 }
 p {
   font-size: 0.8em;
@@ -92,6 +93,9 @@ input {
   color: #DC143C;
 }
 @media(max-width: 900px) {
+  .register-view-wrapper {
+    margin-top: 20%;
+  }  
     section {
       min-width: 70vw;
   }

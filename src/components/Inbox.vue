@@ -1,11 +1,11 @@
 <template>
   <div class="inbox-component-wrapper">
     <div>
-      <p><b>Avsändare: </b> <span>{{ msg.sender }}</span> </p>
+      <div :id="`${msg.id}`"></div>
       <p><b>Angående: </b>  
         <button @click="getImage" :disabled="disableBtn" class="inbox-img-btn" :id="`btn-inbox-${msg.id}`">draft-ID #{{ msg.draftId }}</button>
       </p>
-      <div :id="`${msg.id}`"></div>
+      <p><b>Avsändare: </b> <span>{{ msg.sender }}</span> </p>
       <p><b>Meddelande:</b></p>
       <p class="inbox-msg-font">{{ msg.message }}</p>
     </div>
@@ -41,7 +41,7 @@ export default {
   
   methods: {
     getImage() {
-    this.$store.dispatch("getImage", { req: this.msg, vueComponent: "Inbox.vue" });      
+    this.$store.dispatch("getImage", { req: this.msg });      
     this.disableBtn = true
     let btn =  document.getElementById(`btn-inbox-${this.msg.id}`)
     btn.style.color = "#2c3e50";
