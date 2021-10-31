@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    API_URL: "https://nodeserver-100.herokuapp.com",
+    API_URL: "http://localhost:5000",
     navigationBarVisitor: true,
     user: null,
     role: null,

@@ -16,7 +16,7 @@
         </div>        
         <div class="right-box">
           <h3>Skickat ({{ sentAmount }})</h3>
-          <SentMessages v-for="msg in sent" :key="msg.message" :msg="msg" />
+          <SentMessage v-for="msg in sent" :key="msg.message" :msg="msg" />
         </div>
       </div>
     </div>
@@ -26,14 +26,14 @@
 
 <script>
 import Inbox from '@/components/Inbox'
-import SentMessages from '@/components/SentMessages'
+import SentMessage from '@/components/SentMessage'
 
 export default {
   name: 'MailboxContacts',
 
   components: {
   Inbox,
-  SentMessages
+  SentMessage
   },
 
   beforeMount(){

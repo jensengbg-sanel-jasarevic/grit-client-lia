@@ -1,5 +1,5 @@
 <template>
-  <div class="sent-messages-component-wrapper">
+  <div class="-component-wrapper">
       <div :id="`${msg.id}`"></div>
       <p><b>Angående: </b>  
         <button @click="getImage" :disabled="disableBtn" class="sent-msg-img-btn" :id="`btn-sent-msg-${msg.id}`">draft-ID #{{ msg.draftId }}</button>
@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'SentMessages',
+  name: 'SentMessage',
 
   props: {
     msg: Object
@@ -40,7 +40,7 @@ methods: {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.sent-messages-component-wrapper {
+.sent-message-component-wrapper {
   background-color: #777;
   color: white;
   border-radius: 5px;
