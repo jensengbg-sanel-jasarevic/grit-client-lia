@@ -7,18 +7,18 @@
     <img src="@/assets/103799.svg" alt="approved" width="50" height="50">
     <h1>Godkända skissförslag</h1>
     <p class="underline">Klicka på <b>"Visa mer"</b> för att se det godkända skissförslaget.</p>
-    <OrdersList v-for="order in orders" :key="order.id" :order="order" />
+    <Order v-for="order in orders" :key="order.id" :order="order" />
     </div>
   </div>
 </template>
 
 <script>
-import OrdersList from '@/components/OrdersList'
+import Order from '@/components/Order'
 
 export default {
   name: 'OrdersClient',
   components: {
-  OrdersList
+  Order
   },
   
   beforeMount(){

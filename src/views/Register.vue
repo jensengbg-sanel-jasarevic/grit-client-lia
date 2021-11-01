@@ -6,8 +6,7 @@
         <input type="text" name="userkey" v-model="userkey" placeholder="Användarnyckel">
         <button @click="createUserAccount" id="register-btn">Registrera</button>
         <p class="rejected">{{ textInputUnfilled }}</p>
-        <p v-if="registrationAccepted" class="accepted">{{ registrationAccepted }}</p> 
-        <p v-if="registrationRejected" class="rejected">{{ registrationRejected }}</p>     
+        <p class="message">{{ registrationMessage }}</p> 
       </section>
   </div>
 </template>
@@ -26,11 +25,8 @@ export default {
   },
   
   computed: {
-  registrationAccepted() {
-  return this.$store.state.registrationAccepted;
-  },
-  registrationRejected() {
-  return this.$store.state.registrationRejected;
+  registrationMessage() {
+  return this.$store.state.registrationMessage;
   }
   },
 
@@ -86,8 +82,8 @@ input {
   color: white;
   cursor: pointer;
 }
-.accepted {
-  color: #42b983;
+.message {
+  color: #ff9800;
 }
 .rejected {
   color: #DC143C;

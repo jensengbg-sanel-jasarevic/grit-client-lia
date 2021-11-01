@@ -8,7 +8,7 @@
       <h1>Mailbox</h1>
       <h2>{{ user }}</h2>
       <p>Feedback från kund för underkända skissförslag.</p>
-      <p class="underline">Klicka på det specifika draft-ID som finns tillgänglig under varje meddelanderuta för att se skissförslag som underkänts.</p>
+      <p class="underline">Klicka på det specifika <i>draft</i> som finns tillgänglig under varje meddelanderuta för att se förslag som underkänts.</p>
       <div class="mailbox-container">
         <div class="left-box">
           <h3>Inkorg ({{ mailboxAmount }})</h3>
@@ -16,7 +16,7 @@
         </div>        
         <div class="right-box">
           <h3>Skickat ({{ sentAmount }})</h3>
-          <SentMessage v-for="msg in sent" :key="msg.message" :msg="msg" />
+          <SentMessage v-for="msg in sent" :key="msg.id" :msg="msg" />
         </div>
       </div>
     </div>
@@ -68,7 +68,7 @@ export default {
   methods: {
   listen(message) {
   this.$store.dispatch("postMailbox", message);
-  this.$store.dispatch('getMailbox')     
+  setTimeout( () => { this.$store.dispatch("getMailbox") }, 900)
   },
   }
 

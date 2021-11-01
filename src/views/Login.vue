@@ -4,7 +4,7 @@
       <input type="text" name="username" v-model="username" placeholder="Användarnamn" autocomplete="off">
       <input type="password" name="password" v-model="password" placeholder="Lösenord">
       <button @click="login" id="login-btn">Logga in</button>
-      <p v-if="loginRejected" class="rejected">{{ loginRejected }}</p> 
+      <p v-if="loginRejectedMessage" class="rejected">{{ loginRejectedMessage }}</p> 
     </section>
   </div>  
 </template>
@@ -21,8 +21,8 @@ export default {
   },
 
   computed: {
-  loginRejected() {
-  return this.$store.state.loginRejected
+  loginRejectedMessage() {
+  return this.$store.state.loginRejectedMessage
   },
   },
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="rejected-draft-component-wrapper">
+  <div class="draft-rejected-component-wrapper">
     <button id="approve-btn" @click="postOrder" :disabled="disableApproveBtn">{{ approveBtnText }}</button>
     <div class="image-box">
       <div :id="draft.id"></div>
@@ -14,10 +14,11 @@
 
 <script>
 export default {
-  name: 'RejectedDraft',
+  name: 'DraftRejected',
 
   props: {
-    draft: Object
+    draft: Object,
+    user: String
   },
 
   beforeMount(){
@@ -35,18 +36,13 @@ export default {
     };
   },
 
-  computed: {
-  user() {
-  return this.$store.state.user;
-  }
-  },
-
   methods: {
     postOrder(){
-    this.$store.dispatch('postOrder', { id: this.draft.id, filename: this.draft.filename } )
+    this.$store.dispatch('postOrder', { client: this.user, id: this.draft.id, filename: this.draft.filename } )
     this.$store.dispatch("removeDraft", this.draft);
     this.disableApproveBtn = true;
     this.approveBtnText = "Förslag godkänd";
+    this.mailDraftAccepted()
     setTimeout( () => { this.$store.dispatch("getRejectedDrafts") }, 1500);
    },
    
@@ -63,14 +59,25 @@ export default {
     this.textareaDisabled = true;
     this.disableCommentBtn = true;
     },
+
+  mailDraftAccepted() {
+    const msg = {
+      writer: "Grit",
+      receiver: this.draft.sender,
+      text: `Draft (#${this.draft.id}) godkänd av kund (${this.user}). Det här meddelandet skickas automatiskt när ett godkännande av förslag sker.`,
+      draftId: this.draft.id,
+      filename: document.getElementById(this.draft.id).getElementsByTagName('img')[0].alt
+    }         
+  this.$store.dispatch("postMailbox", msg);
   }
-  
+  }
+
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.rejected-draft-component-wrapper {
+.draft-rejected-component-wrapper {
   margin-left: 5%;
   margin-right: 5%;
   margin-top: 1%;
@@ -78,9 +85,6 @@ export default {
   grid-template-columns: 70% 30%;
   grid-template-areas: "left right";
   border-bottom: 1px solid #292929;
-  background-color: #fff;
-  padding: 2%;
-  border-radius: 5px;
 }
 span {
   color: #2c3e50;
@@ -132,7 +136,7 @@ textarea {
   overflow: auto;
 }
 @media(max-width: 900px) {
-  .rejected-draft-component-wrapper {
+  .draft-rejected-component-wrapper {
     display: flex;
     flex-direction: column;
   }

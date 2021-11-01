@@ -9,7 +9,7 @@
       <p><b>Meddelande:</b></p>
       <p class="inbox-msg-font">{{ msg.message }}</p>
     </div>
-    <form @submit.prevent="emitMessage">
+    <form @submit.prevent="emitMessage" v-if="msg.sender != 'Grit'">
       <label for="message">
         <textarea id="message" v-model="textareaMessage" rows="5" />
       </label>

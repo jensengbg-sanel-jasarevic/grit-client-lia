@@ -1,15 +1,15 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex';
-import OrdersList from '@/components/OrdersList.vue'
+import Order from '@/components/Order.vue'
 
 const localVue = createLocalVue()
 localVue.use(Vuex);
 
-describe('OrdersList', () => {
+describe('Order', () => {
 
   it('should when component mounted render the correct order ID via props data', async () => {
     // Arrange
-    const wrapper = shallowMount(OrdersList, { 
+    const wrapper = shallowMount(Order, { 
       propsData: {
         order: { id: 22 }
       }      

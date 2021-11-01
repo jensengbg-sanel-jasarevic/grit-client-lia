@@ -15,7 +15,7 @@
       <router-link to="/orders-contacts">
         <h4>Visa ordrar</h4>
         <p class="counter">{{ totalOrders }}</p>
-        <img src="@/assets/list-6240.svg" alt="orderslist" width="50" height="50">
+        <img src="@/assets/list-6240.svg" alt="orders" width="50" height="50">
       </router-link>  
     </div>
   </div>

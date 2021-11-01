@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    API_URL: "http://localhost:5000",
+    API_URL: "https://nodeserver-100.herokuapp.com",
     navigationBarVisitor: true,
     user: null,
     role: null,
@@ -140,10 +140,20 @@ export default new Vuex.Store({
       
       let imageGrid = document.getElementById(`${payload.req.id}`)
       let img = document.createElement('img');
+      let downloadLink = document.createElement("a")
       imageGrid.appendChild(img);
+      imageGrid.appendChild(downloadLink)
+
       img.src = imageDataURL;
       img.alt = payload.req.filename; 
       img.style.maxWidth = "90%";
+
+      downloadLink.style.display = "block"
+      downloadLink.style.textDecoration = "none"
+      downloadLink.style.color = "#ff9800"
+      downloadLink.innerText = "Ladda ner fullstorlek"
+      downloadLink.href = imageDataURL;
+      downloadLink.download = payload.req.filename;
     },
     async rejectDraft(ctx, payload){
       await axios.patch(`${ctx.state.API_URL}/api/drafts`, { filename: payload.filename, id: payload.id } );

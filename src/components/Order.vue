@@ -1,8 +1,8 @@
 <template>
-  <div class="orders-list-component-wrapper">
+  <div class="order-component-wrapper">
       <span>Kund: {{ order.client }}</span>
       <span> | </span>
-      <span id="bold">Order ID # {{ order.id }}</span>
+      <span id="order-id">Order ID # {{ order.id }}</span>
       <button @click="displayImage" class="show-more" :id="`show-more-btn${order.id}`" :disabled="disableBtn">{{ btnText }}</button>
       <div :id="order.id"></div>
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'OrdersList',
+  name: 'Order',
 
   props: {
     order: Object
@@ -41,7 +41,7 @@ data() {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.orders-list-component-wrapper {
+.order-component-wrapper {
   margin-left: 15%;
   margin-right: 15%;
   margin-bottom: 1%;

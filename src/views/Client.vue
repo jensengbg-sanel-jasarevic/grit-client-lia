@@ -4,11 +4,11 @@
       <h2 v-if="drafts != '' ">Skissförslag</h2>
       <h2 v-else>Det finns för närvarande inga nya skissförslag att visa</h2>
       
-      <DraftInfo 
+      <Draft
       @rejectedDraft="sendRejectedDraft"
       @postOrder="sendOrder"
       :user="user"
-       v-for="draft in drafts" :key="draft.created_at" :draft="draft" 
+       v-for="draft in drafts" :key="draft.id" :draft="draft" 
        />
 
     </div>
@@ -33,12 +33,12 @@
 </template>
 
 <script>
-import DraftInfo from '@/components/DraftInfo'
+import Draft from '@/components/Draft'
 
 export default {
   name: 'Client',
   components: {
-  DraftInfo
+  Draft
   },
   
   beforeMount(){

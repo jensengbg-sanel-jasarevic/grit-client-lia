@@ -1,11 +1,11 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex';
-import DraftInfo from '@/components/DraftInfo.vue'
+import Draft from '@/components/Draft.vue'
 
 const localVue = createLocalVue()
 localVue.use(Vuex);
 
-describe('DraftInfo.vue', () => {
+describe('Draft.vue', () => {
   let store;
 
   let actions;
@@ -14,6 +14,7 @@ describe('DraftInfo.vue', () => {
 
       actions = {
         getImage: jest.fn(),
+        postMailbox: jest.fn(),
         postOrder: jest.fn(),
         removeDraft: jest.fn()
       };
@@ -25,7 +26,7 @@ describe('DraftInfo.vue', () => {
 
   it('should when mounted dispatch action to Vuex store', async () => {
     // Arrange
-    const wrapper = shallowMount(DraftInfo, {
+    const wrapper = shallowMount(Draft, {
       localVue,
       store,
       propsData: {
@@ -34,7 +35,6 @@ describe('DraftInfo.vue', () => {
     });
 
     // Act
-    await wrapper.vm.$nextTick() 
     const actual = actions.getImage
 
     // Assert
@@ -43,12 +43,12 @@ describe('DraftInfo.vue', () => {
 
   it('should ensure that components method have been called when clicking button', async () => {
     // Arrange
-    const componentMethod = jest.spyOn(DraftInfo.methods, 'postOrder')
-    const wrapper = shallowMount(DraftInfo, { 
+    const componentMethod = jest.spyOn(Draft.methods, 'postOrder')
+    const wrapper = shallowMount(Draft, { 
       localVue,
       store,
       propsData: {
-        draft: { id: 1 }
+        draft: { id: 1, sender: "grit", filename: "qwe.png" }
       }       
     })
   
@@ -58,7 +58,7 @@ describe('DraftInfo.vue', () => {
     /// Assert
     expect(componentMethod).toHaveBeenCalled()
     })
-
+/*
   it('should check if textarea field store correct value in components data property', async () => {
     // Arrange
     const wrapper = shallowMount(DraftInfo, { 
@@ -78,5 +78,5 @@ describe('DraftInfo.vue', () => {
     // Assert
     expect(actual).toBe(expected)
   })    
-
+*/
 }) 

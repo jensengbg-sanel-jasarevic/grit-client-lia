@@ -1,5 +1,5 @@
 <template>
-  <div class="-component-wrapper">
+  <div class="sent-message-component-wrapper">
       <div :id="`${msg.id}`"></div>
       <p><b>Angående: </b>  
         <button @click="getImage" :disabled="disableBtn" class="sent-msg-img-btn" :id="`btn-sent-msg-${msg.id}`">draft-ID #{{ msg.draftId }}</button>

@@ -19,8 +19,10 @@
           <input type="text" name="recipient" v-model="recipient" autocomplete="off" placeholder="Användarkonto">
           <button @click="postDraft" id="post-draft-btn">Skicka</button> 
         </div>
-
-        <p v-if="draftText">{{ draftMessage }}</p>
+        <div v-if="draftText">
+          <p v-if="draftMessage === 'Användarkonto finns inte registrerat.'" @click="back" class="rejected">{{ draftMessage }} Klicka här för att gå tillbaka ett steg.</p>
+          <p v-else class="green-text">{{ draftMessage }}</p>
+        </div>
     </form>
   </div>
 </template>
@@ -61,23 +63,27 @@ export default {
   this.fileSelectedInfo = true
   },
   uploadFile(e){
-    this.$store.dispatch('postSketch', e.target[0].files[0])
-    this.uploadFileBtn = false
-    this.fileSelectedInfo = false
-    this.fileUploadedText = true
-    this.sendDraftBtn = true
+  this.$store.dispatch('postSketch', e.target[0].files[0])
+  this.uploadFileBtn = false
+  this.fileSelectedInfo = false
+  this.fileUploadedText = true
+  this.sendDraftBtn = true
   },
   postDraft(){
-    const receiverInfo = {
+  const receiverInfo = {
       sender: this.user,
       receiver: this.recipient,
       filename: this.filenameInfo.split("Filnamn: ")[1],
     }
-    this.$store.dispatch('postDraft', receiverInfo)
-    this.fileUploadedText = false
-    this.sendDraftBtn = false
-    this.draftText = true
-  }
+  this.$store.dispatch('postDraft', receiverInfo)
+  this.fileUploadedText = false
+  this.sendDraftBtn = false
+  this.draftText = true
+  },
+  back() {
+  this.draftText = false
+  this.sendDraftBtn = true
+  },
   }
     
 }
@@ -91,8 +97,9 @@ export default {
 .green-text {
   color: #42b983;
 }
-#rejected {
+.rejected {
   color: #DC143C;
+  cursor: pointer;
 }
 label {
   cursor: pointer;
@@ -118,6 +125,7 @@ button {
   cursor: pointer;
 }
 .post-draft-box > input {
+  margin-top: 25px;
   border: none; 
   border:solid 1px #ccc;
   border-radius: 10px;

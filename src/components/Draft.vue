@@ -1,9 +1,11 @@
 <template>
-  <div class="draft-info-component-wrapper">
+  <div class="draft-component-wrapper">
+
     <div class="buttons-right">
-    <button id="approve-btn" @click="postOrder" :disabled="disableApproveBtn">{{ approveBtnText }}</button>
-    <button id="reject-btn" :disabled="disableRejectBtn" @click="rejectDraft">{{ rejectBtnText }}</button>
+      <button id="approve-btn" @click="postOrder" :disabled="disableApproveBtn">{{ approveBtnText }}</button>
+      <button id="reject-btn" :disabled="disableRejectBtn" @click="rejectDraft">{{ rejectBtnText }}</button>
     </div>
+
     <div class="image-box">
       <div :id="draft.id"></div>
       <span><b>Draft-ID</b> #{{ draft.id }}</span>
@@ -12,12 +14,13 @@
       </label>
       <button id="leave-comment-btn" @click="postMailbox" :disabled="disableCommentBtn">{{ commentBtnText }}</button>
     </div>
+
   </div>
 </template>
 
 <script>
 export default {
-  name: 'DraftInfo',
+  name: 'Draft',
 
   props: {
     draft: Object,
@@ -29,27 +32,28 @@ export default {
   },
 
  data() {
-    return {
-    approveBtnText: "Godkänn förslag",
-    rejectBtnText: "Underkänn förslag",
-    commentBtnText: "Skicka kommentar",
-    textareaInput: "",
-    textareaDisabled: false,
-    disableApproveBtn: false,
-    disableRejectBtn: false,
-    disableCommentBtn: false    
-    };
+  return {
+  approveBtnText: "Godkänn förslag",
+  rejectBtnText: "Underkänn förslag",
+  commentBtnText: "Skicka kommentar",
+  textareaInput: "",
+  textareaDisabled: false,
+  disableApproveBtn: false,
+  disableRejectBtn: false,
+  disableCommentBtn: false    
+  };
   },
 
   methods: {
-    postOrder(){
-    this.$emit('postOrder', { client: this.user, id: this.draft.id, filename: this.draft.filename }) 
-    this.disableApproveBtn = true;
-    this.approveBtnText = "Förslag godkänd"
-    setTimeout( () => { this.$store.dispatch("getDrafts") }, 1500)
-   },
+  postOrder(){
+  this.$emit('postOrder', { client: this.user, id: this.draft.id, filename: this.draft.filename }) 
+  this.disableApproveBtn = true;
+  this.approveBtnText = "Förslag godkänd"
+  this.mailDraftAccepted()
+  setTimeout( () => { this.$store.dispatch("getDrafts") }, 1500)
+  },
 
-    postMailbox() {
+  postMailbox() {
     const clientMsg = {
       writer: this.user,
       receiver: this.draft.sender,
@@ -57,27 +61,51 @@ export default {
       draftId: this.draft.id,
       filename: document.getElementById(this.draft.id).getElementsByTagName('img')[0].alt
     };      
-    this.$store.dispatch("postMailbox", clientMsg);
-    this.commentBtnText = "Kommentar skickad";
-    this.textareaDisabled = true;
-    this.disableCommentBtn = true;
-    this.commentBtnText = "Kommentar skickad"
-    },
+  this.$store.dispatch("postMailbox", clientMsg);
+  this.commentBtnText = "Kommentar skickad";
+  this.textareaDisabled = true;
+  this.disableCommentBtn = true;
+  this.commentBtnText = "Kommentar skickad"
+  },
 
-    rejectDraft() {
-    this.$emit('rejectedDraft', this.draft)        
-    this.textareaDisabled = true;
-    this.disableRejectBtn = true;
-    this.rejectBtnText = "Förslag underkänd"
-    setTimeout( () => { this.$store.dispatch("getDrafts") }, 1500)
-    },
+  rejectDraft() {
+  this.$emit('rejectedDraft', this.draft)        
+  this.textareaDisabled = true;
+  this.disableRejectBtn = true;
+  this.rejectBtnText = "Förslag underkänd"
+  this.mailDraftRejected()
+  setTimeout( () => { this.$store.dispatch("getDrafts") }, 1500)
+  },
+
+  mailDraftAccepted() {
+    const msg = {
+      writer: "Grit",
+      receiver: this.draft.sender,
+      text: `Draft (#${this.draft.id}) godkänd av kund (${this.user}). Det här meddelandet skickas automatiskt när ett godkännande av förslag sker.`,
+      draftId: this.draft.id,
+      filename: document.getElementById(this.draft.id).getElementsByTagName('img')[0].alt
+    }         
+  this.$store.dispatch("postMailbox", msg);
+  },
+
+  mailDraftRejected() {
+    const msg = {
+      writer: "Grit",
+      receiver: this.draft.sender,
+      text: `Draft (#${this.draft.id}) underkänd av kund (${this.user}). Det här meddelandet skickas automatiskt när ett underkännande av förslag sker.`,
+      draftId: this.draft.id,
+      filename: document.getElementById(this.draft.id).getElementsByTagName('img')[0].alt
+    }         
+  this.$store.dispatch("postMailbox", msg);
+  },     
   }
+
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.draft-info-component-wrapper {
+.draft-component-wrapper {
   margin-left: 5%;
   margin-right: 5%;
   display: grid;
@@ -150,7 +178,7 @@ textarea {
   overflow: auto;
 }
 @media(max-width: 900px) {
-  .draft-info-component-wrapper {
+  .draft-component-wrapper {
     display: flex;
     flex-direction: column;
     border-top: 1px solid #292929;
