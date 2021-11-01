@@ -41,7 +41,7 @@ export default {
   disableApproveBtn: false,
   disableRejectBtn: false,
   disableCommentBtn: false    
-  };
+  }
   },
 
   methods: {
@@ -87,7 +87,7 @@ export default {
     }         
   this.$store.dispatch("postMailbox", msg);
   },
-
+  
   mailDraftRejected() {
     const msg = {
       writer: "Grit",
@@ -99,7 +99,6 @@ export default {
   this.$store.dispatch("postMailbox", msg);
   },     
   }
-
 }
 </script>
 

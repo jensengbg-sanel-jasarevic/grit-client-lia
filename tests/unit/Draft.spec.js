@@ -7,7 +7,7 @@ localVue.use(Vuex);
 
 describe('Draft.vue', () => {
   let store;
-
+  
   let actions;
     
   beforeEach(() => {
@@ -41,27 +41,9 @@ describe('Draft.vue', () => {
     expect(actual).toHaveBeenCalled();
   });
 
-  it('should ensure that components method have been called when clicking button', async () => {
-    // Arrange
-    const componentMethod = jest.spyOn(Draft.methods, 'postOrder')
-    const wrapper = shallowMount(Draft, { 
-      localVue,
-      store,
-      propsData: {
-        draft: { id: 1, sender: "grit", filename: "qwe.png" }
-      }       
-    })
-  
-    // Act
-    await wrapper.find('#approve-btn').trigger('click')
-  
-    /// Assert
-    expect(componentMethod).toHaveBeenCalled()
-    })
-/*
   it('should check if textarea field store correct value in components data property', async () => {
     // Arrange
-    const wrapper = shallowMount(DraftInfo, { 
+    const wrapper = shallowMount(Draft, { 
       localVue,
       store,
       propsData: {
@@ -78,5 +60,5 @@ describe('Draft.vue', () => {
     // Assert
     expect(actual).toBe(expected)
   })    
-*/
+
 }) 
