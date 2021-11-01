@@ -45,7 +45,6 @@ export default {
   },
   logout() {
   this.$store.dispatch("logout");
-  this.$store.state.role = null
   this.$store.state.navigationBarVisitor = true
   }
   },

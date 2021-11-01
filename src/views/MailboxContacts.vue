@@ -7,8 +7,8 @@
       <img src="@/assets/feedback-message-4644.svg" alt="message" width="50" height="50">  
       <h1>Mailbox</h1>
       <h2>{{ user }}</h2>
-      <p>Feedback från kund för underkända skissförslag.</p>
-      <p class="underline">Klicka på det specifika <i>draft</i> som finns tillgänglig under varje meddelanderuta för att se förslag som underkänts.</p>
+      <p>Feedback från kunder för underkända skissförslag.</p>
+      <p class="underline">Klicka på den specifika <i>draft</i> som finns tillgänglig under varje meddelanderuta för att se förslaget.</p>
       <div class="mailbox-container">
         <div class="left-box">
           <h3>Inkorg ({{ mailboxAmount }})</h3>
