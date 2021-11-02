@@ -178,10 +178,18 @@ export default new Vuex.Store({
       }
     },
     async postOrder(ctx, payload) {
-      await axios.post(`${ctx.state.API_URL}/api/orders/`, payload);
+      await axios.post(`${ctx.state.API_URL}/api/orders/`, payload, {
+        headers: {
+           'authorization': `Bearer ${sessionStorage.getItem('token')}` 
+         }
+       }); 
     },
     async postMailbox(ctx, message) {
-      await axios.post(`${ctx.state.API_URL}/api/mailbox`, { text: message.text, draftId: message.draftId, sender: message.writer, receiver: message.receiver, filename: message.filename }); 
+      await axios.post(`${ctx.state.API_URL}/api/mailbox`, { text: message.text, draftId: message.draftId, sender: message.writer, receiver: message.receiver, filename: message.filename }, {
+        headers: {
+           'authorization': `Bearer ${sessionStorage.getItem('token')}` 
+         }
+       }); 
     },
     async getMailbox(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/mailbox`);
