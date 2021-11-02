@@ -46,21 +46,21 @@ export default {
   return this.$store.state.user;
   },    
   mailbox() {
-  return this.$store.state.mailbox.filter(msg => msg.receiver === this.user);
+  return this.$store.state.mailbox
   },
   sent() {
-  return this.$store.state.mailbox.filter(msg => msg.sender === this.user);
+  return this.$store.state.sent
   },
   mailboxAmount() {
   let total;
-  let inboxUser = this.$store.state.mailbox.filter(msg => msg.receiver === this.user)
-  total = inboxUser.length
+  let inbox = this.$store.state.mailbox
+  total = inbox.length
   return total
   },
   sentAmount() {
   let total;
-  let sentUser = this.$store.state.mailbox.filter(msg => msg.sender === this.user)
-  total = sentUser.length
+  let sent = this.$store.state.sent
+  total = sent.length
   return total
   }     
   },

@@ -13,6 +13,13 @@
 export default {
   name: 'Login',
 
+  beforeMount(){
+  this.$store.dispatch('getDrafts');
+  this.$store.dispatch("getRejectedDrafts")
+  this.$store.dispatch('getOrders')
+  this.$store.dispatch('getMailbox')
+  },
+
   data(){
   return {
   username: "",

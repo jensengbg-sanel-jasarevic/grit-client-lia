@@ -1,21 +1,28 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import router from './../router'
 import axios from 'axios'
+import createPersistedState from 'vuex-persistedstate'
+import router from './../router'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [createPersistedState({
+    storage: window.localStorage,
+})],
+
   state: {
     API_URL: "https://nodeserver-100.herokuapp.com",
     navigationBarVisitor: true,
     user: null,
     role: null,
+    token: null,
     generatedKey: null,
     drafts: null,
     rejectedDrafts: null,
     orders: null,
     mailbox: null,
+    sent: null,
     draftMessage: null,
     registrationMessage: null,
     loginRejectedMessage: null
@@ -24,10 +31,22 @@ export default new Vuex.Store({
     setAuthorizedUser(state, data){
       state.user = data.name
       state.role = data.role
+      state.token = data.token
     },
     setLoggedOut(state){
+      state.navigationBarVisitor = true
       state.user = null
       state.role = null
+      state.token = null
+      state.generatedKey = null
+      state.drafts = null
+      state.rejectedDrafts = null
+      state.orders = null
+      state.mailbox = null
+      state.sent = null
+      state.draftMessage = null
+      state.registrationMessage = null
+      state.loginRejectedMessage = null
     },    
     setGeneratedKey(state, generatedKey){
       state.generatedKey = generatedKey;
@@ -46,6 +65,9 @@ export default new Vuex.Store({
     },
     setMailbox(state, mailbox){
       state.mailbox = mailbox;
+    },
+    setSentMessages(state, messages){
+      state.sent = messages
     },
     setDraftMessage(state, text){
       state.draftMessage = text;
@@ -83,13 +105,12 @@ export default new Vuex.Store({
         username: credentials.username,
         password: credentials.password
       });
-      sessionStorage.setItem('token', resp.data.token);
       let authorizedUser = resp.data 
       ctx.commit('setDefaultStoreValues') 
       ctx.commit("setAuthorizedUser", authorizedUser)
       ctx.commit("setNavigationBarVisitor", false)
       if (authorizedUser.role === "admin"){
-      router.push("/")
+        router.push("/")
       } else {
         router.push("/client")
       }
@@ -106,24 +127,43 @@ export default new Vuex.Store({
     async generateUserKey(ctx){
       let resp = await axios.post(`${ctx.state.API_URL}/api/keygen`, { user: "admin" }, {
        headers: {
-          'authorization': `Bearer ${sessionStorage.getItem('token')}` 
+          'authorization': `Bearer ${ctx.state.token}` 
         }
       });
       ctx.commit('setGeneratedKey', resp.data.userkey)
     },
     async getDrafts(ctx){
+      if(ctx.state.role === null){
+        return
+      } else {
       let resp = await axios.get(`${ctx.state.API_URL}/api/drafts`);
-      const rejectedDrafts = resp.data.filter(item => item.rejected === null);
-      ctx.commit('setDrafts', rejectedDrafts.reverse())
+      let drafts = resp.data.filter(item => item.rejected === null);
+      let draftsUser = drafts.filter(item => item.receiver === ctx.state.user)
+      ctx.commit('setDrafts', draftsUser.reverse())
+      }
     },
     async getRejectedDrafts(ctx){
       let resp = await axios.get(`${ctx.state.API_URL}/api/drafts`);
-      const rejectedDrafts = resp.data.filter(item => item.rejected === "rejected");
-      ctx.commit('setRejectedDrafts', rejectedDrafts.reverse()) 
+      let rejectedDrafts = resp.data.filter(item => item.rejected === "rejected");
+      let rejectedDraftsUser = rejectedDrafts.filter(item => item.receiver === ctx.state.user);
+      ctx.commit('setRejectedDrafts', rejectedDraftsUser.reverse()) 
     },
     async getOrders(ctx){
-      let resp = await axios.get(`${ctx.state.API_URL}/api/orders`);
-      ctx.commit('setOrders', resp.data.reverse())
+      if(ctx.state.role === null) {
+        return
+      } else {
+        let resp = await axios.get(`${ctx.state.API_URL}/api/orders`)
+
+        if(ctx.state.role === "admin") {
+          ctx.commit('setOrders', resp.data.reverse())
+        }
+
+        if (ctx.state.role === "client"){
+          let userOrders = resp.data.filter(item => item.client === ctx.state.user);
+          ctx.commit('setOrders', userOrders.reverse())
+        }      
+
+      }
     },
     async getImage(ctx, payload){
       // Template strings with dynamic segment in URL route.
@@ -180,21 +220,38 @@ export default new Vuex.Store({
     async postOrder(ctx, payload) {
       await axios.post(`${ctx.state.API_URL}/api/orders/`, payload, {
         headers: {
-           'authorization': `Bearer ${sessionStorage.getItem('token')}` 
+           'authorization': `Bearer ${ctx.state.token}` 
          }
        }); 
     },
     async postMailbox(ctx, message) {
       await axios.post(`${ctx.state.API_URL}/api/mailbox`, { text: message.text, draftId: message.draftId, sender: message.writer, receiver: message.receiver, filename: message.filename }, {
         headers: {
-           'authorization': `Bearer ${sessionStorage.getItem('token')}` 
+           'authorization': `Bearer ${ctx.state.token}` 
          }
        }); 
     },
     async getMailbox(ctx){
-      let resp = await axios.get(`${ctx.state.API_URL}/api/mailbox`);
-      ctx.commit('setMailbox', resp.data.reverse())
-    }
+      if(ctx.state.role === null) {
+        return
+      } else {
+        let resp = await axios.get(`${ctx.state.API_URL}/api/mailbox`); 
+
+        if (ctx.state.role === "admin"){
+          let userMailbox = resp.data.filter(msg => msg.receiver === ctx.state.user);
+          let sentMessages = resp.data.filter(msg => msg.sender === ctx.state.user);
+          ctx.commit('setMailbox', userMailbox.reverse())
+          ctx.commit('setSentMessages', sentMessages.reverse())
+        }
+
+        if (ctx.state.role === "client"){
+          let userMailbox = resp.data.filter(msg => msg.receiver === ctx.state.user);
+          ctx.commit('setMailbox', userMailbox.reverse())
+        }        
+      }
+      
+    },
+
   },
   modules: {
   }

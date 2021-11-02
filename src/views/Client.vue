@@ -78,25 +78,21 @@ export default {
   return this.$store.state.user;
   },    
   drafts() {
-  let draftsList = this.$store.state.drafts
-  let draftsUser = draftsList.filter(item => item.receiver === this.user);
-  return draftsUser
+  return this.$store.state.drafts
   },
   totalMessages() {
   let total;
   let mailbox = this.$store.state.mailbox
   if(mailbox != undefined){
-    let userMailbox = mailbox.filter(msg => msg.receiver === this.user);
-    total = userMailbox.length
+    total = mailbox.length
   }  
   return total
-  },    
+  },  
   totalOrders() {
   let total;
   let orders = this.$store.state.orders
   if(orders != undefined){
-    let userOrders = orders.filter(item => item.client === this.user);
-    total = userOrders.length
+    total = orders.length
   }  
   return total  
   },
@@ -104,8 +100,7 @@ export default {
   let total;
   let rejectedDrafts = this.$store.state.rejectedDrafts
   if(rejectedDrafts != undefined){
-    let userRejectedDrafts = rejectedDrafts.filter(item => item.receiver === this.user);
-    total = userRejectedDrafts.length
+    total = rejectedDrafts.length
   }  
   return total
   }    

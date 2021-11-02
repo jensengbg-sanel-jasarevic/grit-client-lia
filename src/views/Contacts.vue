@@ -49,8 +49,7 @@ export default {
   let total;
   let mailbox = this.$store.state.mailbox
     if(mailbox != undefined){
-    let userMailbox = mailbox.filter(msg => msg.receiver === this.user);
-    total = userMailbox.length
+    total = mailbox.length
     } 
   return total
   },

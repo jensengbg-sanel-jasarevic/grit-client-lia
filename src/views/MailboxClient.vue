@@ -35,14 +35,14 @@ export default {
   computed: {
   user() {
   return this.$store.state.user;
-  },
+  }, 
   mailbox() {
-  return this.$store.state.mailbox.filter(msg => msg.receiver === this.user);
+  return this.$store.state.mailbox
   },
   mailboxAmount() {
   let total;
-  let inboxUser = this.$store.state.mailbox.filter(msg => msg.receiver === this.user)
-  total = inboxUser.length
+  let inbox = this.$store.state.mailbox
+  total = inbox.length
   return total
   }  
   },
