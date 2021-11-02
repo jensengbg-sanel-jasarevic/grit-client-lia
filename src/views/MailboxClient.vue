@@ -7,7 +7,7 @@
       <img src="@/assets/feedback-message-4644.svg" alt="message" width="50" height="50">      
       <h1>Mailbox</h1>
       <h2>{{ user }}</h2>
-      <p>Respons från contacts för underkända skissförslag.</p>
+      <p>Respons från contacts för skissförslag som underkänts.</p>
       <p class="underline">Klicka på den specifika <i>draft</i> som finns tillgänglig under varje meddelanderuta för att öppna förslaget.</p>
       <h3>Inkorg ({{ mailboxAmount }})</h3>
       <Inbox @postMessage="listen" :user="user" v-for="msg in mailbox" :key="msg.id" :msg="msg" />
