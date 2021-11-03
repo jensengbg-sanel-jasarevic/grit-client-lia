@@ -37,25 +37,25 @@ const router = new VueRouter({
       path: '/client',
       name: 'Client',
       component: Client,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, requiresClientRole: true }
     },  
     {
       path: '/mailbox-client',
       name: 'MailboxClient',
       component: MailboxClient,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, requiresClientRole: true }
     },
     {
       path: '/orders-client',
       name: 'OrdersClient',
       component: OrdersClient,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, requiresClientRole: true }
     },
     {
       path: '/rejected-client',
       name: 'RejectedClient',
       component: RejectedClient,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, requiresClientRole: true }
     },
     {
       path: '/register',
@@ -82,6 +82,13 @@ if (to.matched.some(record => record.meta.requiresAuth)) {
 if (to.matched.some(record => record.meta.requiresAdminRole)) {
   if(Store.state.role === "client") { 
   next({ path: '/client', query: { redirect: to.fullPath } })
+  }
+  next()
+}
+
+if (to.matched.some(record => record.meta.requiresClientRole)) {
+  if(Store.state.role === "admin") { 
+  next({ path: '/', query: { redirect: to.fullPath } })
   }
   next()
 }

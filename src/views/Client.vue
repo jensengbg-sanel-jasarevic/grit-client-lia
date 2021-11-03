@@ -1,6 +1,7 @@
 <template>
   <div class="client-view-wrapper">
     <div>
+      <h2>Inloggad användare: {{ user }}</h2>
       <h2 v-if="drafts != '' ">Skissförslag</h2>
       <h2 v-else>Det finns för närvarande inga nya skissförslag att visa</h2>
       
