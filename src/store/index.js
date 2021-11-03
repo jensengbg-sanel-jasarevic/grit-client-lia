@@ -133,7 +133,7 @@ export default new Vuex.Store({
     },
     async verifyActiveUser(ctx) {
       let resp = await axios.get(`${ctx.state.API_URL}/api/user/${ctx.state.user}`)
-      if(resp.data[0].active === 0){
+      if(resp.data[0].state === "inactive"){
         ctx.commit("setLoggedOut")
         router.push('/login')
       }
