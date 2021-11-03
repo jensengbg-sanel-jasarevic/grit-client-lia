@@ -12,8 +12,10 @@ export default new Vuex.Store({
 })],
 
   state: {
+    // https://nodeserver-100.herokuapp.com
     API_URL: "https://nodeserver-100.herokuapp.com",
     navigationBarVisitor: true,
+    active: false,
     user: null,
     role: null,
     token: null,
@@ -35,6 +37,7 @@ export default new Vuex.Store({
     },
     setLoggedOut(state){
       state.navigationBarVisitor = true
+      state.active = false
       state.user = null
       state.role = null
       state.token = null
@@ -47,6 +50,9 @@ export default new Vuex.Store({
       state.draftMessage = null
       state.registrationMessage = null
       state.loginRejectedMessage = null
+    },
+    setUserActive(state, value){
+      state.active = value
     },    
     setGeneratedKey(state, generatedKey){
       state.generatedKey = generatedKey;
@@ -108,6 +114,7 @@ export default new Vuex.Store({
       let authorizedUser = resp.data 
       ctx.commit('setDefaultStoreValues') 
       ctx.commit("setAuthorizedUser", authorizedUser)
+      ctx.commit('setUserActive', true)
       ctx.commit("setNavigationBarVisitor", false)
       if (authorizedUser.role === "admin"){
         router.push("/")
@@ -121,9 +128,18 @@ export default new Vuex.Store({
     }
     },
     async logout(ctx) {
+      await axios.patch(`${ctx.state.API_URL}/api/user`, { user: ctx.state.user })
       ctx.commit("setLoggedOut")
       router.push('/login')
-    },    
+    },
+    async verifyActiveUser(ctx) {
+      let resp = await axios.get(`${ctx.state.API_URL}/api/user/${ctx.state.user}`)
+      if(resp.data[0].active === 0){
+        ctx.commit("setLoggedOut")
+        router.push('/login')
+      }
+      return
+   },     
     async generateUserKey(ctx){
       let resp = await axios.post(`${ctx.state.API_URL}/api/keygen`, { user: "admin" }, {
        headers: {

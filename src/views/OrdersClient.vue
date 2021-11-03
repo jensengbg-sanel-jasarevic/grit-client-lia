@@ -22,6 +22,7 @@ export default {
   },
   
   beforeMount(){
+  this.$store.dispatch('verifyActiveUser')
   this.$store.dispatch('getOrders')
   this.$store.dispatch('getMailbox')
   this.$store.dispatch("getDrafts");
