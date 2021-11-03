@@ -18,6 +18,7 @@ describe('Contacts.vue', () => {
 		}
 
     actions = {
+      verifyActiveUser: jest.fn(),
       getMailbox: jest.fn(),
 			getOrders: jest.fn()
 		};

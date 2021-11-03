@@ -18,6 +18,7 @@ describe('MailboxClient.vue', () => {
 	}
 
     actions = {
+      verifyActiveUser: jest.fn(),
       getMailbox: jest.fn(),
       getDrafts: jest.fn(),
       getRejectedDrafts: jest.fn(),

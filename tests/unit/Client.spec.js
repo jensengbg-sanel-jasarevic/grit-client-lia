@@ -21,6 +21,7 @@ describe('Client.vue', () => {
 
     actions = {
       getImage: jest.fn(),
+      verifyActiveUser: jest.fn(),
       getDrafts: jest.fn(),
       getMailbox: jest.fn(),
       getRejectedDrafts: jest.fn(),

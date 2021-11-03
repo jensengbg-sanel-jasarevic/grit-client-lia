@@ -14,10 +14,12 @@ describe('MailboxContacts.vue', () => {
 
   beforeEach(() => {
 	state = {
-		mailbox: [ { id: 9 } ]
+		mailbox: [],
+    sent: []
 	}
 
     actions = {
+      verifyActiveUser: jest.fn(),
       getMailbox: jest.fn(),
       getOrders: jest.fn()
 	  };
@@ -49,7 +51,8 @@ it('should when mounted dispatch action to Vuex store', () => {
         $store: {
          dispatch: function() { },
          state: { 
-           mailbox: [] 
+           mailbox: [],
+           sent: [] 
           }
         }
       }
