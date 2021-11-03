@@ -12,7 +12,6 @@ export default new Vuex.Store({
 })],
 
   state: {
-    // https://nodeserver-100.herokuapp.com
     API_URL: "https://nodeserver-100.herokuapp.com",
     navigationBarVisitor: true,
     active: false,
