@@ -1,6 +1,5 @@
-Heroku deploy: https://vueclient-100.herokuapp.com/
-
-# demo-client
+<b>URL:</b></br>
+https://vueclient-100.herokuapp.com/
 
 ## Project setup
 ```
@@ -20,6 +19,11 @@ npm run build
 ### Run your unit tests
 ```
 npm run test:unit
+```
+
+## Start server Heroku
+```
+npm run start
 ```
 
 ### Lints and fixes files
