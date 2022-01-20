@@ -1,5 +1,5 @@
 <b>URL:</b></br>
-https://vueclient-100.herokuapp.com/
+https://grit-client-lia.herokuapp.com
 
 ## Project setup
 ```
