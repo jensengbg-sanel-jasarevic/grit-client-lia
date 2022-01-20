@@ -12,7 +12,7 @@ export default new Vuex.Store({
 })],
 
   state: {
-    API_URL: "https://nodeserver-100.herokuapp.com",
+    API_URL: "https://grit-server-lia.herokuapp.com",
     navigationBarVisitor: true,
     active: false,
     user: null,
